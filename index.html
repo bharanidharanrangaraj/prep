@@ -736,7 +736,10 @@ li strong, b { color: var(--text); font-weight: 600; }
   </nav>
 
   <div class="sidebar-timer">
-    <div class="timer-label">Study Timer</div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+      <span class="timer-label" style="margin-bottom:0;">Study Timer</span>
+      <span id="sync-status" style="font-size:10px;color:var(--text3);font-family:'JetBrains Mono',monospace;">Loading...</span>
+    </div>
     <div class="timer-display" id="timer-display">25:00</div>
     <div class="timer-controls">
       <button class="timer-btn primary" id="timer-start" onclick="timerToggle()">Start</button>
@@ -2007,6 +2010,104 @@ li strong, b { color: var(--text); font-weight: 600; }
 <button class="mobile-menu-btn" onclick="toggleSidebar()" id="menu-btn">☰</button>
 
 <script>
+// ── JSONBIN SYNC
+const BIN_ID = '69d0a463aaba882197c2b09a';
+const API_KEY = '$2a$10$ILC3Bf70KmNHIY3Bd1pYZ.5meKy3q7dX4tAg4DhLZvJRqrKFaTn5e';
+const BIN_URL = `https://api.jsonbin.io/v3/b/${BIN_ID}`;
+
+let syncData = { notes:'', topicNotes:{}, checklist:[], topicDone:[], secDone:[] };
+let saveTimeout = null;
+let isSyncing = false;
+
+function showSyncStatus(msg, color) {
+  let el = document.getElementById('sync-status');
+  if (!el) return;
+  el.textContent = msg;
+  el.style.color = color || 'var(--text3)';
+}
+
+async function loadFromCloud() {
+  showSyncStatus('Syncing...', '#b45309');
+  try {
+    const res = await fetch(BIN_URL + '/latest', {
+      headers: { 'X-Master-Key': API_KEY }
+    });
+    const json = await res.json();
+    syncData = json.record || syncData;
+    applyAllData();
+    showSyncStatus('Synced ✓', 'var(--accent)');
+  } catch(e) {
+    showSyncStatus('Offline — local only', 'var(--high)');
+    applyAllData();
+  }
+}
+
+async function saveToCloud() {
+  if (isSyncing) return;
+  isSyncing = true;
+  showSyncStatus('Saving...', '#b45309');
+  try {
+    await fetch(BIN_URL, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'X-Master-Key': API_KEY },
+      body: JSON.stringify(syncData)
+    });
+    showSyncStatus('Saved ✓', 'var(--accent)');
+  } catch(e) {
+    showSyncStatus('Save failed', 'var(--high)');
+  }
+  isSyncing = false;
+}
+
+function scheduleSave() {
+  clearTimeout(saveTimeout);
+  saveTimeout = setTimeout(saveToCloud, 1500);
+}
+
+function applyAllData() {
+  // checklist
+  if (syncData.checklist && syncData.checklist.length) {
+    syncData.checklist.forEach((checked, i) => {
+      const cb = document.getElementById('cb-' + i);
+      const item = document.getElementById('ci-' + i);
+      if (cb) { cb.checked = checked; if (item) item.classList.toggle('checked', checked); }
+    });
+  }
+  // global notes
+  if (syncData.notes !== undefined) {
+    const el = document.getElementById('global-notes');
+    if (el) el.value = syncData.notes;
+  }
+  // topic notes
+  if (syncData.topicNotes) {
+    document.querySelectorAll('.topic-note').forEach(el => {
+      const val = syncData.topicNotes[el.dataset.key];
+      if (val !== undefined) el.value = val;
+    });
+  }
+  // topic done
+  if (syncData.topicDone && syncData.topicDone.length) {
+    document.querySelectorAll('.topic').forEach((t, i) => {
+      if (syncData.topicDone[i]) t.classList.add('topic-done');
+    });
+  }
+  // section done
+  if (syncData.secDone && syncData.secDone.length) {
+    document.querySelectorAll('.section-done-btn').forEach((b, i) => {
+      if (syncData.secDone[i]) {
+        b.classList.add('marked');
+        b.textContent = 'Done ✓';
+        const sec = b.closest('.section');
+        if (sec) {
+          const navItem = document.querySelector(`.nav-item[data-sec="${sec.id}"]`);
+          if (navItem) navItem.classList.add('done');
+        }
+      }
+    });
+  }
+  updateProgress();
+}
+
 // ── SIDEBAR TOGGLE (mobile)
 function toggleSidebar() {
   document.getElementById('sidebar').classList.toggle('open');
@@ -2060,81 +2161,36 @@ function toggleCheck(idx) {
   const cb = document.getElementById('cb-' + idx);
   if (document.activeElement !== cb) cb.checked = !cb.checked;
   item.classList.toggle('checked', cb.checked);
-  saveChecklist();
+  syncData.checklist = Array.from(document.querySelectorAll('.check-item input')).map(c => c.checked);
   updateProgress();
-}
-
-function saveChecklist() {
-  const states = [];
-  document.querySelectorAll('.check-item input').forEach(cb => states.push(cb.checked));
-  localStorage.setItem('foxconn-checklist', JSON.stringify(states));
-}
-
-function loadChecklist() {
-  try {
-    const states = JSON.parse(localStorage.getItem('foxconn-checklist') || '[]');
-    states.forEach((checked, i) => {
-      const cb = document.getElementById('cb-' + i);
-      const item = document.getElementById('ci-' + i);
-      if (cb) { cb.checked = checked; if (item) item.classList.toggle('checked', checked); }
-    });
-  } catch(e) {}
+  scheduleSave();
 }
 
 // ── NOTES
 function saveNotes() {
-  localStorage.setItem('foxconn-global-notes', document.getElementById('global-notes').value);
+  syncData.notes = document.getElementById('global-notes').value;
+  scheduleSave();
 }
 
 function clearNotes() {
   if (confirm('Clear all notes?')) {
     document.getElementById('global-notes').value = '';
-    localStorage.removeItem('foxconn-global-notes');
+    syncData.notes = '';
+    scheduleSave();
   }
 }
 
-function loadNotes() {
-  const saved = localStorage.getItem('foxconn-global-notes');
-  if (saved) document.getElementById('global-notes').value = saved;
-}
-
 function saveTopicNote(el) {
-  localStorage.setItem(el.dataset.key, el.value);
+  if (!syncData.topicNotes) syncData.topicNotes = {};
+  syncData.topicNotes[el.dataset.key] = el.value;
+  scheduleSave();
 }
 
-function loadTopicNotes() {
-  document.querySelectorAll('.topic-note').forEach(el => {
-    const saved = localStorage.getItem(el.dataset.key);
-    if (saved) el.value = saved;
-  });
-}
-
-// ── DONE STATE PERSIST
+// ── DONE STATE
 function saveDoneState() {
-  const topicDone = Array.from(document.querySelectorAll('.topic')).map(t => t.classList.contains('topic-done'));
-  const secDone = Array.from(document.querySelectorAll('.section-done-btn')).map(b => b.classList.contains('marked'));
-  localStorage.setItem('foxconn-topic-done', JSON.stringify(topicDone));
-  localStorage.setItem('foxconn-sec-done', JSON.stringify(secDone));
-}
-
-function loadDoneState() {
-  try {
-    const topicDone = JSON.parse(localStorage.getItem('foxconn-topic-done') || '[]');
-    const secDone = JSON.parse(localStorage.getItem('foxconn-sec-done') || '[]');
-    document.querySelectorAll('.topic').forEach((t, i) => { if (topicDone[i]) t.classList.add('topic-done'); });
-    document.querySelectorAll('.section-done-btn').forEach((b, i) => {
-      if (secDone[i]) {
-        b.classList.add('marked');
-        b.textContent = 'Done ✓';
-        const sec = b.closest('.section');
-        const secId = sec ? sec.id : null;
-        if (secId) {
-          const navItem = document.querySelector(`.nav-item[data-sec="${secId}"]`);
-          if (navItem) navItem.classList.add('done');
-        }
-      }
-    });
-  } catch(e) {}
+  syncData.topicDone = Array.from(document.querySelectorAll('.topic')).map(t => t.classList.contains('topic-done'));
+  syncData.secDone = Array.from(document.querySelectorAll('.section-done-btn')).map(b => b.classList.contains('marked'));
+  scheduleSave();
 }
 
 // ── COUNTDOWN
@@ -2225,11 +2281,7 @@ sections.forEach(s => observer.observe(s));
 
 // ── INIT
 window.onload = () => {
-  loadChecklist();
-  loadNotes();
-  loadTopicNotes();
-  loadDoneState();
-  updateProgress();
+  loadFromCloud();
   updateCountdown();
   setInterval(updateCountdown, 60000);
 };
