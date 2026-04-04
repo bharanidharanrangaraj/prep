@@ -3,370 +3,898 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Foxconn NPI FA — Complete Interview Prep</title>
+<title>Foxconn NPI FA — Interview Prep</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
 
-  :root {
-    --bg: #0f0f0f;
-    --surface: #161616;
-    --surface2: #1e1e1e;
-    --border: #2a2a2a;
-    --accent: #00d4ff;
-    --accent2: #ff6b35;
-    --accent3: #7fff6b;
-    --text: #e8e8e8;
-    --muted: #888;
-    --tag-bg: #1a2a2a;
-  }
+:root {
+  --bg: #f5f4f0;
+  --surface: #ffffff;
+  --surface2: #f0ede8;
+  --border: #e2ddd8;
+  --border2: #d0cac3;
+  --accent: #1a6b4a;
+  --accent-light: #e8f5ef;
+  --accent2: #c45c1a;
+  --accent2-light: #fdf0e8;
+  --accent3: #1a4a8a;
+  --accent3-light: #e8eef8;
+  --text: #1a1814;
+  --text2: #4a4540;
+  --text3: #8a8078;
+  --high: #c42828;
+  --high-bg: #fdf0f0;
+  --med: #1a6b4a;
+  --med-bg: #e8f5ef;
+  --low: #1a4a8a;
+  --low-bg: #e8eef8;
+  --done-bg: #f0fdf4;
+  --done-border: #86efac;
+  --sticky: #fffbeb;
+  --sticky-border: #fde68a;
+  --header-h: 0px;
+}
 
-  * { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 15px;
-    line-height: 1.7;
-  }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Outfit', sans-serif;
+  font-size: 15px;
+  line-height: 1.7;
+}
 
-  header {
-    border-bottom: 1px solid var(--border);
-    padding: 32px 40px 24px;
-    background: var(--surface);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-  }
+/* ── SIDEBAR LAYOUT ── */
+.layout { display: flex; min-height: 100vh; }
 
-  header h1 {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--accent);
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    margin-bottom: 4px;
-  }
+.sidebar {
+  width: 260px;
+  flex-shrink: 0;
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  overflow-y: auto;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+}
 
-  header p {
-    font-size: 12px;
-    color: var(--muted);
-    font-family: 'IBM Plex Mono', monospace;
-  }
+.sidebar-logo {
+  padding: 20px 20px 16px;
+  border-bottom: 1px solid var(--border);
+}
 
-  nav {
-    display: flex;
-    gap: 0;
-    flex-wrap: wrap;
-    margin-top: 16px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    overflow: hidden;
-  }
+.sidebar-logo h1 {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
 
-  nav a {
-    padding: 6px 14px;
-    font-size: 11px;
-    font-family: 'IBM Plex Mono', monospace;
-    color: var(--muted);
-    text-decoration: none;
-    border-right: 1px solid var(--border);
-    transition: all 0.15s;
-    white-space: nowrap;
-  }
+.sidebar-logo p {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 2px;
+}
 
-  nav a:last-child { border-right: none; }
-  nav a:hover { background: var(--surface2); color: var(--accent); }
+/* Progress bar */
+.progress-wrap {
+  padding: 14px 20px;
+  border-bottom: 1px solid var(--border);
+  background: var(--accent-light);
+}
 
-  .container { max-width: 860px; margin: 0 auto; padding: 40px 24px 80px; }
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  margin-bottom: 6px;
+  font-family: 'JetBrains Mono', monospace;
+}
 
-  .section {
-    margin-bottom: 60px;
-    scroll-margin-top: 120px;
-  }
+.progress-bar-track {
+  height: 6px;
+  background: #c8e6d8;
+  border-radius: 10px;
+  overflow: hidden;
+}
 
-  .section-header {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    margin-bottom: 24px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--border);
-  }
+.progress-bar-fill {
+  height: 100%;
+  background: var(--accent);
+  border-radius: 10px;
+  transition: width 0.4s ease;
+}
 
-  .section-num {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--accent);
-    background: var(--tag-bg);
-    border: 1px solid var(--accent);
-    padding: 3px 8px;
-    border-radius: 3px;
-    white-space: nowrap;
-  }
+/* Nav */
+.sidebar-nav { padding: 12px 0; flex: 1; }
 
-  .section-title {
-    font-size: 19px;
-    font-weight: 500;
-    color: var(--text);
-  }
+.nav-group-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 10px 20px 4px;
+}
 
-  .topic {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    margin-bottom: 16px;
-    overflow: hidden;
-  }
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 20px;
+  font-size: 12.5px;
+  color: var(--text2);
+  text-decoration: none;
+  transition: all 0.12s;
+  cursor: pointer;
+  border-left: 2px solid transparent;
+}
 
-  .topic-head {
-    padding: 14px 18px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
-    user-select: none;
-    transition: background 0.15s;
-  }
+.nav-item:hover { background: var(--surface2); color: var(--accent); border-left-color: var(--accent); }
+.nav-item.active { background: var(--accent-light); color: var(--accent); border-left-color: var(--accent); font-weight: 600; }
 
-  .topic-head:hover { background: var(--surface2); }
+.nav-check {
+  width: 16px; height: 16px;
+  border: 1.5px solid var(--border2);
+  border-radius: 4px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.15s;
+  font-size: 10px;
+  color: transparent;
+}
 
-  .topic-head h3 {
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text);
-  }
+.nav-item.done .nav-check {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
 
-  .topic-head .arrow {
-    font-size: 12px;
-    color: var(--muted);
-    transition: transform 0.2s;
-    font-family: monospace;
-  }
+.nav-item.done { color: var(--text3); }
+.nav-item.done:hover { color: var(--accent); }
 
-  .topic.open .arrow { transform: rotate(90deg); }
+/* Timer in sidebar */
+.sidebar-timer {
+  padding: 14px 20px;
+  border-top: 1px solid var(--border);
+  background: var(--surface2);
+}
 
-  .topic-body {
-    display: none;
-    padding: 0 18px 18px;
-    border-top: 1px solid var(--border);
-  }
+.timer-label { font-size: 10px; font-weight: 600; color: var(--text3); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px; }
+.timer-display {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 28px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+.timer-display.running { color: var(--accent); }
+.timer-display.low { color: var(--high); }
 
-  .topic.open .topic-body { display: block; }
+.timer-controls { display: flex; gap: 6px; }
+.timer-btn {
+  flex: 1;
+  padding: 5px;
+  font-size: 11px;
+  font-weight: 600;
+  border: 1px solid var(--border2);
+  border-radius: 5px;
+  background: var(--surface);
+  color: var(--text2);
+  cursor: pointer;
+  transition: all 0.12s;
+  font-family: 'Outfit', sans-serif;
+}
+.timer-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+.timer-btn.primary { background: var(--accent); color: white; border-color: var(--accent); }
+.timer-btn.primary:hover { opacity: 0.85; }
 
-  .imp-tag {
-    font-size: 10px;
-    font-family: 'IBM Plex Mono', monospace;
-    padding: 2px 7px;
-    border-radius: 3px;
-    margin-left: 10px;
-    font-weight: 600;
-  }
+.timer-presets { display: flex; gap: 4px; margin-top: 6px; flex-wrap: wrap; }
+.preset-btn {
+  font-size: 10px;
+  padding: 2px 7px;
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--text3);
+  cursor: pointer;
+  transition: all 0.12s;
+  font-family: 'Outfit', sans-serif;
+}
+.preset-btn:hover { border-color: var(--accent); color: var(--accent); }
 
-  .high { background: #2a1a1a; color: #ff6b6b; border: 1px solid #ff6b6b44; }
-  .med { background: #1a2000; color: #a8d400; border: 1px solid #a8d40044; }
-  .low { background: #1a1a2a; color: #6b8fff; border: 1px solid #6b8fff44; }
+/* ── MAIN CONTENT ── */
+.main {
+  margin-left: 260px;
+  flex: 1;
+  max-width: 100%;
+}
 
-  h4 {
-    font-size: 13px;
-    font-weight: 600;
-    color: var(--accent);
-    font-family: 'IBM Plex Mono', monospace;
-    margin: 18px 0 8px;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
+/* Hero banner */
+.hero {
+  background: var(--accent);
+  color: white;
+  padding: 32px 40px 28px;
+}
 
-  p { color: #ccc; margin-bottom: 10px; font-size: 14px; }
+.hero-top { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 16px; }
+.hero h2 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+.hero p { font-size: 13px; opacity: 0.8; }
 
-  ul, ol {
-    padding-left: 20px;
-    margin-bottom: 12px;
-  }
+.hero-stats { display: flex; gap: 24px; }
+.hero-stat { text-align: center; }
+.hero-stat-num { font-size: 24px; font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+.hero-stat-label { font-size: 10px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.06em; }
 
-  li {
-    color: #ccc;
-    font-size: 14px;
-    margin-bottom: 5px;
-    line-height: 1.6;
-  }
+.deadline-badge {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  margin-top: 12px;
+  display: inline-block;
+}
 
-  li strong, b { color: var(--text); font-weight: 600; }
+/* Container */
+.container { max-width: 820px; margin: 0 auto; padding: 32px 32px 80px; }
 
-  .formula {
-    background: var(--surface2);
-    border-left: 3px solid var(--accent);
-    padding: 10px 16px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 13px;
-    color: var(--accent);
-    margin: 10px 0;
-    border-radius: 0 4px 4px 0;
-  }
+/* Quick Notes Panel */
+.notes-panel {
+  background: var(--sticky);
+  border: 1px solid var(--sticky-border);
+  border-radius: 10px;
+  padding: 16px 18px;
+  margin-bottom: 28px;
+}
 
-  .answer-box {
-    background: #0d1f0d;
-    border: 1px solid #3a5a3a;
-    border-radius: 6px;
-    padding: 14px 16px;
-    margin: 12px 0;
-    font-size: 14px;
-    color: #b8d4b8;
-    line-height: 1.7;
-  }
+.notes-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
 
-  .answer-box .label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 10px;
-    color: var(--accent3);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
-    margin-bottom: 6px;
-  }
+.notes-panel-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #92400e;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
 
-  .term-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    margin: 10px 0;
-  }
+.notes-clear {
+  font-size: 11px;
+  color: #b45309;
+  cursor: pointer;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  font-family: 'Outfit', sans-serif;
+}
 
-  .term {
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    border-radius: 5px;
-    padding: 9px 12px;
-  }
+.notes-textarea {
+  width: 100%;
+  min-height: 80px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  color: #78350f;
+  resize: vertical;
+  line-height: 1.6;
+}
 
-  .term dt {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: var(--accent2);
-    font-weight: 600;
-    margin-bottom: 2px;
-  }
+.notes-textarea::placeholder { color: #d97706; opacity: 0.6; }
 
-  .term dd {
-    font-size: 12px;
-    color: #aaa;
-    line-height: 1.5;
-  }
+/* Study checklist */
+.checklist-panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  margin-bottom: 28px;
+}
 
-  .q-box {
-    background: var(--surface2);
-    border-left: 3px solid var(--accent2);
-    padding: 10px 14px;
-    margin: 8px 0;
-    border-radius: 0 4px 4px 0;
-  }
+.checklist-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
 
-  .q-box .q {
-    font-size: 13px;
-    font-weight: 500;
-    color: var(--text);
-    margin-bottom: 4px;
-  }
+.checklist-title span {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text3);
+}
 
-  .q-box .a {
-    font-size: 13px;
-    color: #aaa;
-  }
+.check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 7px 0;
+  border-bottom: 1px solid var(--border);
+  cursor: pointer;
+  user-select: none;
+}
 
-  .warn {
-    background: #1f1800;
-    border: 1px solid #ff990044;
-    border-radius: 6px;
-    padding: 10px 14px;
-    font-size: 13px;
-    color: #ffcc66;
-    margin: 12px 0;
-  }
+.check-item:last-child { border-bottom: none; }
 
-  .cheatrow {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin: 8px 0;
-  }
+.check-item input[type="checkbox"] {
+  width: 16px; height: 16px;
+  flex-shrink: 0;
+  margin-top: 3px;
+  accent-color: var(--accent);
+  cursor: pointer;
+}
 
-  .chip {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    background: var(--surface2);
-    border: 1px solid var(--border);
-    color: var(--accent);
-    padding: 3px 9px;
-    border-radius: 20px;
-  }
+.check-item label {
+  font-size: 13px;
+  color: var(--text2);
+  cursor: pointer;
+  line-height: 1.5;
+}
 
-  .star-section { margin: 10px 0; }
-  .star-label {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 11px;
-    color: var(--accent2);
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.08em;
-    margin-bottom: 2px;
-  }
-  .star-text {
-    font-size: 14px;
-    color: #c8c8c8;
-    padding-left: 12px;
-    border-left: 2px solid var(--border);
-    margin-bottom: 10px;
-    line-height: 1.65;
-  }
+.check-item.checked label {
+  text-decoration: line-through;
+  color: var(--text3);
+}
 
-  @media (max-width: 600px) {
-    header { padding: 20px 16px 16px; }
-    .container { padding: 24px 14px 60px; }
-    .term-grid { grid-template-columns: 1fr; }
-    nav a { padding: 5px 10px; font-size: 10px; }
-  }
+.check-tag {
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 10px;
+  font-weight: 600;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.check-tag.h { background: var(--high-bg); color: var(--high); }
+.check-tag.m { background: var(--med-bg); color: var(--med); }
+.check-tag.l { background: var(--low-bg); color: var(--low); }
+
+/* ── SECTIONS ── */
+.section {
+  margin-bottom: 48px;
+  scroll-margin-top: 24px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--border);
+}
+
+.section-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--accent-light);
+  border: 1px solid #a7d8c0;
+  padding: 3px 8px;
+  border-radius: 4px;
+}
+
+.section-title { font-size: 18px; font-weight: 700; color: var(--text); }
+
+.section-done-btn {
+  margin-left: auto;
+  font-size: 11px;
+  padding: 4px 12px;
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  background: var(--surface);
+  color: var(--text3);
+  cursor: pointer;
+  transition: all 0.15s;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 600;
+}
+
+.section-done-btn:hover { border-color: var(--accent); color: var(--accent); }
+.section-done-btn.marked { background: var(--accent); color: white; border-color: var(--accent); }
+
+/* Topics */
+.topic {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: box-shadow 0.15s;
+}
+
+.topic:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.06); }
+
+.topic-head {
+  padding: 13px 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.12s;
+}
+
+.topic-head:hover { background: var(--surface2); }
+
+.topic-check {
+  width: 18px; height: 18px;
+  border: 1.5px solid var(--border2);
+  border-radius: 5px;
+  flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 11px;
+  color: transparent;
+  transition: all 0.15s;
+  cursor: pointer;
+}
+
+.topic.topic-done .topic-check {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.topic.topic-done { opacity: 0.7; }
+.topic.topic-done .topic-head { background: var(--done-bg); }
+
+.topic-head h3 {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text);
+  flex: 1;
+}
+
+.topic.topic-done .topic-head h3 { color: var(--text3); }
+
+.imp-tag {
+  font-size: 9px;
+  font-family: 'JetBrains Mono', monospace;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.high { background: var(--high-bg); color: var(--high); border: 1px solid #fca5a5; }
+.med { background: var(--med-bg); color: var(--med); border: 1px solid #86efac; }
+.low { background: var(--low-bg); color: var(--low); border: 1px solid #93c5fd; }
+
+.arrow {
+  font-size: 11px;
+  color: var(--text3);
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+
+.topic.open .arrow { transform: rotate(90deg); }
+
+.topic-body {
+  display: none;
+  padding: 0 18px 18px;
+  border-top: 1px solid var(--border);
+}
+
+.topic.open .topic-body { display: block; }
+
+/* Topic note */
+.topic-note-wrap {
+  margin-top: 14px;
+  border-top: 1px dashed var(--border2);
+  padding-top: 12px;
+}
+
+.topic-note-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 5px;
+}
+
+.topic-note {
+  width: 100%;
+  min-height: 48px;
+  background: var(--sticky);
+  border: 1px solid var(--sticky-border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 12px;
+  color: #78350f;
+  resize: vertical;
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.topic-note:focus { border-color: #f59e0b; }
+.topic-note::placeholder { color: #d97706; opacity: 0.5; }
+
+/* Content styles */
+h4 {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--accent);
+  font-family: 'JetBrains Mono', monospace;
+  margin: 16px 0 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+p { color: var(--text2); margin-bottom: 10px; font-size: 14px; }
+
+ul, ol { padding-left: 18px; margin-bottom: 12px; }
+
+li { color: var(--text2); font-size: 13.5px; margin-bottom: 5px; line-height: 1.6; }
+li strong, b { color: var(--text); font-weight: 600; }
+
+.formula {
+  background: #f0fdf8;
+  border-left: 3px solid var(--accent);
+  padding: 9px 14px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12.5px;
+  color: var(--accent);
+  margin: 8px 0;
+  border-radius: 0 5px 5px 0;
+}
+
+.answer-box {
+  background: #f0fdf8;
+  border: 1px solid #a7d8c0;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 10px 0;
+  font-size: 13.5px;
+  color: #166534;
+  line-height: 1.7;
+}
+
+.answer-box .label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--accent);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 5px;
+}
+
+.term-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.term {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 9px 12px;
+}
+
+.term dt {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--accent2);
+  font-weight: 700;
+  margin-bottom: 3px;
+}
+
+.term dd { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+.q-box {
+  background: var(--surface2);
+  border-left: 3px solid var(--accent2);
+  padding: 11px 14px;
+  margin: 8px 0;
+  border-radius: 0 6px 6px 0;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent2);
+}
+
+.q-box .q {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.q-box .a { font-size: 13px; color: var(--text2); line-height: 1.6; }
+
+.warn {
+  background: #fffbeb;
+  border: 1px solid #fde68a;
+  border-left: 3px solid #f59e0b;
+  border-radius: 0 6px 6px 0;
+  padding: 10px 14px;
+  font-size: 13px;
+  color: #92400e;
+  margin: 10px 0;
+}
+
+.cheatrow { display: flex; gap: 6px; flex-wrap: wrap; margin: 8px 0; }
+
+.chip {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10.5px;
+  background: var(--accent-light);
+  border: 1px solid #a7d8c0;
+  color: var(--accent);
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.star-section { margin: 8px 0; }
+.star-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  color: var(--accent2);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 2px;
+}
+.star-text {
+  font-size: 13.5px;
+  color: var(--text2);
+  padding-left: 12px;
+  border-left: 2px solid var(--border2);
+  margin-bottom: 8px;
+  line-height: 1.65;
+}
+
+/* ── MOBILE MENU ── */
+.mobile-menu-btn {
+  display: none;
+  position: fixed;
+  bottom: 20px; right: 20px;
+  width: 48px; height: 48px;
+  background: var(--accent);
+  color: white;
+  border: none;
+  border-radius: 50%;
+  font-size: 20px;
+  cursor: pointer;
+  z-index: 300;
+  box-shadow: 0 4px 12px rgba(26,107,74,0.3);
+}
+
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); transition: transform 0.25s; }
+  .sidebar.open { transform: translateX(0); }
+  .main { margin-left: 0; }
+  .mobile-menu-btn { display: flex; align-items: center; justify-content: center; }
+  .container { padding: 20px 16px 80px; }
+  .term-grid { grid-template-columns: 1fr; }
+  .hero { padding: 20px; }
+  .hero-stats { gap: 12px; }
+}
 </style>
 </head>
 <body>
 
-<header>
-  <h1>Foxconn NPI FA &mdash; Complete Interview Prep Guide</h1>
-  <p>Electronics Engineer (3 yrs exp) &bull; NPI FA&DOE Engineering &bull; Bangalore &bull; Interview: Monday 10AM</p>
-  <nav>
-    <a href="#s1">01 Electronics</a>
-    <a href="#s2">02 Lab Instruments</a>
-    <a href="#s3">03 Debugging</a>
-    <a href="#s4">04 Failure Analysis</a>
-    <a href="#s5">05 DOE/8D/FMEA</a>
-    <a href="#s6">06 Sensors</a>
-    <a href="#s7">07 Circuits</a>
-    <a href="#s8">08 Python</a>
-    <a href="#s9">09 PCB/EDA</a>
-    <a href="#s10">10 Soft Skills</a>
-    <a href="#s11">11 Your Stories</a>
-    <a href="#s12">12 Cheat Sheet</a>
-    <a href="#s13">13 Resume Q&amp;A</a>
-    <a href="#s14">14 All Questions</a>
+<div class="layout">
+
+<!-- ── SIDEBAR ── -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-logo">
+    <h1>Foxconn Prep</h1>
+    <p>NPI FA &bull; Monday 10AM</p>
+  </div>
+
+  <div class="progress-wrap">
+    <div class="progress-label">
+      <span>Progress</span>
+      <span id="progress-pct">0%</span>
+    </div>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill" id="progress-fill" style="width:0%"></div>
+    </div>
+  </div>
+
+  <nav class="sidebar-nav">
+    <div class="nav-group-label">Theory</div>
+    <a class="nav-item" href="#s1" data-sec="s1"><span class="nav-check">✓</span>01 Electronics Fundamentals</a>
+    <a class="nav-item" href="#s2" data-sec="s2"><span class="nav-check">✓</span>02 Lab Instruments</a>
+    <a class="nav-item" href="#s3" data-sec="s3"><span class="nav-check">✓</span>03 Hardware Debugging</a>
+    <a class="nav-item" href="#s4" data-sec="s4"><span class="nav-check">✓</span>04 Failure Analysis</a>
+    <a class="nav-item" href="#s5" data-sec="s5"><span class="nav-check">✓</span>05 DOE / 8D / FMEA</a>
+    <a class="nav-item" href="#s6" data-sec="s6"><span class="nav-check">✓</span>06 Sensors — ALS &amp; Proximity</a>
+    <a class="nav-item" href="#s7" data-sec="s7"><span class="nav-check">✓</span>07 Analog &amp; Digital Circuits</a>
+    <a class="nav-item" href="#s8" data-sec="s8"><span class="nav-check">✓</span>08 Python for Hardware</a>
+    <a class="nav-item" href="#s9" data-sec="s9"><span class="nav-check">✓</span>09 PCB &amp; EDA</a>
+    <div class="nav-group-label">Soft Skills</div>
+    <a class="nav-item" href="#s10" data-sec="s10"><span class="nav-check">✓</span>10 Communication &amp; Teamwork</a>
+    <a class="nav-item" href="#s11" data-sec="s11"><span class="nav-check">✓</span>11 Your STAR Stories</a>
+    <div class="nav-group-label">Questions</div>
+    <a class="nav-item" href="#s12" data-sec="s12"><span class="nav-check">✓</span>12 Cheat Sheet</a>
+    <a class="nav-item" href="#s13" data-sec="s13"><span class="nav-check">✓</span>13 Resume Q&amp;A</a>
+    <a class="nav-item" href="#s14" data-sec="s14"><span class="nav-check">✓</span>14 General Questions</a>
+    <a class="nav-item" href="#s15" data-sec="s15"><span class="nav-check">✓</span>15 Twisted &amp; Scenarios</a>
   </nav>
-</header>
 
-<div class="container">
+  <div class="sidebar-timer">
+    <div class="timer-label">Study Timer</div>
+    <div class="timer-display" id="timer-display">25:00</div>
+    <div class="timer-controls">
+      <button class="timer-btn primary" id="timer-start" onclick="timerToggle()">Start</button>
+      <button class="timer-btn" onclick="timerReset()">Reset</button>
+    </div>
+    <div class="timer-presets">
+      <button class="preset-btn" onclick="setTimer(25)">25 min</button>
+      <button class="preset-btn" onclick="setTimer(45)">45 min</button>
+      <button class="preset-btn" onclick="setTimer(60)">60 min</button>
+    </div>
+  </div>
+</aside>
 
+<!-- ── MAIN ── -->
+<main class="main">
+
+  <div class="hero">
+    <div class="hero-top">
+      <div>
+        <h2>Foxconn NPI FA — Interview Prep</h2>
+        <p>Electronics Engineer &bull; NPI FA&DOE Engineering &bull; Bangalore</p>
+        <div class="deadline-badge" id="countdown-badge">Loading countdown...</div>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="hero-stat-num">15</div>
+          <div class="hero-stat-label">Sections</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num" id="q-count">80+</div>
+          <div class="hero-stat-label">Questions</div>
+        </div>
+        <div class="hero-stat">
+          <div class="hero-stat-num" id="done-count">0</div>
+          <div class="hero-stat-label">Done</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- Quick Notes -->
+    <div class="notes-panel">
+      <div class="notes-panel-header">
+        <span class="notes-panel-title">&#9998; Quick Notes — Jot anything here</span>
+        <button class="notes-clear" onclick="clearNotes()">Clear</button>
+      </div>
+      <textarea class="notes-textarea" id="global-notes" placeholder="Use this space for anything — things to remember, weak areas, key terms you keep forgetting..." oninput="saveNotes()"></textarea>
+    </div>
+
+    <!-- Study Checklist -->
+    <div class="checklist-panel">
+      <div class="checklist-title">
+        Study Checklist
+        <span id="checklist-summary">0 of 16 done</span>
+      </div>
+
+      <div class="check-item" id="ci-0" onclick="toggleCheck(0)">
+        <input type="checkbox" id="cb-0" onclick="event.stopPropagation();" onchange="toggleCheck(0)">
+        <label for="cb-0">Read Electronics Fundamentals (Ohm's law, components, power supply)</label>
+        <span class="check-tag h">HIGH</span>
+      </div>
+      <div class="check-item" id="ci-1" onclick="toggleCheck(1)">
+        <input type="checkbox" id="cb-1" onclick="event.stopPropagation();" onchange="toggleCheck(1)">
+        <label for="cb-1">Read Lab Instruments — DMM modes, oscilloscope, power analyser</label>
+        <span class="check-tag h">HIGH</span>
+      </div>
+      <div class="check-item" id="ci-2" onclick="toggleCheck(2)">
+        <input type="checkbox" id="cb-2" onclick="event.stopPropagation();" onchange="toggleCheck(2)">
+        <label for="cb-2">Read Hardware Debugging — methodology, failure modes, protocols</label>
+        <span class="check-tag h">HIGH</span>
+      </div>
+      <div class="check-item" id="ci-3" onclick="toggleCheck(3)">
+        <input type="checkbox" id="cb-3" onclick="event.stopPropagation();" onchange="toggleCheck(3)">
+        <label for="cb-3">Read Failure Analysis — FA flow, SEM/EDS/X-ray basics</label>
+        <span class="check-tag h">HIGH</span>
+      </div>
+      <div class="check-item" id="ci-4" onclick="toggleCheck(4)">
+        <input type="checkbox" id="cb-4" onclick="event.stopPropagation();" onchange="toggleCheck(4)">
+        <label for="cb-4">Read 8D Problem Solving — all 8 disciplines memorised</label>
+        <span class="check-tag h">HIGH</span>
+      </div>
+      <div class="check-item" id="ci-5" onclick="toggleCheck(5)">
+        <input type="checkbox" id="cb-5" onclick="event.stopPropagation();" onchange="toggleCheck(5)">
+        <label for="cb-5">Read FMEA — RPN formula, table structure, what to prioritise</label>
+        <span class="check-tag h">HIGH</span>
+      </div>
+      <div class="check-item" id="ci-6" onclick="toggleCheck(6)">
+        <input type="checkbox" id="cb-6" onclick="event.stopPropagation();" onchange="toggleCheck(6)">
+        <label for="cb-6">Read DOE — factors, levels, Taguchi basics</label>
+        <span class="check-tag m">MED</span>
+      </div>
+      <div class="check-item" id="ci-7" onclick="toggleCheck(7)">
+        <input type="checkbox" id="cb-7" onclick="event.stopPropagation();" onchange="toggleCheck(7)">
+        <label for="cb-7">Read Sensors — ALS and proximity sensor, common ICs, FA issues</label>
+        <span class="check-tag m">MED</span>
+      </div>
+      <div class="check-item" id="ci-8" onclick="toggleCheck(8)">
+        <input type="checkbox" id="cb-8" onclick="event.stopPropagation();" onchange="toggleCheck(8)">
+        <label for="cb-8">Read Analog &amp; Digital Circuits — ADC/DAC, logic levels, op-amp</label>
+        <span class="check-tag m">MED</span>
+      </div>
+      <div class="check-item" id="ci-9" onclick="toggleCheck(9)">
+        <input type="checkbox" id="cb-9" onclick="event.stopPropagation();" onchange="toggleCheck(9)">
+        <label for="cb-9">Read Python section — serial, CSV, pandas snippets</label>
+        <span class="check-tag m">MED</span>
+      </div>
+      <div class="check-item" id="ci-10" onclick="toggleCheck(10)">
+        <input type="checkbox" id="cb-10" onclick="event.stopPropagation();" onchange="toggleCheck(10)">
+        <label for="cb-10">Prepare all 3 STAR stories — nRF52, PZEM library, IoT Studio</label>
+        <span class="check-tag h">HIGH</span>
+      </div>
+      <div class="check-item" id="ci-11" onclick="toggleCheck(11)">
+        <input type="checkbox" id="cb-11" onclick="event.stopPropagation();" onchange="toggleCheck(11)">
+        <label for="cb-11">Read all Resume Q&amp;A — Optipace, Semicon, projects section</label>
+        <span class="check-tag h">HIGH</span>
+      </div>
+      <div class="check-item" id="ci-12" onclick="toggleCheck(12)">
+        <input type="checkbox" id="cb-12" onclick="event.stopPropagation();" onchange="toggleCheck(12)">
+        <label for="cb-12">Read General &amp; HR questions — practise answers out loud</label>
+        <span class="check-tag h">HIGH</span>
+      </div>
+      <div class="check-item" id="ci-13" onclick="toggleCheck(13)">
+        <input type="checkbox" id="cb-13" onclick="event.stopPropagation();" onchange="toggleCheck(13)">
+        <label for="cb-13">Read Twisted questions — especially the calculation ones</label>
+        <span class="check-tag h">HIGH</span>
+      </div>
+      <div class="check-item" id="ci-14" onclick="toggleCheck(14)">
+        <input type="checkbox" id="cb-14" onclick="event.stopPropagation();" onchange="toggleCheck(14)">
+        <label for="cb-14">Memorise all key terms in the Cheat Sheet (Section 12)</label>
+        <span class="check-tag h">HIGH</span>
+      </div>
+      <div class="check-item" id="ci-15" onclick="toggleCheck(15)">
+        <input type="checkbox" id="cb-15" onclick="event.stopPropagation();" onchange="toggleCheck(15)">
+        <label for="cb-15">Do one full mock interview (Sunday evening)</label>
+        <span class="check-tag h">HIGH</span>
+      </div>
+    </div>
+
+<!-- ═══════════════════════════════════════════ -->
 <!-- SECTION 1 -->
+<!-- ═══════════════════════════════════════════ -->
 <div class="section" id="s1">
   <div class="section-header">
     <span class="section-num">01</span>
     <span class="section-title">Electronics Fundamentals</span>
+    <button class="section-done-btn" onclick="markSection(this,'s1')">Mark done</button>
   </div>
 
   <div class="topic open">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>Ohm's Law &amp; Power <span class="imp-tag high">DEFINITELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
-      <div class="formula">V = I × R &nbsp;&nbsp;|&nbsp;&nbsp; P = V × I &nbsp;&nbsp;|&nbsp;&nbsp; P = I²R &nbsp;&nbsp;|&nbsp;&nbsp; P = V²/R</div>
+      <div class="formula">V = I × R &nbsp;|&nbsp; P = V × I &nbsp;|&nbsp; P = I²R &nbsp;|&nbsp; P = V²/R</div>
       <p>V = Voltage (Volts), I = Current (Amperes), R = Resistance (Ohms), P = Power (Watts)</p>
       <h4>Quick examples they might ask</h4>
       <div class="q-box">
@@ -377,16 +905,21 @@
         <div class="q">What power does a 10Ω resistor dissipate with 2A through it?</div>
         <div class="a">P = I²R = 4 × 10 = 40W</div>
       </div>
-      <h4>Kirchhoff's Laws (KCL &amp; KVL)</h4>
+      <h4>Kirchhoff's Laws</h4>
       <ul>
         <li><b>KCL</b> — Sum of currents entering a node = sum leaving. Current is conserved.</li>
         <li><b>KVL</b> — Sum of all voltages around a closed loop = 0. Voltage is conserved.</li>
       </ul>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s1-ohm" oninput="saveTopicNote(this)"></textarea>
+      </div>
     </div>
   </div>
 
   <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>Passive Components <span class="imp-tag high">DEFINITELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
@@ -399,20 +932,25 @@
       </div>
       <h4>Series vs Parallel</h4>
       <div class="formula">Series R: R_total = R1 + R2 + R3</div>
-      <div class="formula">Parallel R: 1/R_total = 1/R1 + 1/R2 (two resistors: R1×R2 / R1+R2)</div>
+      <div class="formula">Parallel R: R = (R1 × R2) / (R1 + R2)</div>
       <div class="formula">Series C: 1/C_total = 1/C1 + 1/C2 &nbsp;|&nbsp; Parallel C: C_total = C1 + C2</div>
       <h4>Capacitor behaviour to remember</h4>
       <ul>
         <li>At DC steady state: capacitor is an <b>open circuit</b></li>
         <li>At very high frequency: capacitor is a <b>short circuit</b></li>
+        <li>Electrolytic caps are <b>polarised</b> — reversed polarity causes failure</li>
         <li>Decoupling caps (100nF) placed near IC power pins to suppress noise</li>
-        <li>Electrolytic caps are <b>polarised</b> — reversed polarity causes failure/explosion</li>
       </ul>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s1-passive" oninput="saveTopicNote(this)"></textarea>
+      </div>
     </div>
   </div>
 
   <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>Transistors — BJT &amp; MOSFET <span class="imp-tag med">LIKELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
@@ -422,43 +960,49 @@
         <li>Pins: Base, Collector, Emitter</li>
         <li>NPN: current flows Collector → Emitter when base is driven HIGH</li>
         <li>PNP: current flows Emitter → Collector when base is driven LOW</li>
-        <li>Current-controlled device. Used as amplifier or switch.</li>
-        <li>VBE ≈ 0.7V to turn on a silicon BJT</li>
+        <li>Current-controlled device. VBE ≈ 0.7V to turn on.</li>
       </ul>
       <h4>MOSFET</h4>
       <ul>
         <li>Pins: Gate, Drain, Source</li>
         <li>N-channel: turns ON when Gate is HIGH (voltage-controlled)</li>
         <li>P-channel: turns ON when Gate is LOW</li>
-        <li>Used in power electronics, motor drives, switching power supplies</li>
         <li>Very high input impedance — gate draws almost no current</li>
       </ul>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s1-transistor" oninput="saveTopicNote(this)"></textarea>
+      </div>
     </div>
   </div>
 
   <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>Power Supply Concepts <span class="imp-tag high">DEFINITELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
       <div class="term-grid">
-        <div class="term"><dt>LDO (Linear Dropout)</dt><dd>Simple regulator. Converts higher V to lower V. Wastes excess as heat. E.g., 5V → 3.3V.</dd></div>
-        <div class="term"><dt>Buck Converter</dt><dd>Switching regulator. Steps voltage DOWN efficiently. Used in most modern boards.</dd></div>
-        <div class="term"><dt>Boost Converter</dt><dd>Switching regulator. Steps voltage UP. E.g., 3.3V battery → 5V output.</dd></div>
-        <div class="term"><dt>Ripple</dt><dd>AC noise on a DC supply. Measured in mV. Caused by switching frequency. Filtered by caps.</dd></div>
+        <div class="term"><dt>LDO</dt><dd>Linear Dropout Regulator. Simple, wastes excess voltage as heat. E.g., 5V → 3.3V.</dd></div>
+        <div class="term"><dt>Buck Converter</dt><dd>Switching. Steps voltage DOWN efficiently. Used in modern boards.</dd></div>
+        <div class="term"><dt>Boost Converter</dt><dd>Switching. Steps voltage UP. E.g., 3.3V → 5V.</dd></div>
+        <div class="term"><dt>Ripple</dt><dd>AC noise on DC supply. Measured in mV. Filtered by caps.</dd></div>
       </div>
       <h4>Common failure symptoms from power issues</h4>
       <ul>
         <li>Board not powering on → check input voltage, fuse, LDO output</li>
-        <li>IC getting hot → overcurrent, wrong voltage, reversed polarity, shorted output</li>
-        <li>Erratic resets → power rail dropping under load (check with scope, not just DMM)</li>
-        <li>Voltage correct but device not working → check ground continuity</li>
+        <li>IC getting hot → overcurrent, wrong voltage, reversed polarity</li>
+        <li>Erratic resets → power rail dropping under load (check with scope)</li>
+        <li>Voltage correct but device dead → check ground continuity</li>
       </ul>
-      <div class="warn">Key tip: Always measure voltage at the IC pin, not just at the connector. Voltage drop across traces can matter.</div>
+      <div class="warn">Key tip: Always measure voltage at the IC pin, not just at the connector.</div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s1-power" oninput="saveTopicNote(this)"></textarea>
+      </div>
     </div>
   </div>
-
 </div>
 
 <!-- SECTION 2 -->
@@ -466,84 +1010,91 @@
   <div class="section-header">
     <span class="section-num">02</span>
     <span class="section-title">Lab Instruments</span>
+    <button class="section-done-btn" onclick="markSection(this,'s2')">Mark done</button>
   </div>
 
   <div class="topic open">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>Digital Multimeter (DMM) <span class="imp-tag high">DEFINITELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
-      <h4>Modes and what they measure</h4>
       <div class="term-grid">
-        <div class="term"><dt>DC Voltage (V—)</dt><dd>Measure battery voltage, rail voltages, logic levels. Probes: red to positive, black to GND.</dd></div>
-        <div class="term"><dt>AC Voltage (V~)</dt><dd>Measure mains supply, AC signals. Do NOT use on DC circuits expecting AC.</dd></div>
-        <div class="term"><dt>Resistance (Ω)</dt><dd>Power OFF the circuit. Measure component value or trace resistance.</dd></div>
-        <div class="term"><dt>Continuity (beep)</dt><dd>Beeps if resistance &lt; ~30Ω. Used for checking traces, solder joints, shorts.</dd></div>
-        <div class="term"><dt>Diode test</dt><dd>Shows forward voltage drop. Silicon ~0.6–0.7V. Open circuit in reverse = good diode.</dd></div>
+        <div class="term"><dt>DC Voltage (V—)</dt><dd>Measure battery, rail voltages, logic levels. Red to positive, black to GND.</dd></div>
+        <div class="term"><dt>AC Voltage (V~)</dt><dd>Measure mains supply. Do NOT use on DC circuits.</dd></div>
+        <div class="term"><dt>Resistance (Ω)</dt><dd>Power OFF the circuit first. Measure component value or trace resistance.</dd></div>
+        <div class="term"><dt>Continuity (beep)</dt><dd>Beeps if resistance &lt;~30Ω. Check traces, solder joints, shorts.</dd></div>
+        <div class="term"><dt>Diode test</dt><dd>Shows forward voltage drop. Silicon ~0.6–0.7V. Open in reverse = good diode.</dd></div>
         <div class="term"><dt>DC Current (A)</dt><dd>Break circuit, insert meter IN SERIES. Use correct current port on DMM.</dd></div>
       </div>
       <h4>How to answer: "Walk me through checking a dead board with a DMM"</h4>
       <div class="answer-box">
         <div class="label">Your answer</div>
-        First I check input voltage at the power connector — confirm the right voltage is arriving. Then I measure the output of the power regulator (LDO or buck converter) to see if the rail is up. Then I check continuity on the ground plane. Then I measure voltage at the VCC pin of the main IC. If all rails are correct but the device is dead, I move to checking communication lines or looking for heat signatures manually.
+        Check input voltage at power connector → measure LDO/buck output → check ground continuity → measure VCC at the main IC pin → if rails correct but device dead, check communication lines or thermal issues.
+      </div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s2-dmm" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
 
   <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>Oscilloscope <span class="imp-tag high">DEFINITELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
-      <h4>Key parameters</h4>
       <ul>
         <li><b>Timebase (X axis)</b> — time per division. Adjust to see your signal period clearly.</li>
-        <li><b>Voltage scale (Y axis)</b> — volts per division. Adjust so signal fills ~60% of screen.</li>
-        <li><b>Trigger</b> — stabilises the waveform on screen. Set trigger level to ~50% of signal amplitude.</li>
-        <li><b>Probe compensation</b> — square wave test before use. Adjust probe trim cap until square is clean.</li>
-        <li><b>Ground clip</b> — always connect probe ground to circuit ground.</li>
+        <li><b>Voltage scale (Y axis)</b> — volts per division. Fill ~60% of screen.</li>
+        <li><b>Trigger</b> — stabilises waveform. Set to ~50% of signal amplitude.</li>
+        <li><b>Probe ground clip</b> — always connect to circuit ground first.</li>
       </ul>
-      <h4>What you use a scope for in FA work</h4>
-      <ul>
-        <li>Checking power rail noise/ripple (DMM shows average, scope shows transients)</li>
-        <li>Verifying clock signals — frequency, duty cycle, clean edges</li>
-        <li>Checking SPI/I2C/UART communication waveforms</li>
-        <li>Measuring PWM duty cycle</li>
-        <li>Catching glitches and spikes that cause erratic behaviour</li>
-      </ul>
+      <h4>Scope vs DMM — when to use which</h4>
       <div class="warn">Scope shows what DMM cannot: transient dips, noise spikes, signal integrity issues. If DMM shows correct voltage but device behaves erratically — grab the scope.</div>
+      <ul>
+        <li>Use DMM for: steady voltage levels, continuity, resistance, slow measurements</li>
+        <li>Use scope for: power rail noise/ripple, clock signals, SPI/I2C/UART waveforms, PWM, glitches</li>
+      </ul>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s2-scope" oninput="saveTopicNote(this)"></textarea>
+      </div>
     </div>
   </div>
 
   <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>Power Analyser &amp; Spectrum Analyser <span class="imp-tag med">LIKELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
       <h4>Power Analyser</h4>
       <ul>
-        <li>Measures voltage, current, power simultaneously with high accuracy</li>
-        <li>Can show power factor, efficiency, harmonics</li>
+        <li>Measures voltage, current, power simultaneously with high accuracy over time</li>
+        <li>Shows power factor, efficiency, harmonics — unlike DMM which is point-in-time</li>
         <li>Used for testing power supplies, motor drives, chargers</li>
-        <li>Different from DMM — DMM measures point-in-time; power analyser logs over time</li>
       </ul>
       <h4>Spectrum Analyser</h4>
       <ul>
-        <li>Shows frequency content of a signal (X = frequency, Y = amplitude)</li>
-        <li>Used to check RF emissions, noise floor, clock harmonics</li>
-        <li>Important in consumer electronics for EMI/EMC compliance testing</li>
-        <li>At Foxconn: checking for spurious emissions from phone or device PCBAs</li>
+        <li>Shows frequency content (X = frequency, Y = amplitude) — the "frequency domain"</li>
+        <li>Used for EMI/EMC compliance, RF performance validation, clock harmonics</li>
+        <li>At Foxconn: checking spurious emissions from phone/device PCBAs</li>
       </ul>
       <div class="answer-box">
-        <div class="label">If asked "have you used a spectrum analyser?"</div>
-        I haven't used one directly, but I understand it shows the frequency domain representation of a signal. In NPI/FA context, it's used to identify EMI issues and validate RF performance of products. I'm familiar with the concept and ready to learn hands-on.
+        <div class="label">Honest answer if you haven't used spectrum analyser</div>
+        I haven't used one directly, but I understand it shows the frequency domain representation of a signal. In NPI/FA context it's used to identify EMI issues and validate RF performance. I'm ready to learn hands-on.
+      </div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s2-analyser" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
-
 </div>
 
 <!-- SECTION 3 -->
@@ -551,59 +1102,68 @@
   <div class="section-header">
     <span class="section-num">03</span>
     <span class="section-title">Hardware Debugging</span>
+    <button class="section-done-btn" onclick="markSection(this,'s3')">Mark done</button>
   </div>
 
   <div class="topic open">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>Debugging Methodology <span class="imp-tag high">DEFINITELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
       <h4>The systematic approach — say this in your interview</h4>
       <ol>
-        <li><b>Define the symptom clearly</b> — what exactly is failing? Is it reproducible?</li>
+        <li><b>Define the symptom clearly</b> — what exactly is failing? Reproducible?</li>
         <li><b>Check power first</b> — always. All rails correct? Ground connected?</li>
-        <li><b>Visual inspection</b> — burnt components, cold solder joints, missing parts, polarity errors</li>
-        <li><b>Isolate the fault domain</b> — power section? Communication? Firmware? Mechanical?</li>
-        <li><b>Divide and conquer</b> — split the circuit in half, test each half. Narrow it down.</li>
-        <li><b>Measure, don't assume</b> — probe it. Don't guess.</li>
-        <li><b>Document findings</b> — every measurement, every test, every result.</li>
-        <li><b>Root cause, not just symptom fix</b> — if cap was reversed, why? Design issue? Assembly error?</li>
+        <li><b>Visual inspection</b> — burnt components, cold solder joints, polarity errors</li>
+        <li><b>Isolate the fault domain</b> — power? comms? firmware? mechanical?</li>
+        <li><b>Divide and conquer</b> — split the circuit, test each half, narrow down</li>
+        <li><b>Measure, don't assume</b> — probe it. Every time.</li>
+        <li><b>Document findings</b> — every measurement, every test result</li>
+        <li><b>Root cause, not symptom fix</b> — WHY did it fail?</li>
       </ol>
-
-      <h4>Common failure modes to know</h4>
+      <h4>Common failure modes</h4>
       <div class="term-grid">
-        <div class="term"><dt>Cold solder joint</dt><dd>Dull, grainy appearance. High resistance. Intermittent contact. Common SMD failure.</dd></div>
-        <div class="term"><dt>Solder bridge</dt><dd>Solder connecting two pins that should be separate. Causes shorts. Visible under microscope.</dd></div>
-        <div class="term"><dt>Open trace</dt><dd>Broken PCB trace. Continuity test shows open. Caused by mechanical stress, corrosion.</dd></div>
-        <div class="term"><dt>ESD damage</dt><dd>Electrostatic discharge kills ICs silently. Device may work then fail. Requires IC replacement.</dd></div>
-        <div class="term"><dt>Reversed polarity</dt><dd>Capacitor or diode placed backwards. Causes overheating, bulging, circuit failure.</dd></div>
-        <div class="term"><dt>Wrong component</dt><dd>Similar package, wrong value or part number. Visual and electrical test both needed.</dd></div>
+        <div class="term"><dt>Cold solder joint</dt><dd>Dull, grainy. High resistance. Intermittent contact.</dd></div>
+        <div class="term"><dt>Solder bridge</dt><dd>Connects two pins that should be separate. Short circuit.</dd></div>
+        <div class="term"><dt>Open trace</dt><dd>Broken PCB track. Continuity test shows open.</dd></div>
+        <div class="term"><dt>ESD damage</dt><dd>Electrostatic discharge kills ICs silently. Requires replacement.</dd></div>
+        <div class="term"><dt>Reversed polarity</dt><dd>Cap or diode backwards. Overheating, bulging, failure.</dd></div>
+        <div class="term"><dt>Wrong component</dt><dd>Similar package, wrong value. Visual + electrical test needed.</dd></div>
+      </div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s3-debug" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
 
   <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>Communication Protocols in Debugging <span class="imp-tag med">LIKELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
       <div class="term-grid">
-        <div class="term"><dt>UART</dt><dd>2 wires: TX, RX. No clock. Async. Speed set by baud rate. Most common for debug output.</dd></div>
-        <div class="term"><dt>I2C</dt><dd>2 wires: SDA, SCL. Addressed. Multiple devices on one bus. Pull-up resistors required.</dd></div>
-        <div class="term"><dt>SPI</dt><dd>4 wires: MOSI, MISO, SCK, CS. Fast. Full duplex. One master, multiple slaves via CS.</dd></div>
-        <div class="term"><dt>GPIO</dt><dd>General Purpose I/O. Digital high/low. Can be input or output. Used for control signals.</dd></div>
+        <div class="term"><dt>UART</dt><dd>2 wires: TX, RX. No clock. Async. Speed set by baud rate. Main debug output.</dd></div>
+        <div class="term"><dt>I2C</dt><dd>2 wires: SDA, SCL. Addressed. Multiple devices one bus. Pull-ups required.</dd></div>
+        <div class="term"><dt>SPI</dt><dd>4 wires: MOSI, MISO, SCK, CS. Fast. Full duplex. CS per slave.</dd></div>
+        <div class="term"><dt>GPIO</dt><dd>Digital high/low. Can be input or output. Used for control signals.</dd></div>
       </div>
-      <h4>Debugging comms with a scope</h4>
+      <h4>Debugging comms with a scope or logic analyser</h4>
       <ul>
-        <li>UART: Check baud rate matches. Look for clean transitions. Voltage levels correct (3.3V or 5V logic)?</li>
-        <li>I2C: Check pull-up resistors present. SCL clock running? ACK bit visible?</li>
+        <li>UART: Check baud rate matches. Voltage levels correct (3.3V or 5V)?</li>
+        <li>I2C: Pull-up resistors present? SCL clock running? ACK bit visible?</li>
         <li>SPI: CS going LOW before data? Clock edge correct (CPOL/CPHA)?</li>
       </ul>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s3-comms" oninput="saveTopicNote(this)"></textarea>
+      </div>
     </div>
   </div>
-
 </div>
 
 <!-- SECTION 4 -->
@@ -611,46 +1171,54 @@
   <div class="section-header">
     <span class="section-num">04</span>
     <span class="section-title">Failure Analysis Techniques</span>
+    <button class="section-done-btn" onclick="markSection(this,'s4')">Mark done</button>
   </div>
 
   <div class="topic open">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>FA Flow — NPI Context <span class="imp-tag high">DEFINITELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
-      <p>In NPI FA at Foxconn, your job is to find <b>why</b> a unit failed — not just that it failed. This drives corrective action so the problem doesn't repeat in production.</p>
-      <h4>Standard FA flow</h4>
       <ol>
-        <li><b>Visual inspection</b> — naked eye, magnifier, microscope. Look for obvious damage.</li>
-        <li><b>Electrical characterisation</b> — DMM and scope measurements. Reproduce the failure.</li>
-        <li><b>Fault isolation</b> — narrow down to component, joint, or area.</li>
-        <li><b>Physical analysis</b> — cross-section, SEM/EDS, X-ray as needed.</li>
+        <li><b>Visual inspection</b> — naked eye, magnifier, microscope</li>
+        <li><b>Electrical characterisation</b> — DMM and scope. Reproduce the failure.</li>
+        <li><b>Fault isolation</b> — narrow down to component, joint, or area</li>
+        <li><b>Physical analysis</b> — cross-section, SEM/EDS, X-ray as needed</li>
         <li><b>Root cause identification</b> — design? material? process? assembly?</li>
-        <li><b>Corrective action</b> — 8D report, FMEA update, design change.</li>
+        <li><b>Corrective action</b> — 8D report, FMEA update, design change</li>
       </ol>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s4-flow" oninput="saveTopicNote(this)"></textarea>
+      </div>
     </div>
   </div>
 
   <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>SEM / EDS / X-ray / Cross-section <span class="imp-tag med">LIKELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
       <div class="term-grid">
-        <div class="term"><dt>SEM (Scanning Electron Microscope)</dt><dd>Very high magnification imaging. Shows surface morphology, crack details, fracture surfaces. Much more detail than optical microscope.</dd></div>
-        <div class="term"><dt>EDS (Energy Dispersive Spectroscopy)</dt><dd>Used WITH SEM. Identifies chemical elements at a point or area. "What material is this?" Confirms contamination, wrong alloy, corrosion products.</dd></div>
-        <div class="term"><dt>X-ray inspection</dt><dd>Non-destructive. Views solder joints under BGA/QFN without removing component. Detects voids, bridges, missing balls. Standard in PCBA FA.</dd></div>
-        <div class="term"><dt>Cross-sectional analysis</dt><dd>Cut and polish the sample. View solder joint internal structure under microscope. Confirms voiding, intermetallic layer thickness, crack propagation.</dd></div>
+        <div class="term"><dt>SEM</dt><dd>Scanning Electron Microscope. Very high magnification. Shows surface morphology, cracks, fractures.</dd></div>
+        <div class="term"><dt>EDS</dt><dd>Used WITH SEM. Identifies chemical elements. Confirms contamination, wrong alloy, corrosion.</dd></div>
+        <div class="term"><dt>X-ray</dt><dd>Non-destructive. Views solder under BGA/QFN. Detects voids, bridges, missing balls.</dd></div>
+        <div class="term"><dt>Cross-section</dt><dd>Cut and polish sample. View solder joint internal structure. Confirms cracks, voids.</dd></div>
       </div>
       <div class="answer-box">
-        <div class="label">If asked "have you used SEM/EDS?"</div>
-        I haven't operated SEM/EDS directly. However, I understand their role in FA — SEM gives high-magnification surface imaging while EDS identifies elemental composition, which together help confirm contamination, wrong materials, or corrosion as root causes. I'm ready to work with lab partners or learn in-house equipment.
+        <div class="label">Honest answer if asked about SEM/EDS</div>
+        I haven't operated SEM/EDS directly. I understand SEM gives high-magnification surface imaging while EDS identifies elemental composition — together they confirm contamination or wrong materials as root cause. I'm ready to work with lab partners or learn in-house.
+      </div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s4-sem" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
-
 </div>
 
 <!-- SECTION 5 -->
@@ -658,97 +1226,109 @@
   <div class="section-header">
     <span class="section-num">05</span>
     <span class="section-title">DOE, 8D &amp; FMEA</span>
+    <button class="section-done-btn" onclick="markSection(this,'s5')">Mark done</button>
   </div>
 
   <div class="topic open">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>8D Problem Solving <span class="imp-tag high">DEFINITELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
-      <p>8D = 8 Disciplines. Standard corrective action framework used in manufacturing. Foxconn uses this heavily.</p>
       <ol>
-        <li><b>D1 — Team</b>: Form a cross-functional team</li>
-        <li><b>D2 — Problem description</b>: Define the problem with data (5W2H: Who, What, Where, When, Why, How, How many)</li>
-        <li><b>D3 — Containment action</b>: Stop the bleeding immediately. Quarantine affected units.</li>
-        <li><b>D4 — Root cause</b>: Use 5-Why, Fishbone (Ishikawa) diagram. Find the TRUE root cause.</li>
-        <li><b>D5 — Corrective action</b>: Choose and verify the fix.</li>
-        <li><b>D6 — Implement</b>: Roll out corrective action permanently.</li>
-        <li><b>D7 — Prevent recurrence</b>: Update FMEA, work instructions, control plans.</li>
-        <li><b>D8 — Congratulate team</b>: Close the report, recognise contributions.</li>
+        <li><b>D1 — Team:</b> Form a cross-functional team</li>
+        <li><b>D2 — Problem description:</b> Define with data (5W2H)</li>
+        <li><b>D3 — Containment action:</b> Stop the bleeding. Quarantine affected units.</li>
+        <li><b>D4 — Root cause:</b> Use 5-Why, Fishbone/Ishikawa diagram</li>
+        <li><b>D5 — Corrective action:</b> Choose and verify the fix</li>
+        <li><b>D6 — Implement:</b> Roll out corrective action permanently</li>
+        <li><b>D7 — Prevent recurrence:</b> Update FMEA, work instructions, control plans</li>
+        <li><b>D8 — Congratulate team:</b> Close the report</li>
       </ol>
-      <div class="warn">Most important to remember: D3 (containment) and D4 (root cause). They will ask "what's the difference between containment and corrective action?"</div>
+      <div class="warn">Most important: D3 (containment) and D4 (root cause). They WILL ask the difference.</div>
       <div class="q-box">
         <div class="q">What's the difference between containment and corrective action?</div>
         <div class="a">Containment is an immediate temporary fix to prevent further damage — like quarantining suspect units. Corrective action is the permanent fix that addresses the root cause so the failure never happens again.</div>
       </div>
-    </div>
-  </div>
-
-  <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
-      <h3>FMEA (Failure Mode &amp; Effects Analysis) <span class="imp-tag high">DEFINITELY ASKED</span></h3>
-      <span class="arrow">▶</span>
-    </div>
-    <div class="topic-body">
-      <p>FMEA is a proactive risk analysis tool. Done BEFORE failures happen, to predict and prevent them.</p>
-      <h4>Key columns in an FMEA table</h4>
-      <ul>
-        <li><b>Failure Mode</b> — What could go wrong? (e.g., capacitor open circuit)</li>
-        <li><b>Effect</b> — What happens if it does? (e.g., power supply fails, device dead)</li>
-        <li><b>Severity (S)</b> — How bad is the effect? Rated 1–10.</li>
-        <li><b>Occurrence (O)</b> — How often might it happen? Rated 1–10.</li>
-        <li><b>Detection (D)</b> — How likely is it to be caught before reaching customer? Rated 1–10.</li>
-        <li><b>RPN (Risk Priority Number)</b> — S × O × D. Higher = more critical. Prioritise highest RPNs.</li>
-      </ul>
-      <div class="formula">RPN = Severity × Occurrence × Detection</div>
-      <p>Goal: reduce RPN by improving detection, reducing occurrence, or reducing severity.</p>
-    </div>
-  </div>
-
-  <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
-      <h3>DOE (Design of Experiments) <span class="imp-tag med">LIKELY ASKED</span></h3>
-      <span class="arrow">▶</span>
-    </div>
-    <div class="topic-body">
-      <p>DOE is a structured method to find which factors affect an output, and by how much.</p>
-      <h4>Simple example to explain in interview</h4>
-      <p>If solder joint strength varies, DOE would systematically test combinations of: reflow temperature, solder paste volume, and pad size — to find which factor matters most and what the optimal setting is.</p>
-      <h4>Key concepts</h4>
-      <ul>
-        <li><b>Factor</b> — An input variable you control (temperature, speed, pressure)</li>
-        <li><b>Level</b> — The values a factor takes (low/high, or specific values)</li>
-        <li><b>Response</b> — The output you're measuring (yield, strength, resistance)</li>
-        <li><b>Full factorial</b> — Test every combination. Accurate but slow if many factors.</li>
-        <li><b>Taguchi method</b> — Orthogonal arrays. Fewer experiments, still finds main effects.</li>
-      </ul>
-      <div class="answer-box">
-        <div class="label">Simple interview answer</div>
-        DOE helps us systematically vary process parameters to understand which ones truly affect the output. Instead of changing one thing at a time (which is slow and misses interactions), DOE tests combinations in a structured way and uses statistical analysis to find the key drivers.
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s5-8d" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
 
   <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
+      <h3>FMEA — Failure Mode &amp; Effects Analysis <span class="imp-tag high">DEFINITELY ASKED</span></h3>
+      <span class="arrow">▶</span>
+    </div>
+    <div class="topic-body">
+      <ul>
+        <li><b>Failure Mode</b> — What could go wrong?</li>
+        <li><b>Effect</b> — What happens if it does?</li>
+        <li><b>Severity (S)</b> — How bad is the effect? 1–10.</li>
+        <li><b>Occurrence (O)</b> — How often might it happen? 1–10.</li>
+        <li><b>Detection (D)</b> — Likely to be caught before customer? 1–10.</li>
+        <li><b>RPN</b> — Risk Priority Number. Higher = more critical.</li>
+      </ul>
+      <div class="formula">RPN = Severity × Occurrence × Detection (max = 1000)</div>
+      <p>Goal: reduce RPN. Focus on highest RPNs first.</p>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s5-fmea" oninput="saveTopicNote(this)"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
+      <h3>DOE — Design of Experiments <span class="imp-tag med">LIKELY ASKED</span></h3>
+      <span class="arrow">▶</span>
+    </div>
+    <div class="topic-body">
+      <ul>
+        <li><b>Factor</b> — An input variable you control (temperature, speed, pressure)</li>
+        <li><b>Level</b> — The values a factor takes (low/high)</li>
+        <li><b>Response</b> — The output you measure (yield, strength)</li>
+        <li><b>Full factorial</b> — Test every combination. Accurate but slow.</li>
+        <li><b>Taguchi method</b> — Orthogonal arrays. Fewer experiments, finds main effects.</li>
+      </ul>
+      <div class="answer-box">
+        <div class="label">Simple interview answer</div>
+        DOE helps us systematically vary process parameters to understand which ones truly affect the output — instead of changing one thing at a time (slow and misses interactions), DOE tests structured combinations and uses statistics to find key drivers.
+      </div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s5-doe" oninput="saveTopicNote(this)"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>5-Why Analysis <span class="imp-tag med">LIKELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
-      <p>Ask "Why?" repeatedly until you reach the root cause. Usually takes 5 iterations.</p>
       <h4>Example — board not powering on</h4>
       <ul>
-        <li><b>Why</b> is the board dead? → LDO output is 0V</li>
-        <li><b>Why</b> is LDO output 0V? → Input capacitor is shorted</li>
-        <li><b>Why</b> is capacitor shorted? → It was placed with reversed polarity</li>
-        <li><b>Why</b> was it reversed? → Component orientation marking unclear in assembly drawing</li>
-        <li><b>Why</b> was the drawing unclear? → No polarity indicator in silkscreen</li>
-        <li><b>Root cause</b>: PCB silkscreen lacked polarity marking → fix the design and update assembly instructions</li>
+        <li><b>Why</b> dead? → LDO output is 0V</li>
+        <li><b>Why</b> 0V? → Input capacitor shorted</li>
+        <li><b>Why</b> shorted? → Reversed polarity placement</li>
+        <li><b>Why</b> reversed? → Component orientation unclear in assembly drawing</li>
+        <li><b>Why</b> unclear? → No polarity indicator in PCB silkscreen</li>
+        <li><b>Root cause:</b> Missing silkscreen polarity mark → fix design + update assembly instructions</li>
       </ul>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s5-5why" oninput="saveTopicNote(this)"></textarea>
+      </div>
     </div>
   </div>
-
 </div>
 
 <!-- SECTION 6 -->
@@ -756,72 +1336,68 @@
   <div class="section-header">
     <span class="section-num">06</span>
     <span class="section-title">Sensors — ALS &amp; Proximity</span>
+    <button class="section-done-btn" onclick="markSection(this,'s6')">Mark done</button>
   </div>
 
   <div class="topic open">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>Ambient Light Sensor (ALS) <span class="imp-tag med">LIKELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
-      <p>ALS measures the intensity of ambient light in lux. Used in smartphones to auto-adjust screen brightness.</p>
-      <h4>How it works</h4>
+      <p>Measures ambient light intensity in lux. Used in smartphones to auto-adjust screen brightness.</p>
       <ul>
-        <li>Contains a photodiode that generates current proportional to light intensity</li>
-        <li>ADC converts the current/voltage to a digital value</li>
-        <li>Output in lux. Interface: usually I2C</li>
-        <li>Spectral response tuned to match human eye (peaks around 550nm green)</li>
+        <li>Photodiode generates current proportional to light → ADC converts to digital value</li>
+        <li>Spectral response tuned to match human eye (~550nm)</li>
+        <li>Interface: usually I2C</li>
       </ul>
-      <h4>Common ICs</h4>
       <div class="cheatrow">
-        <span class="chip">BH1750</span>
-        <span class="chip">APDS-9930</span>
-        <span class="chip">OPT3001</span>
-        <span class="chip">TSL2561</span>
-        <span class="chip">VEML7700</span>
+        <span class="chip">BH1750</span><span class="chip">APDS-9930</span><span class="chip">OPT3001</span><span class="chip">TSL2561</span><span class="chip">VEML7700</span>
       </div>
-      <h4>FA issues with ALS</h4>
+      <h4>Common FA issues with ALS</h4>
       <ul>
-        <li>Covered by protective film during testing → reads 0 lux incorrectly</li>
+        <li>Protective film covering sensor during test → reads 0 lux incorrectly</li>
         <li>Wrong I2C address configuration</li>
-        <li>Integration time not set correctly → saturated or too-slow readings</li>
-        <li>Physical damage to lens/window above sensor</li>
+        <li>Integration time not set correctly → saturated or slow readings</li>
       </ul>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s6-als" oninput="saveTopicNote(this)"></textarea>
+      </div>
     </div>
   </div>
 
   <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>Proximity Sensor <span class="imp-tag med">LIKELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
-      <p>Detects if an object is near without physical contact. In smartphones: turns off screen when held to ear.</p>
-      <h4>How it works</h4>
+      <p>Detects object proximity without contact. In phones: turns off screen when held to ear.</p>
       <ul>
-        <li>IR LED emits infrared light pulses</li>
-        <li>Photodetector measures reflected IR from nearby object</li>
+        <li>IR LED emits pulses → photodetector measures reflected IR</li>
         <li>More reflection = object closer</li>
         <li>Often combined with ALS in same IC package</li>
-        <li>Interface: I2C, with interrupt output for threshold crossing</li>
+        <li>Interface: I2C with interrupt output for threshold crossing</li>
       </ul>
-      <h4>Common ICs</h4>
       <div class="cheatrow">
-        <span class="chip">APDS-9930</span>
-        <span class="chip">VCNL4010</span>
-        <span class="chip">RPR-0521RS</span>
-        <span class="chip">LTR-559</span>
+        <span class="chip">APDS-9930</span><span class="chip">VCNL4010</span><span class="chip">RPR-0521RS</span><span class="chip">LTR-559</span>
       </div>
-      <h4>FA issues with proximity sensor</h4>
+      <h4>Common FA issues</h4>
       <ul>
-        <li>IR LED not driving (open circuit or wrong current limiting resistor)</li>
+        <li>IR LED not driving — open circuit or wrong current resistor</li>
         <li>Crosstalk — IR reflecting off device housing, not actual object</li>
         <li>Threshold registers set incorrectly → triggers too early or not at all</li>
-        <li>Black protective tape over sensor window (assembly error)</li>
+        <li>Black tape over sensor window from assembly error</li>
       </ul>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s6-prox" oninput="saveTopicNote(this)"></textarea>
+      </div>
     </div>
   </div>
-
 </div>
 
 <!-- SECTION 7 -->
@@ -829,53 +1405,61 @@
   <div class="section-header">
     <span class="section-num">07</span>
     <span class="section-title">Analog &amp; Digital Circuits</span>
+    <button class="section-done-btn" onclick="markSection(this,'s7')">Mark done</button>
   </div>
 
   <div class="topic open">
-    <div class="topic-head" onclick="toggle(this)">
-      <h3>Analog vs Digital <span class="imp-tag high">DEFINITELY ASKED</span></h3>
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
+      <h3>Analog vs Digital &amp; ADC/DAC <span class="imp-tag high">DEFINITELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
       <div class="term-grid">
-        <div class="term"><dt>Analog signal</dt><dd>Continuous range of values. E.g., microphone output, temperature sensor voltage, audio signal.</dd></div>
-        <div class="term"><dt>Digital signal</dt><dd>Only two states: HIGH (1) or LOW (0). E.g., UART TX line, GPIO output, SPI clock.</dd></div>
-        <div class="term"><dt>ADC</dt><dd>Analog to Digital Converter. Converts real-world signals to numbers. Resolution in bits (12-bit ADC = 4096 levels).</dd></div>
-        <div class="term"><dt>DAC</dt><dd>Digital to Analog Converter. Converts numbers to analog voltage. Used in audio output, signal generation.</dd></div>
+        <div class="term"><dt>Analog signal</dt><dd>Continuous range. E.g., microphone, temperature sensor voltage, audio.</dd></div>
+        <div class="term"><dt>Digital signal</dt><dd>Only HIGH or LOW. E.g., UART TX, GPIO, SPI clock.</dd></div>
+        <div class="term"><dt>ADC</dt><dd>Analog → Digital. Resolution in bits. 12-bit = 4096 levels over Vref.</dd></div>
+        <div class="term"><dt>DAC</dt><dd>Digital → Analog. Numbers to voltage. Used in audio output.</dd></div>
       </div>
-      <h4>Logic families and voltage levels</h4>
+      <div class="formula">ADC resolution = Vref / 2^n &nbsp;|&nbsp; 12-bit, 3.3V: 3.3/4096 ≈ 0.8mV per step</div>
+      <h4>Logic voltage levels</h4>
       <ul>
-        <li><b>5V TTL logic</b>: HIGH &gt; 2V, LOW &lt; 0.8V</li>
-        <li><b>3.3V CMOS logic</b>: HIGH &gt; 2V, LOW &lt; 0.8V (approximately)</li>
-        <li><b>Level shifting</b>: Needed when 5V device talks to 3.3V device. Direct connection can damage 3.3V IC.</li>
+        <li><b>5V TTL:</b> HIGH &gt; 2V, LOW &lt; 0.8V</li>
+        <li><b>3.3V CMOS:</b> HIGH &gt; 2V, LOW &lt; 0.8V</li>
+        <li><b>Level shifting needed</b> when 5V device connects to 3.3V device — direct connection can damage the 3.3V GPIO</li>
       </ul>
-      <h4>Op-Amp basics</h4>
-      <ul>
-        <li>Amplifies the difference between two inputs (inverting and non-inverting)</li>
-        <li>Used as: voltage amplifier, comparator, filter, buffer</li>
-        <li>Comparator mode: output goes HIGH or LOW depending on which input is larger</li>
-        <li>Virtual ground rule: in feedback configuration, both inputs are at same voltage</li>
-      </ul>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s7-analog" oninput="saveTopicNote(this)"></textarea>
+      </div>
     </div>
   </div>
 
   <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
-      <h3>Digital Logic Gates <span class="imp-tag low">GOOD TO KNOW</span></h3>
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
+      <h3>Logic Gates &amp; Op-Amp Basics <span class="imp-tag low">GOOD TO KNOW</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
       <div class="term-grid">
-        <div class="term"><dt>AND</dt><dd>Output HIGH only if ALL inputs HIGH. Both A AND B must be 1.</dd></div>
-        <div class="term"><dt>OR</dt><dd>Output HIGH if ANY input HIGH. A OR B is 1.</dd></div>
-        <div class="term"><dt>NOT (Inverter)</dt><dd>Output is opposite of input. 0→1, 1→0.</dd></div>
-        <div class="term"><dt>NAND</dt><dd>AND + NOT. Output LOW only if all inputs HIGH. Universal gate.</dd></div>
-        <div class="term"><dt>XOR</dt><dd>Output HIGH if inputs are DIFFERENT. Used in error detection, addition circuits.</dd></div>
-        <div class="term"><dt>Flip-flop (D-FF)</dt><dd>Stores one bit. Output changes on clock edge. Foundation of registers and memory.</dd></div>
+        <div class="term"><dt>AND</dt><dd>Output HIGH only if ALL inputs HIGH.</dd></div>
+        <div class="term"><dt>OR</dt><dd>Output HIGH if ANY input HIGH.</dd></div>
+        <div class="term"><dt>NAND</dt><dd>AND + NOT. Universal gate.</dd></div>
+        <div class="term"><dt>XOR</dt><dd>HIGH if inputs DIFFERENT. Used in error detection.</dd></div>
+      </div>
+      <h4>Op-Amp</h4>
+      <ul>
+        <li>Amplifies difference between inverting and non-inverting inputs</li>
+        <li>Used as: amplifier, comparator, filter, buffer</li>
+        <li>Comparator mode: output goes HIGH or LOW based on which input is larger</li>
+      </ul>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s7-gates" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
-
 </div>
 
 <!-- SECTION 8 -->
@@ -883,35 +1467,34 @@
   <div class="section-header">
     <span class="section-num">08</span>
     <span class="section-title">Python for Hardware</span>
+    <button class="section-done-btn" onclick="markSection(this,'s8')">Mark done</button>
   </div>
 
   <div class="topic open">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>Python in an FA/NPI Role <span class="imp-tag med">LIKELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
-      <p>At Foxconn, Python is used for test automation, data analysis, report generation, and communicating with instruments.</p>
-      <h4>What they actually want you to know</h4>
       <ul>
-        <li>Reading serial port data (test equipment output)</li>
-        <li>Parsing CSV/Excel data from test results</li>
-        <li>Basic data analysis: averages, pass/fail counts, yield calculation</li>
+        <li>Reading serial port data from test equipment</li>
+        <li>Parsing CSV/Excel test results, calculating yield</li>
+        <li>Basic data analysis: averages, pass/fail counts</li>
         <li>Automating repetitive tasks: renaming files, generating reports</li>
-        <li>Communicating with instruments via VISA/GPIB (nice to have, not essential)</li>
       </ul>
-      <h4>Key Python snippets to be familiar with</h4>
       <div class="formula">import serial<br>ser = serial.Serial('COM3', 9600)<br>data = ser.readline().decode('utf-8')</div>
-      <div class="formula">import csv<br>with open('results.csv') as f:<br>&nbsp;&nbsp;&nbsp;&nbsp;reader = csv.reader(f)<br>&nbsp;&nbsp;&nbsp;&nbsp;for row in reader: print(row)</div>
-      <div class="formula">import pandas as pd<br>df = pd.read_csv('test_data.csv')<br>pass_count = df[df['result'] == 'PASS'].count()</div>
-      <h4>Your honest answer if they ask about Python</h4>
+      <div class="formula">import pandas as pd<br>df = pd.read_csv('results.csv')<br>yield_pct = len(df[df['result']=='PASS']) / len(df) * 100</div>
       <div class="answer-box">
-        <div class="label">Your answer</div>
-        I've used Python for serial communication with sensors and microcontrollers, including reading data over UART from custom boards. I'm comfortable with basic data handling using pandas and CSV. I haven't used it for VISA instrument control yet, but I understand the concept and can learn quickly.
+        <div class="label">Your honest answer</div>
+        I've used Python for serial communication with sensors and microcontrollers, reading UART data from custom boards. I'm comfortable with CSV handling and pandas for basic data analysis. Instrument control via VISA is something I can learn quickly.
+      </div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s8-python" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
-
 </div>
 
 <!-- SECTION 9 -->
@@ -919,179 +1502,158 @@
   <div class="section-header">
     <span class="section-num">09</span>
     <span class="section-title">PCB &amp; EDA</span>
+    <button class="section-done-btn" onclick="markSection(this,'s9')">Mark done</button>
   </div>
 
   <div class="topic open">
-    <div class="topic-head" onclick="toggle(this)">
-      <h3>Reading Schematics <span class="imp-tag high">DEFINITELY ASKED</span></h3>
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
+      <h3>Reading Schematics &amp; PCB Basics <span class="imp-tag high">DEFINITELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
-      <h4>Key things to read in a schematic</h4>
       <ul>
-        <li><b>Power rails</b> — VCC, GND, 3V3, 5V. Follow the power flow first.</li>
-        <li><b>Reference designators</b> — R1 = resistor 1, C4 = capacitor 4, U2 = IC 2, Q1 = transistor</li>
-        <li><b>Net labels</b> — Same label = connected, even if no wire drawn between them</li>
-        <li><b>Decoupling caps</b> — 100nF caps near IC VCC pins. Filter power noise.</li>
-        <li><b>Pull-up/pull-down resistors</b> — On I2C lines, reset pins, enable pins</li>
-        <li><b>Test points</b> — TP1, TP2 etc. Dedicated pads for probing. Your DMM/scope targets.</li>
+        <li><b>Power rails</b> — VCC, GND, 3V3, 5V. Follow power flow first.</li>
+        <li><b>Reference designators</b> — R1=resistor, C4=capacitor, U2=IC, Q1=transistor</li>
+        <li><b>Net labels</b> — Same label = connected, even without a drawn wire</li>
+        <li><b>Decoupling caps</b> — 100nF caps near IC VCC pins</li>
+        <li><b>Test points</b> — TP1, TP2 etc. Your DMM/scope probe targets</li>
       </ul>
       <h4>PCB layers (2-layer board)</h4>
       <ul>
         <li><b>Top layer</b> — components and signal traces</li>
         <li><b>Bottom layer</b> — usually ground plane or more traces</li>
-        <li><b>Silkscreen</b> — component labels, polarity marks, test point labels</li>
-        <li><b>Solder mask</b> — the green (or other color) coating. Protects traces.</li>
+        <li><b>Silkscreen</b> — component labels, polarity marks</li>
+        <li><b>Solder mask</b> — the green coating. Protects traces.</li>
       </ul>
       <div class="answer-box">
-        <div class="label">Your strength here</div>
-        You have actually designed 2-layer PCBs. Mention this. "I've designed 2-layer PCBs in KiCad, so I'm comfortable reading schematics and understanding how layout relates to electrical performance. I understand how decoupling caps are placed, how ground planes work, and how to read net labels."
+        <div class="label">Your strength here — say this</div>
+        I've designed 2-layer PCBs in KiCad, so I'm comfortable reading schematics and understanding how layout affects performance. I understand decoupling cap placement, ground plane importance, and how net labels work.
+      </div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s9-pcb" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
-
 </div>
 
 <!-- SECTION 10 -->
 <div class="section" id="s10">
   <div class="section-header">
     <span class="section-num">10</span>
-    <span class="section-title">Soft Skills &amp; Customer Handling</span>
+    <span class="section-title">Communication &amp; Teamwork</span>
+    <button class="section-done-btn" onclick="markSection(this,'s10')">Mark done</button>
   </div>
 
   <div class="topic open">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>NPI Meeting Preparation <span class="imp-tag med">LIKELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
-      <p>NPI = New Product Introduction. You support moving a product from design to mass production. Customer meetings in NPI context = the OEM client (e.g., a phone brand) coming to review progress.</p>
-      <h4>What they expect from an NPI engineer in customer meetings</h4>
       <ul>
         <li>Prepare test data and yield reports before the meeting</li>
         <li>Know your failure data — how many failed, what modes, what corrective actions are in progress</li>
-        <li>Use clear structured communication — state the problem, the root cause found, the action taken</li>
-        <li>Never hide failures. Customers respect transparency + corrective action over silence.</li>
-        <li>Bring samples, photos, data sheets when demonstrating a failure</li>
+        <li>Never hide failures. Transparency + corrective action earns respect.</li>
+        <li>State the problem, root cause found, and action taken — clearly and concisely</li>
       </ul>
-      <h4>Team collaboration answer</h4>
-      <div class="answer-box">
-        <div class="label">If asked about teamwork</div>
-        In my previous role, I worked with both hardware and software teams on ESP32 and nRF52 custom boards. I coordinated with firmware developers when isolating whether failures were hardware or software related. I documented test results and shared them clearly with the team so everyone had the same information to work from.
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s10-npi" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
 
   <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>Common HR / Behavioural Questions <span class="imp-tag high">DEFINITELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
       <div class="q-box">
         <div class="q">Tell me about yourself.</div>
-        <div class="a">I'm an electronics engineer with experience in embedded systems, hardware debugging, and IoT platforms. In my previous role I worked with custom nRF52 and ESP32 boards, doing hardware bring-up, debugging power and communication failures, and integrating sensors. I've also built PCBs in KiCad and developed sensor libraries. I'm looking to move into an NPI/FA role where I can apply those debugging skills in a structured manufacturing environment.</div>
+        <div class="a">I'm an electronics engineer with nearly 2 years of experience in embedded systems, hardware debugging, and IoT platforms. I've worked with custom nRF52 and ESP32 boards at Optipace — doing hardware bring-up, debugging power and communication failures, and validating sensor integrations. I've also designed PCBs in KiCad, published a Modbus library, and built a live IoT platform. I'm looking to move into an NPI/FA role where I can apply these debugging skills in a structured manufacturing environment.</div>
       </div>
       <div class="q-box">
         <div class="q">Why Foxconn?</div>
-        <div class="a">Foxconn works on some of the most complex electronics manufacturing in the world. An NPI FA role here means working on real product-level problems with structured methodologies like 8D and FMEA — which is exactly the discipline I want to build. The scale and rigour of Foxconn's processes is what attracts me.</div>
+        <div class="a">Foxconn operates at world-class manufacturing scale. An NPI FA role here means structured methodologies — 8D, FMEA, real FA workflows — exactly the rigour I want to build my career on. The product complexity and the discipline of the environment is what attracts me.</div>
       </div>
       <div class="q-box">
         <div class="q">What is your biggest weakness?</div>
-        <div class="a">I sometimes spend too much time trying to fully understand a problem before escalating. I'm working on knowing when to ask for help earlier — especially in a fast-paced production environment where containment speed matters.</div>
+        <div class="a">I sometimes spend too much time trying to fully understand a problem before escalating. I'm working on knowing when to ask for help earlier — especially in production environments where containment speed matters.</div>
       </div>
       <div class="q-box">
         <div class="q">Where do you see yourself in 3 years?</div>
-        <div class="a">I want to be a strong FA/NPI engineer who can independently handle complex failure investigations and lead corrective action processes. Longer term, I'm interested in growing into a lead or senior role in quality or product engineering.</div>
+        <div class="a">A strong FA/NPI engineer who can independently handle complex failure investigations and lead corrective action processes. Longer term, growing into a lead or senior engineering role.</div>
+      </div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s10-hr" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
-
 </div>
 
 <!-- SECTION 11 -->
 <div class="section" id="s11">
   <div class="section-header">
     <span class="section-num">11</span>
-    <span class="section-title">Your Real Stories (STAR Format)</span>
+    <span class="section-title">Your STAR Stories</span>
+    <button class="section-done-btn" onclick="markSection(this,'s11')">Mark done</button>
   </div>
 
   <div class="topic open">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>Story 1 — nRF52 Board Debugging <span class="imp-tag high">YOUR STRONGEST ANSWER</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
-      <p>Use this for any question about hardware debugging, failure analysis, or problem solving. Fill in the actual details you remember when you practise.</p>
-      <div class="star-section">
-        <div class="star-label">Situation</div>
-        <div class="star-text">At my previous company, we had a custom nRF52 board that was showing [describe symptom — not powering on / drawing too much current / peripheral not responding]. This was happening consistently and affecting our development timeline.</div>
-      </div>
-      <div class="star-section">
-        <div class="star-label">Task</div>
-        <div class="star-text">I was responsible for identifying the root cause and getting the board functional so the firmware team could continue their work.</div>
-      </div>
-      <div class="star-section">
-        <div class="star-label">Action</div>
-        <div class="star-text">I started with the power rails using a multimeter — checked the input voltage, then traced it through to the LDO output and the 3.3V rail at the nRF52 VCC pin. I found [describe what you found]. Then I [describe what you did — visual inspection, replaced component, re-soldered, etc.].</div>
-      </div>
-      <div class="star-section">
-        <div class="star-label">Result</div>
-        <div class="star-text">The board came up correctly after the fix. I also documented the failure mode so the team could check for the same issue on other boards in the batch. [Add any team impact if applicable.]</div>
-      </div>
-      <div class="warn">Important: Before Monday, recall the actual details of what failed on that nRF52 board. Even rough details are fine — "I think it was a power issue" is enough to build the story.</div>
-    </div>
-  </div>
-
-  <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
-      <h3>Story 2 — PZEM Library &amp; Sensor Work <span class="imp-tag med">SECONDARY STORY</span></h3>
-      <span class="arrow">▶</span>
-    </div>
-    <div class="topic-body">
-      <div class="star-section">
-        <div class="star-label">Situation</div>
-        <div class="star-text">I needed to interface the PZEM-004T energy meter with Arduino-based boards and found that the existing libraries had limitations for the v4 version of the module.</div>
-      </div>
-      <div class="star-section">
-        <div class="star-label">Task</div>
-        <div class="star-text">I developed a dedicated Arduino library for the PZEM-004Tv4, handling the Modbus RTU communication protocol, parsing voltage, current, power, and energy readings.</div>
-      </div>
-      <div class="star-section">
-        <div class="star-label">Action</div>
-        <div class="star-text">I wrote the library, tested it across multiple board types, documented it properly, and published it to both the Arduino Library Manager and PlatformIO's registry so others could use it.</div>
-      </div>
-      <div class="star-section">
-        <div class="star-label">Result</div>
-        <div class="star-text">The library is publicly available and used by the community. It demonstrates my ability to understand hardware communication protocols, work systematically with sensor data, and deliver something production-ready.</div>
+      <div class="star-section"><div class="star-label">Situation</div><div class="star-text">At Optipace, we had a custom nRF52 board showing [your actual symptom — not powering on / drawing too much current / peripheral not responding]. This was happening consistently and affecting development.</div></div>
+      <div class="star-section"><div class="star-label">Task</div><div class="star-text">I was responsible for finding the root cause and getting the board functional for the firmware team.</div></div>
+      <div class="star-section"><div class="star-label">Action</div><div class="star-text">I started with power rails using a multimeter — checked input voltage, traced through to LDO output, measured 3.3V rail at the nRF52 VCC pin. I found [your actual finding]. Then [your actual fix].</div></div>
+      <div class="star-section"><div class="star-label">Result</div><div class="star-text">Board came up correctly. I documented the failure mode so the team could check the same issue on other boards in the batch.</div></div>
+      <div class="warn">Before Monday: recall the actual details of what failed. Even rough memory — "power issue" or "component was wrong" — is enough to build this.</div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">Fill in your actual details here</div>
+        <textarea class="topic-note" style="min-height:80px;" placeholder="What was the actual symptom? What did you find? What did you replace or fix? Write it out here." data-key="note-s11-nrf52" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
 
   <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
-      <h3>Story 3 — IoT Studio Platform <span class="imp-tag low">IF ASKED ABOUT PROJECTS</span></h3>
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
+      <h3>Story 2 — PZEM Library <span class="imp-tag med">SECONDARY STORY</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
-      <div class="star-section">
-        <div class="star-label">What to say</div>
-        <div class="star-text">I built and currently run a web-based IoT lab management platform called IoT Studio — it's live in production and used for managing IoT lab sessions. I built it entirely myself, handling the backend, frontend, hardware integration via serial communication, cloud tunneling, and deployment on a Raspberry Pi. It shows I can take an end-to-end project from idea to production — including debugging real hardware-software integration issues along the way.</div>
+      <div class="star-section"><div class="star-label">Situation</div><div class="star-text">I needed to interface the PZEM-004T V4 energy meter with Arduino boards. Existing libraries had limitations for the V4 version.</div></div>
+      <div class="star-section"><div class="star-label">Task</div><div class="star-text">Develop a complete Arduino library handling Modbus RTU communication, parsing voltage, current, power, energy, frequency, and power factor.</div></div>
+      <div class="star-section"><div class="star-label">Action</div><div class="star-text">Wrote the library from scratch, tested across multiple boards including UNO R4, documented it, and published to Arduino Library Manager and PlatformIO Registry.</div></div>
+      <div class="star-section"><div class="star-label">Result</div><div class="star-text">Publicly available and community-used. Shows ability to understand hardware communication protocols and deliver production-ready work.</div></div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s11-pzem" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
-
 </div>
 
 <!-- SECTION 12 -->
 <div class="section" id="s12">
   <div class="section-header">
     <span class="section-num">12</span>
-    <span class="section-title">Final Cheat Sheet — Read on Monday Morning</span>
+    <span class="section-title">Cheat Sheet — Read Monday Morning</span>
+    <button class="section-done-btn" onclick="markSection(this,'s12')">Mark done</button>
   </div>
 
   <div class="topic open">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>Key Terms — Know These Cold</h3>
       <span class="arrow">▶</span>
     </div>
@@ -1101,11 +1663,11 @@
         <span class="chip">FA = Failure Analysis</span>
         <span class="chip">DOE = Design of Experiments</span>
         <span class="chip">FMEA = Failure Mode Effects Analysis</span>
-        <span class="chip">RPN = Severity × Occurrence × Detection</span>
-        <span class="chip">8D = 8 Disciplines problem solving</span>
+        <span class="chip">RPN = S × O × D</span>
+        <span class="chip">8D = 8 Disciplines</span>
         <span class="chip">SEM = Scanning Electron Microscope</span>
-        <span class="chip">EDS = Elemental analysis (with SEM)</span>
-        <span class="chip">BGA = Ball Grid Array (IC package)</span>
+        <span class="chip">EDS = Elemental analysis</span>
+        <span class="chip">BGA = Ball Grid Array</span>
         <span class="chip">SMD = Surface Mount Device</span>
         <span class="chip">THT = Through-Hole Technology</span>
         <span class="chip">ICT = In-Circuit Test</span>
@@ -1114,394 +1676,563 @@
         <span class="chip">ALS = Ambient Light Sensor</span>
         <span class="chip">ESD = Electrostatic Discharge</span>
         <span class="chip">EMI = Electromagnetic Interference</span>
-        <span class="chip">DMM = Digital Multimeter</span>
         <span class="chip">PCBA = PCB Assembly</span>
         <span class="chip">BOM = Bill of Materials</span>
         <span class="chip">ECN = Engineering Change Notice</span>
-        <span class="chip">Cold joint = Dull, grainy solder</span>
+        <span class="chip">Cold joint = Dull grainy solder</span>
         <span class="chip">Solder bridge = Unwanted connection</span>
-        <span class="chip">Continuity = Connected path (beep)</span>
+        <span class="chip">Containment ≠ Corrective action</span>
+      </div>
+      <h4>5 Things to walk in knowing</h4>
+      <ol>
+        <li><b>Check power first</b> — in any debugging question, start with power rails</li>
+        <li><b>Root cause not just fix</b> — Foxconn wants WHY, not just what you replaced</li>
+        <li><b>Containment ≠ Corrective action</b> — containment is temporary, corrective is permanent</li>
+        <li><b>Your nRF52 story is your anchor</b> — if you go blank, come back to this</li>
+        <li><b>Honest &gt; bluffing</b> — "I understand it conceptually and I'm ready to learn hands-on" beats a bluff</li>
+      </ol>
+      <h4>Formulas</h4>
+      <div class="formula">V = IR &nbsp;|&nbsp; P = VI &nbsp;|&nbsp; P = I²R &nbsp;|&nbsp; P = V²/R</div>
+      <div class="formula">Parallel R = (R1 × R2) / (R1 + R2)</div>
+      <div class="formula">RPN = Severity × Occurrence × Detection</div>
+      <div class="formula">f = 1/T &nbsp;|&nbsp; ADC resolution = Vref / 2^n</div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s12-cheat" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
-
-  <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
-      <h3>5 Things to Remember Walking In</h3>
-      <span class="arrow">▶</span>
-    </div>
-    <div class="topic-body">
-      <ol>
-        <li><b>Check power first</b> — always. In any debugging question, your first step is verify power rails.</li>
-        <li><b>Root cause, not just fix</b> — Foxconn wants to know WHY it failed, not just what you replaced.</li>
-        <li><b>Containment ≠ Corrective action</b> — containment is temporary, corrective action is permanent.</li>
-        <li><b>Your nRF52 story is your anchor</b> — if you go blank, come back to this real experience.</li>
-        <li><b>Honest &gt; bluffing</b> — "I haven't used that tool directly, but I understand how it works and I'm ready to learn" is a good answer. Bluffing about SEM experience will backfire.</li>
-      </ol>
-    </div>
-  </div>
-
-  <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
-      <h3>Formulas to Remember</h3>
-      <span class="arrow">▶</span>
-    </div>
-    <div class="topic-body">
-      <div class="formula">V = I × R &nbsp;|&nbsp; P = VI &nbsp;|&nbsp; P = I²R &nbsp;|&nbsp; P = V²/R</div>
-      <div class="formula">Series R: R_total = R1 + R2 &nbsp;|&nbsp; Parallel R: R = (R1 × R2)/(R1 + R2)</div>
-      <div class="formula">RPN = Severity × Occurrence × Detection</div>
-      <div class="formula">Frequency = 1 / Period &nbsp;|&nbsp; Period = 1 / Frequency</div>
-    </div>
-  </div>
-
 </div>
 
 <!-- SECTION 13 -->
 <div class="section" id="s13">
   <div class="section-header">
     <span class="section-num">13</span>
-    <span class="section-title">Resume-Based Interview Questions</span>
+    <span class="section-title">Resume-Based Q&amp;A</span>
+    <button class="section-done-btn" onclick="markSection(this,'s13')">Mark done</button>
   </div>
 
   <div class="topic open">
-    <div class="topic-head" onclick="toggle(this)">
-      <h3>Questions from Your Summary / Profile <span class="imp-tag high">DEFINITELY ASKED</span></h3>
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
+      <h3>Questions from Your Profile &amp; Summary <span class="imp-tag high">DEFINITELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
       <div class="q-box">
-        <div class="q">Your resume says 1.5 years experience but this role asks for 3 years. How do you justify that?</div>
-        <div class="a">My formal employment is 1.5 years, but my hands-on experience goes back to my UG days — I've been building with microcontrollers, sensors, and PCBs since 2019. I've worked across nRF52, ESP32, STM32, ATMega platforms, designed and fabricated PCBs, published a hardware library, and currently run a live IoT platform in production. The depth of my practical work is closer to 3 years even if the employment timeline is shorter.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">You mention firmware debugging — give me a specific example.</div>
-        <div class="a">At Optipace, I worked with nRF52 custom boards. When a board came back with unexpected behaviour [describe your actual nRF52 debugging story here — power issue, peripheral not responding, etc.]. I used the oscilloscope to check signal integrity on the communication lines and the multimeter to verify power rails, narrowed it down to [root cause], and resolved it.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">Your resume says "root cause analysis during validation cycles." What does that mean in practice?</div>
-        <div class="a">During validation, when a unit failed a test, my job was to not just flag it as a failure but to find why it failed. I would start by reproducing the failure consistently, then systematically isolate — is it firmware, hardware, or environment? I'd trace signals, check voltages, read communication lines, and document findings in a structured way so the team could take corrective action.</div>
+        <div class="q">Your resume says 1.5 years experience but this role asks for 3. How do you justify that?</div>
+        <div class="a">My formal employment is nearly 2 years across two companies, but my hands-on work with microcontrollers, sensors, and PCBs started during my UG in 2019. I've published a hardware library, designed and fabricated boards, and currently run a live production IoT platform. The depth of practical work is closer to 3 years even if the employment timeline is shorter.</div>
       </div>
       <div class="q-box">
         <div class="q">What testing tools have you used hands-on?</div>
-        <div class="a">I've used digital multimeters for voltage, current, continuity, and diode testing. Oscilloscopes for signal integrity, protocol verification, and power rail noise analysis. Logic analysers for decoding UART, SPI, and I2C traffic. Power supplies for bench testing and current measurement. I'm comfortable setting up test benches independently.</div>
+        <div class="a">Digital multimeters for voltage, current, continuity, and diode testing. Oscilloscopes for signal integrity, protocol verification, and power rail noise. Logic analysers for decoding UART, SPI, and I2C. Power supplies for bench testing and current measurement. I'm comfortable setting up test benches independently.</div>
+      </div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s13-profile" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
 
   <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
-      <h3>Questions from Optipace Technologies (Job 1) <span class="imp-tag high">DEFINITELY ASKED</span></h3>
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
+      <h3>Questions from Optipace Technologies <span class="imp-tag high">DEFINITELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
       <div class="q-box">
-        <div class="q">You "led an engineering team in testing workflows." How big was the team? What did leading mean?</div>
-        <div class="a">I coordinated with a small cross-functional group — firmware developers and hardware engineers. Leading meant I was the point person for organising what tests needed to run, tracking results, flagging failures, and coordinating with the relevant person to resolve them. I was the one ensuring the validation cycle moved forward and findings were documented clearly.</div>
+        <div class="q">You "led an engineering team in testing workflows." What did leading mean?</div>
+        <div class="a">I was the point person for organising what tests needed to run, tracking results, flagging failures, and coordinating with the relevant person to resolve them. I ensured the validation cycle moved forward and findings were documented clearly.</div>
       </div>
       <div class="q-box">
         <div class="q">What nRF52 platforms did you work on? What was the application?</div>
-        <div class="a">I worked on custom nRF52-based boards used for wireless embedded demos and reference designs. The nRF52 handled BLE communication, sensor interfacing over I2C and SPI, and GPIO control. I developed and debugged firmware in the Arduino framework and also supported bring-up of new board revisions.</div>
+        <div class="a">Custom nRF52-based boards for wireless embedded demos and reference designs. The nRF52 handled BLE communication, sensor interfacing over I2C and SPI, and GPIO control. I developed and debugged firmware in Arduino framework and supported bring-up of new board revisions.</div>
       </div>
       <div class="q-box">
-        <div class="q">You mention "firmware optimisation based on real-world performance data." Can you explain?</div>
-        <div class="a">After initial bring-up, we ran the firmware in real conditions and measured things like power consumption, response latency, and BLE throughput. Where we found the device consuming more power than expected in sleep mode, I adjusted the sleep configuration and peripheral power-down sequence. The optimisation was driven by measured data, not guesswork.</div>
+        <div class="q">Why did you leave Optipace after 16 months?</div>
+        <div class="a">The projects I was supporting reached completion — it was a natural end to that phase. I joined Semicon Media to continue building skills in a broader context, and now I'm looking for the structured engineering environment that Foxconn's NPI/FA team offers.</div>
       </div>
       <div class="q-box">
-        <div class="q">Why did you leave Optipace after only 16 months?</div>
-        <div class="a">The role wound down as the projects I was supporting reached completion. It was a natural end to that phase. I joined Semicon Media to continue building my skills in a different context — content-driven embedded work — but now I'm looking to move into a more structured engineering environment like Foxconn's NPI/FA team.</div>
+        <div class="q">You implemented USB — what USB protocol did you work with?</div>
+        <div class="a">Primarily USB CDC — USB as a virtual serial port for debugging and data transfer. I tested USB enumeration, verified data flow, and debugged descriptor issues. My work is at the application/interface level rather than USB stack development.</div>
       </div>
-      <div class="q-box">
-        <div class="q">You implemented USB — what USB protocols or classes did you work with?</div>
-        <div class="a">I worked primarily with USB CDC (Communication Device Class) — essentially USB as a virtual serial port for debugging and data transfer. I tested USB enumeration, verified data flow with a protocol analyser, and debugged descriptor issues. My hands-on USB work is primarily at the application/interface level rather than USB stack development.</div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s13-optipace" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
 
   <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
-      <h3>Questions from Semicon Media (Job 2) <span class="imp-tag med">LIKELY ASKED</span></h3>
-      <span class="arrow">▶</span>
-    </div>
-    <div class="topic-body">
-      <div class="q-box">
-        <div class="q">What is CircuitDigest? What was your role there exactly?</div>
-        <div class="a">CircuitDigest is a technical electronics content platform. At Semicon Media I built hardware demos — interfacing sensors, writing firmware, and producing technical documentation and application notes for their audience. It helped me work across a wide range of platforms and sensors quickly, and write clearly about technical work — which is directly useful for FA reporting.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">You mention MAX98357A — what is that and how did you use it?</div>
-        <div class="a">The MAX98357A is a Class D audio amplifier IC with an I2S digital audio interface. I interfaced it with an ESP32 to output audio from digital audio data. It involves configuring I2S on the microcontroller side, setting the gain and shutdown control pins, and verifying audio output quality. It was used for a demo project documenting audio output from embedded systems.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">You designed 3D parts — how does that connect to electronics engineering?</div>
-        <div class="a">Designing enclosures for custom boards is a practical skill in hardware development. When you build a demo or prototype, you often need a housing that fits the PCB, exposes the right connectors, and protects the electronics. I used Autodesk Fusion for this — modelled basic enclosures and fabricated them on a 3D printer. In an NPI context, this kind of mechanical awareness is useful when evaluating product assembly.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">Why did you leave Semicon Media after only 4–5 months?</div>
-        <div class="a">Semicon Media was a content-focused role. I valued the breadth it gave me, but I realised I wanted to work on deeper engineering problems — real hardware validation, structured failure analysis, and production-level work. The Foxconn NPI/FA role is exactly that transition I'm looking for.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
-      <h3>Questions from Education — MS &amp; BS <span class="imp-tag med">LIKELY ASKED</span></h3>
-      <span class="arrow">▶</span>
-    </div>
-    <div class="topic-body">
-      <div class="q-box">
-        <div class="q">You have an MS in Electronics — why are you applying for a role that seems entry-level for that qualification?</div>
-        <div class="a">My MS gave me strong theoretical foundation, but I'm pragmatic about where I am in my practical career. NPI FA at Foxconn is not entry-level — it requires systematic thinking, hardware understanding, and structured problem-solving, all of which I bring. I'd rather build deep expertise in a challenging real-world environment than overstate my current hands-on FA experience.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">Tell me about your research paper on Smart Farming.</div>
-        <div class="a">The paper was on using embedded systems for smart farming — specifically sensor-based monitoring and automated control for agricultural environments. We used microcontrollers with temperature, humidity, soil moisture, and CO2 sensors to build an automated system. It was published as part of my MS programme and ties directly into my hydroponics project work.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">You were a Hackathon Coordinator — what does that tell us about you?</div>
-        <div class="a">It tells you I can organise, communicate, and handle logistics under pressure — skills directly relevant to coordinating in an NPI team. I worked with faculty, managed participant coordination, and kept the event on track. It's the same skill set as keeping a validation cycle moving — making sure the right people are informed and tasks don't fall through the cracks.</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>Questions from Projects <span class="imp-tag high">DEFINITELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
       <div class="q-box">
         <div class="q">Tell me about your PZEM004T Arduino library.</div>
-        <div class="a">The PZEM-004T V4.0 is an energy monitoring module that communicates over Modbus RTU — a serial protocol used in industrial equipment. I found that existing libraries didn't fully support the V4 version, so I wrote one from scratch. It reads voltage, current, active power, energy, frequency, and power factor. I made it compatible across multiple Arduino boards including the UNO R4, tested it thoroughly, and published it to both Arduino Library Manager and PlatformIO Registry. It's publicly available and community-used.</div>
+        <div class="a">The PZEM-004T V4.0 communicates over Modbus RTU — an industrial serial protocol over UART/RS485. Existing libraries didn't fully support V4, so I wrote one from scratch that reads voltage, current, active power, energy, frequency, and power factor. Made it compatible across multiple boards including UNO R4, and published to both Arduino Library Manager and PlatformIO Registry. It's publicly available and community-used.</div>
       </div>
       <div class="q-box">
         <div class="q">What is Modbus RTU?</div>
-        <div class="a">Modbus RTU is a serial communication protocol widely used in industrial and energy monitoring devices. It runs over UART/RS485. The master sends a request frame containing device address, function code, register address, and CRC checksum. The slave responds with the requested data. In the PZEM library, I implemented the request frames for reading measurement registers and parsing the response bytes into meaningful values.</div>
+        <div class="a">An industrial serial protocol over UART/RS485. Master sends a frame with device address, function code, register address, and CRC checksum. Slave responds with requested data. I implemented request frames for reading measurement registers and parsing response bytes into meaningful values.</div>
       </div>
       <div class="q-box">
         <div class="q">Tell me about your hydroponics automation system.</div>
-        <div class="a">This was my UG final year project. I built an IoT system using ESP32 that monitored temperature, humidity, pH, CO2, and water temperature using SHT40, DS18B20, pH sensor, and Sensirion CO2 sensors over I2C and UART. Based on threshold logic, it automatically controlled exhaust fans, grow lights, and water pumps via relays. Data was sent over HTTP to a custom web dashboard, and a local I2C LCD showed real-time readings. It was fully autonomous and published as a research paper.</div>
+        <div class="a">ESP32-based IoT system monitoring temperature (SHT40 over I2C), water temperature (DS18B20 over 1-Wire), pH (analog ADC), and CO2 (Sensirion over UART). Based on threshold logic, it automatically controlled exhaust fans, grow lights, and water pumps via relays. Data sent over HTTP to a custom web dashboard, with local I2C LCD for real-time display. Fully autonomous — published as a research paper.</div>
       </div>
       <div class="q-box">
-        <div class="q">What sensors did you use in the hydroponics project and how were they interfaced?</div>
-        <div class="a">SHT40 for temperature and humidity — I2C interface. DS18B20 for water temperature — 1-Wire protocol. pH sensor — analog output read via ADC. Sensirion CO2 sensor — UART or I2C depending on model. Each sensor required understanding its datasheet, initialising the right protocol, reading raw values, and applying calibration or conversion to get meaningful engineering units.</div>
+        <div class="q">Most complex PCB you've designed?</div>
+        <div class="a">2-layer boards in KiCad for sensor interfacing and custom embedded systems — including power regulation, MCU footprints, I2C/SPI breakout headers, and decoupling caps. I handle schematic capture, layout, and fabrication export. I understand trace width for current capacity, via sizing, and ground plane importance. I'm still developing experience in high-speed layout and impedance-controlled traces.</div>
       </div>
-      <div class="q-box">
-        <div class="q">You mention PCB design — what's the most complex board you've designed?</div>
-        <div class="a">I've designed 2-layer boards in KiCad for sensor interfacing and custom embedded systems. My boards include power regulation circuits, microcontroller footprints, I2C/SPI breakout headers, and decoupling capacitors. I handle schematic capture, footprint assignment, layout, and export for fabrication. I understand design rules like trace width for current capacity and via sizing, though I acknowledge I'm still developing experience in high-speed layout and impedance-controlled traces.</div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s13-projects" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
 
   <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>Questions from Skills Section <span class="imp-tag high">DEFINITELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
       <div class="q-box">
         <div class="q">You list FreeRTOS — explain what it is and how you've used it.</div>
-        <div class="a">FreeRTOS is a real-time operating system for microcontrollers. It allows you to run multiple tasks concurrently — for example, one task handles sensor reading while another handles BLE communication. Key concepts are tasks (like threads), queues (for inter-task data passing), semaphores (for synchronisation), and task priorities. I used FreeRTOS on ESP32 and nRF52 projects to separate concerns — sensor polling in one task, communication in another — so the system remains responsive.</div>
+        <div class="a">Real-time OS for microcontrollers. Allows multiple tasks concurrently — one task handles sensor reading, another handles BLE communication. Key concepts: tasks, queues (inter-task data), semaphores (synchronisation), task priorities. Used on ESP32 and nRF52 to separate sensor polling from communication so the system stays responsive.</div>
       </div>
       <div class="q-box">
-        <div class="q">Difference between I2C and SPI — when would you choose one over the other?</div>
-        <div class="a">I2C uses 2 wires (SDA, SCL) and supports multiple devices with addressing — good when you have many sensors and limited pins. SPI uses 4 wires (MOSI, MISO, SCK, CS) per device but is faster and full-duplex — better when you need high data throughput, like displays or ADCs. I choose I2C for slow sensors like temperature or light, SPI for fast peripherals like flash memory or high-speed ADCs.</div>
+        <div class="q">I2C vs SPI — when would you choose one over the other?</div>
+        <div class="a">I2C: 2 wires, multiple devices with addressing, good when you have many sensors and limited pins. SPI: 4 wires but faster and full-duplex, better for high data throughput like displays or fast ADCs. I choose I2C for slow sensors, SPI for fast peripherals.</div>
       </div>
       <div class="q-box">
-        <div class="q">You mention logic analysers — what have you used them for specifically?</div>
-        <div class="a">I've used logic analysers to decode and verify I2C, SPI, and UART communication. For example, when a sensor wasn't responding over I2C, I used a logic analyser to confirm whether the SCL clock was running, whether the correct device address was being sent, and whether an ACK was being returned. It's much faster than guessing — you see exactly what's happening on the wire.</div>
+        <div class="q">You mention logic analysers — what have you used them for?</div>
+        <div class="a">Decoding and verifying I2C, SPI, and UART communication. When a sensor wasn't responding over I2C, I used a logic analyser to confirm whether SCL was running, whether the correct address was being sent, and whether an ACK was being returned. Faster than guessing — you see exactly what's on the wire.</div>
       </div>
       <div class="q-box">
-        <div class="q">You list BLE — what experience do you have with Bluetooth Low Energy?</div>
-        <div class="a">On the nRF52 platform I worked with BLE for wireless data transfer between the embedded device and a mobile app or central device. I'm familiar with GATT services and characteristics — how you define a service with a UUID, set up characteristics for read/write/notify, and how the central reads data from the peripheral. My work was primarily at the application layer using the nRF SDK or Arduino BLE library, not at the protocol stack level.</div>
+        <div class="q">You mention soldering and reworking — what have you done?</div>
+        <div class="a">Through-hole soldering, SMD hand soldering with temperature-controlled iron, and basic rework — desoldering and replacing SMD components including 0402 scale. I can identify cold joints visually. Haven't done BGA rework but understand the process.</div>
       </div>
-      <div class="q-box">
-        <div class="q">You mention "soldering and reworking" — what types of soldering have you done?</div>
-        <div class="a">I've done through-hole soldering, SMD hand soldering with a temperature-controlled iron, and basic rework — desoldering and replacing SMD components like resistors, capacitors, and small ICs. I'm comfortable with fine-pitch work at the 0402 scale and can identify cold joints visually. I haven't done BGA rework, which requires hot air and reballing, but I understand the process.</div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s13-skills" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
-
 </div>
 
 <!-- SECTION 14 -->
 <div class="section" id="s14">
   <div class="section-header">
     <span class="section-num">14</span>
-    <span class="section-title">General Interview Questions — All Types</span>
+    <span class="section-title">General Interview Questions</span>
+    <button class="section-done-btn" onclick="markSection(this,'s14')">Mark done</button>
   </div>
 
   <div class="topic open">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>Technical Rapid-Fire Questions <span class="imp-tag high">DEFINITELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
-      <div class="q-box">
-        <div class="q">What is the difference between a microcontroller and a microprocessor?</div>
-        <div class="a">A microcontroller (MCU) has CPU, RAM, flash, and peripherals all on one chip — self-contained, used in embedded systems. A microprocessor is just the CPU — needs external RAM, storage, and peripherals. ESP32 and nRF52 are microcontrollers. A Raspberry Pi uses a microprocessor (ARM Cortex-A) and requires an OS.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">What is a pull-up resistor and where do you use it?</div>
-        <div class="a">A pull-up resistor connects a signal line to VCC so the default state is HIGH when nothing is driving it. I2C lines (SDA, SCL) require pull-ups — typically 4.7kΩ — because the bus uses open-drain drivers that can only pull the line low. Without pull-ups, the line floats and communication fails.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">What is PWM and where is it used?</div>
-        <div class="a">Pulse Width Modulation — a digital signal switched rapidly between HIGH and LOW. The duty cycle (% time HIGH) controls the effective power. Used for: LED brightness control, motor speed control, servo position control, DAC approximation. A 50% duty cycle at 5V behaves like 2.5V average to a slow-responding load.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">What is ESD and how do you protect against it?</div>
-        <div class="a">Electrostatic discharge — a sudden transfer of static electricity that can permanently damage ICs. Protection: TVS diodes or ESD protection diodes on exposed pins (USB, connectors, GPIOs). Design-level: ground planes, proper PCB layout, ESD protection ICs. In the lab: anti-static wrist strap, ESD mat, storing ICs in anti-static bags.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">What is the difference between volatile and non-volatile memory?</div>
-        <div class="a">Volatile memory loses data when power is removed — RAM (SRAM, DRAM). Non-volatile retains data without power — Flash, EEPROM, ROM. In embedded systems: program code lives in Flash (non-volatile), variables live in SRAM (volatile). Data you want to survive a reset (settings, calibration) must be stored in Flash or EEPROM.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">What is a watchdog timer?</div>
-        <div class="a">A hardware timer that resets the MCU if firmware doesn't "kick" (reset) it within a set time window. It's a safety mechanism — if firmware hangs or enters an infinite loop, the watchdog fires and reboots the system. Used in production embedded systems to ensure reliability without human intervention.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">What is the purpose of a decoupling capacitor?</div>
-        <div class="a">Placed close to IC power pins (between VCC and GND). Acts as a local charge reservoir. When the IC switches rapidly and demands a burst of current, the decoupling cap supplies it instantly — preventing the power rail from drooping and causing noise on other parts of the circuit. Typical values: 100nF ceramic close to IC, 10µF bulk cap nearby.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">What is the difference between RS232 and RS485?</div>
-        <div class="a">RS232 is single-ended — voltage relative to ground, short distance (~15m), point-to-point. RS485 is differential — uses two wires (A and B), detects the difference between them, much more noise-immune, up to 1200m, supports multiple devices on one bus. Modbus RTU (used in my PZEM library) runs over RS485.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">What causes a ground loop and how do you fix it?</div>
-        <div class="a">A ground loop occurs when two parts of a circuit have different ground potentials — usually when there are multiple ground paths with different impedances. Causes noise, hum in audio, measurement errors. Fix: use a single ground reference point (star grounding), use differential measurement, or use optoisolators/transformers to break the loop.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">A component is getting very hot. What do you check first?</div>
-        <div class="a">First: is the voltage correct? Overvoltage causes excess power dissipation. Second: is the current within rating? Overcurrent = P = I²R → excess heat. Third: is the component the right part (check BOM vs actual part number)? Fourth: is polarity correct for capacitors/diodes? Fifth: is the thermal design adequate — does it need a heatsink or better airflow?</div>
+      <div class="q-box"><div class="q">Microcontroller vs microprocessor?</div><div class="a">MCU: CPU + RAM + flash + peripherals on one chip. Self-contained for embedded. Microprocessor: just the CPU, needs external RAM and storage. ESP32/nRF52 = MCU. Raspberry Pi = microprocessor.</div></div>
+      <div class="q-box"><div class="q">What is a pull-up resistor?</div><div class="a">Connects a signal line to VCC so default state is HIGH. I2C SDA and SCL require pull-ups (~4.7kΩ) because the bus uses open-drain drivers — without pull-ups, the line floats and communication fails.</div></div>
+      <div class="q-box"><div class="q">What is PWM and where is it used?</div><div class="a">Pulse Width Modulation — digital signal rapidly switching HIGH/LOW. Duty cycle controls effective power. Used for LED brightness, motor speed, servo position control.</div></div>
+      <div class="q-box"><div class="q">What is ESD and how do you protect against it?</div><div class="a">Electrostatic discharge — sudden static electricity transfer that damages ICs. Protection: TVS diodes on exposed pins, ground planes, anti-static wrist strap in lab, ESD bags for storage.</div></div>
+      <div class="q-box"><div class="q">Volatile vs non-volatile memory?</div><div class="a">Volatile loses data when power off — RAM. Non-volatile retains — Flash, EEPROM. Embedded: code in Flash, variables in SRAM. Settings/calibration that must survive reset go in Flash or EEPROM.</div></div>
+      <div class="q-box"><div class="q">What is a watchdog timer?</div><div class="a">Hardware timer that resets the MCU if firmware doesn't "kick" it within a set window. Safety mechanism — if firmware hangs, watchdog fires and reboots. Used in production for reliability.</div></div>
+      <div class="q-box"><div class="q">What is a decoupling capacitor?</div><div class="a">Placed between VCC and GND near IC power pins. Supplies burst current when IC switches rapidly — prevents power rail drooping. Typical: 100nF ceramic close to IC, 10µF bulk cap nearby.</div></div>
+      <div class="q-box"><div class="q">RS232 vs RS485?</div><div class="a">RS232: single-ended, short distance (~15m), point-to-point. RS485: differential (A and B wires), noise-immune, up to 1200m, supports multiple devices. Modbus RTU (my PZEM library) runs over RS485.</div></div>
+      <div class="q-box"><div class="q">A component is getting very hot. What do you check first?</div><div class="a">Voltage correct? Current within rating? Right component (check BOM)? Polarity correct? Adequate thermal design? Check in this order.</div></div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s14-rapid" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
 
   <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>NPI &amp; FA Specific Questions <span class="imp-tag high">DEFINITELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
-      <div class="q-box">
-        <div class="q">What is NPI and what does an NPI engineer do?</div>
-        <div class="a">NPI — New Product Introduction — is the process of taking a product from design to mass production. An NPI engineer bridges the gap: validating that the design works at scale, identifying failures during pilot builds, driving corrective actions, and ensuring the production process is stable before full ramp. In FA, the NPI engineer investigates why units fail during this phase and feeds that learning back into the design and process.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">What is yield and how do you improve it?</div>
-        <div class="a">Yield = percentage of units that pass all tests. If 90 out of 100 boards pass, yield is 90%. To improve yield: identify the most common failure modes (Pareto analysis), find their root causes via FA, implement corrective actions (design change, process change, better incoming quality control), then verify yield improves. FMEA helps predict and prevent yield issues before they happen.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">What is a Pareto chart and how is it used in FA?</div>
-        <div class="a">A Pareto chart ranks failure modes from most frequent to least — bar chart ordered by count, with cumulative percentage line. The "80/20 rule" usually applies: 80% of failures come from 20% of causes. In FA, you focus corrective action on the top 2–3 failure modes first — fixing those gives the biggest yield improvement for the least effort.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">What is ICT vs FCT?</div>
-        <div class="a">ICT (In-Circuit Test) — tests the PCBA electrically before it's assembled into a product. Checks component values, shorts, opens using a bed-of-nails fixture. Fast, catches assembly defects. FCT (Functional Test) — tests the fully assembled product under real operating conditions. Verifies it works as intended. ICT catches assembly errors; FCT catches functional failures.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">What would you do if you found a failure that was happening randomly and couldn't be reproduced?</div>
-        <div class="a">Intermittent failures are the hardest. My approach: first stress the unit — temperature cycling, vibration, power cycling — to make it fail more frequently. Second, look for marginal signals with a scope that DMM would miss. Third, check solder joints under magnification — intermittent contact from cold joints is a common cause. Fourth, check for ESD sensitivity. Fifth, monitor power rails under dynamic load — voltage droop under current spikes. Document every condition when failure occurs — patterns reveal the trigger.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">How do you write a failure analysis report?</div>
-        <div class="a">A good FA report covers: unit identification and failure description, test conditions when failure occurred, measurements taken (with data/photos), fault isolation steps taken, root cause identified, evidence supporting the root cause (photos, waveforms, EDS data), corrective action recommended, and recurrence prevention steps. It should be clear enough that someone who wasn't in the lab can understand what happened and why.</div>
+      <div class="q-box"><div class="q">What is NPI and what does an NPI engineer do?</div><div class="a">New Product Introduction — taking a product from design to mass production. NPI engineer bridges the gap: validates design works at scale, investigates failures during pilot builds, drives corrective actions, ensures production process is stable before full ramp.</div></div>
+      <div class="q-box"><div class="q">What is yield and how do you improve it?</div><div class="a">Yield = % of units passing all tests. Improve by: Pareto analysis of failure modes, FA on top failures, corrective action (design/process change), verify yield improvement. FMEA predicts and prevents yield issues.</div></div>
+      <div class="q-box"><div class="q">ICT vs FCT?</div><div class="a">ICT (In-Circuit Test): tests PCBA electrically before assembly into product. Checks components, shorts, opens using bed-of-nails fixture. Catches assembly defects. FCT (Functional Test): tests fully assembled product under real conditions. Catches functional failures.</div></div>
+      <div class="q-box"><div class="q">How do you write a failure analysis report?</div><div class="a">Unit ID and failure description → test conditions → measurements taken with data/photos → fault isolation steps → root cause with evidence → corrective action recommended → recurrence prevention. Clear enough that someone not in the lab can understand what happened and why.</div></div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s14-npi" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
 
   <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
       <h3>Situational / Behavioural Questions <span class="imp-tag high">DEFINITELY ASKED</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
-      <div class="q-box">
-        <div class="q">Tell me about a time you disagreed with a colleague or team member. How did you handle it?</div>
-        <div class="a">At Optipace, during a validation cycle there was a disagreement about whether a failure was firmware or hardware related. My colleague believed it was a firmware bug. I had measured the power rail drooping under load and believed it was a hardware power supply issue. Instead of arguing, I suggested we both test our hypothesis — I measured the rail with a scope under the exact load condition that triggered the failure and showed the droop. We resolved it by evidence, not opinion. The fix was a hardware change.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">Tell me about a time you worked under pressure or a tight deadline.</div>
-        <div class="a">At Semicon Media, content deadlines were fixed — a demo had to be working, documented, and published by a specific date. When a sensor integration wasn't behaving as expected close to the deadline, I systematically debugged — checked the I2C address, verified pull-up resistors, used a logic analyser to see what was on the bus — found a wrong I2C address in the datasheet errata, fixed it, and delivered on time. Pressure made me more systematic, not more scattered.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">Tell me about a time you failed at something. What did you learn?</div>
-        <div class="a">Early in my PCB design work, I designed a board where I didn't pay attention to decoupling capacitor placement — they were on the opposite side of the board from the ICs. The board worked but had intermittent noise issues under load. It taught me that PCB layout is as important as schematic design, and that power integrity problems are hard to debug after the fact. Since then, decoupling caps go as close to VCC pins as physically possible.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">How do you prioritise when you have multiple failing units and limited time?</div>
-        <div class="a">I do a quick triage first — categorise failures by symptom. If multiple units show the same symptom, that's my top priority because one root cause analysis fixes all of them. Unique or one-off failures come second. Within each group, I prioritise based on impact — failures that block production or affect safety first, cosmetic or minor failures last. I communicate the priority list to my lead so everyone has the same picture.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">Are you comfortable relocating to Bangalore?</div>
-        <div class="a">Yes, I've already worked in Bangalore at Optipace Technologies for over a year, so I'm familiar with the city and comfortable relocating there for the right opportunity. This role at Foxconn is exactly that.</div>
+      <div class="q-box"><div class="q">Tell me about a time you disagreed with a colleague.</div><div class="a">At Optipace, disagreement about whether failure was firmware or hardware. My colleague said firmware bug. I had measured power rail drooping under load. Instead of arguing, I suggested we both test our hypothesis — I showed the droop on scope under the exact load condition. We resolved by evidence, not opinion. Fix was hardware.</div></div>
+      <div class="q-box"><div class="q">Tell me about a time you worked under pressure.</div><div class="a">At Semicon Media, content deadline was fixed. Sensor integration wasn't working close to deadline. Systematically debugged — checked I2C address, pull-up resistors, logic analyser on bus — found wrong I2C address in datasheet errata, fixed it, delivered on time. Pressure made me more systematic.</div></div>
+      <div class="q-box"><div class="q">Tell me about a time you failed at something.</div><div class="a">Early PCB design — didn't place decoupling caps close to IC VCC pins. Board worked but had intermittent noise under load. Taught me PCB layout is as important as schematic design. Since then, decoupling caps go as close to VCC pins as physically possible.</div></div>
+      <div class="q-box"><div class="q">Are you comfortable relocating to Bangalore?</div><div class="a">Yes — I already worked in Bangalore at Optipace for over a year, so I'm familiar with the city. Comfortable relocating for the right opportunity, and this is it.</div></div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s14-behav" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
 
   <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
-      <h3>Questions You Should Ask Them <span class="imp-tag med">ASK AT LEAST 2</span></h3>
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
+      <h3>Questions YOU Should Ask Them <span class="imp-tag med">ASK AT LEAST 2</span></h3>
       <span class="arrow">▶</span>
     </div>
     <div class="topic-body">
-      <p>Always have questions ready. It shows you're serious and thinking about the role.</p>
-      <div class="q-box">
-        <div class="q">What does the typical NPI cycle look like for a new product at this facility?</div>
-        <div class="a">(Listen carefully — it tells you what your daily work will actually be.)</div>
-      </div>
-      <div class="q-box">
-        <div class="q">What kind of products does this NPI team currently work on? Consumer electronics, phones, or industrial?</div>
-        <div class="a">(Foxconn makes phones, laptops, TVs, and industrial products — knowing the product line helps you speak to it.)</div>
-      </div>
-      <div class="q-box">
-        <div class="q">What FA tools are available in-house versus sent to external labs?</div>
-        <div class="a">(Shows you know what tools are involved and you're thinking practically about how to do the job.)</div>
-      </div>
-      <div class="q-box">
-        <div class="q">What does the onboarding and training process look like for a new engineer joining this team?</div>
-        <div class="a">(Shows you're planning to be there for the long term and want to integrate properly.)</div>
+      <div class="q-box"><div class="q">What does the typical NPI cycle look like for a new product at this facility?</div><div class="a">(Listen carefully — tells you what your daily work will actually be.)</div></div>
+      <div class="q-box"><div class="q">What kind of products does this NPI team currently work on?</div><div class="a">(Consumer electronics, phones, industrial — knowing helps you speak to it.)</div></div>
+      <div class="q-box"><div class="q">What FA tools are available in-house versus sent to external labs?</div><div class="a">(Shows you know what tools are involved and you're thinking practically.)</div></div>
+      <div class="q-box"><div class="q">What does the onboarding process look like for a new engineer?</div><div class="a">(Shows you're planning to be there long-term.)</div></div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s14-ask" oninput="saveTopicNote(this)"></textarea>
       </div>
     </div>
   </div>
-
-  <div class="topic">
-    <div class="topic-head" onclick="toggle(this)">
-      <h3>Tricky / Trap Questions to Watch Out For <span class="imp-tag high">READ THIS</span></h3>
-      <span class="arrow">▶</span>
-    </div>
-    <div class="topic-body">
-      <div class="warn">These questions are designed to catch you out. Know how to handle them.</div>
-      <div class="q-box">
-        <div class="q">"Your experience is mostly Arduino-level. Foxconn works at production scale. Are you sure you're ready?"</div>
-        <div class="a">I understand the concern. Arduino-framework experience is the starting point, but my actual work went beyond it — I debugged hardware failures on custom boards, not just ran example code. I worked on nRF52 and ESP32 custom PCBAs, handled bring-up, root cause analysis, and validation cycles. I learn fast in structured environments, and I'm being honest about where I am — I'd rather show you my real capability than oversell.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">"You've changed jobs after short periods. How do we know you'll stay?"</div>
-        <div class="a">Both previous roles had natural endings — Optipace's projects completed their cycle, and Semicon Media was a content role that I outgrew once I realised I wanted deeper engineering work. A role at Foxconn NPI/FA is exactly the structured, growth-oriented environment I want to build a long-term career in. I'm not looking to move around — I'm looking for the right place to grow.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">"Can you write bare-metal firmware from scratch in C for an STM32?"</div>
-        <div class="a">I've studied bare-metal concepts with STM32 and PIC — registers, clock configuration, peripheral init without HAL. My production experience is primarily with Arduino framework and nRF SDK. I can read and understand bare-metal code, and I know the concepts. Full bare-metal development from scratch is something I'm actively building. But for an NPI FA role, the primary need is hardware debugging and analysis — not firmware authoring.</div>
-      </div>
-      <div class="q-box">
-        <div class="q">"Your resume says you depend on AI tools. Doesn't that mean you don't actually know things?"</div>
-        <div class="a">(Your resume doesn't say this — but if probed about AI use:) I use AI tools the same way engineers use datasheets or reference manuals — to look up syntax, validate approaches, or accelerate research. The hardware debugging, the decisions about what to measure, what the measurements mean, and what action to take — those are my judgements, not the tool's. You can't AI your way through a scope and a dead board.</div>
-      </div>
-    </div>
-  </div>
-
 </div>
 
-</div><!-- end container -->
+<!-- SECTION 15 -->
+<div class="section" id="s15">
+  <div class="section-header">
+    <span class="section-num">15</span>
+    <span class="section-title">Twisted &amp; Real-World Scenario Questions</span>
+    <button class="section-done-btn" onclick="markSection(this,'s15')">Mark done</button>
+  </div>
+
+  <div class="topic open">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
+      <h3>Twisted Theory Questions <span class="imp-tag high">WATCH OUT</span></h3>
+      <span class="arrow">▶</span>
+    </div>
+    <div class="topic-body">
+      <div class="warn">Same concepts you know — asked from a different angle to catch you if you memorised without understanding.</div>
+      <div class="q-box"><div class="q">A capacitor is fully charged. How much current flows through it?</div><div class="a">Zero. Fully charged capacitor in DC = open circuit. Current only flows while charging or discharging.</div></div>
+      <div class="q-box"><div class="q">You measure 3.3V on a GPIO pin with a DMM. Does that mean the pin is outputting correctly?</div><div class="a">Not necessarily. DMM has very high impedance — barely loads the pin. Under real load the pin might collapse. Measure under actual operating conditions or use a scope.</div></div>
+      <div class="q-box"><div class="q">Scope shows clean 3.3V SPI clock. But sensor doesn't respond. What next?</div><div class="a">Clock is fine — check: (1) CS going LOW before clock? (2) MOSI data correct? (3) SPI mode (CPOL/CPHA) correct for this sensor? (4) Clock frequency within sensor's max? (5) Sensor VCC — check at IC pin, not just supply.</div></div>
+      <div class="q-box"><div class="q">Two identical boards, same batch — one works, one doesn't. What does that tell you?</div><div class="a">Design is probably fine. Failure is likely assembly defect or component variation. Compare boards physically — use working board as reference, measure same test points on both, find where readings diverge. That's your fault location.</div></div>
+      <div class="q-box"><div class="q">Board works at room temp but fails after 30 minutes. What do you suspect?</div><div class="a">Thermal failure. Suspects: electrolytic cap losing capacitance with heat, solder joint that opens with thermal expansion, component near thermal limit, LDO going into thermal shutdown. Use thermal camera to find the hot component.</div></div>
+      <div class="q-box"><div class="q">You replace a capacitor and the board works. Is your job done?</div><div class="a">No. That fixes the symptom. Ask: why did this cap fail? Wrong voltage rating? Reversed? Counterfeit? Thermal overstress? Answer determines risk to all other boards in the batch. Document, check remaining stock, initiate corrective action.</div></div>
+      <div class="q-box"><div class="q">DMM beeps continuity between VCC and GND. Always a problem?</div><div class="a">Not always. Many circuits have LEDs, low-value resistors, or forward-biased diodes between VCC and GND. Check the schematic. A true short shows near-zero Ω and a component getting hot. Always measure the resistance value, don't just react to the beep.</div></div>
+      <div class="q-box"><div class="q">You increase I2C pull-up from 4.7kΩ to 47kΩ. What happens?</div><div class="a">Communication becomes slower and unreliable. Higher pull-up means slower rise time (RC constant increases). At 400kHz Fast mode, line may not reach valid HIGH before next clock edge — device stops responding or gives corrupted data. Higher I2C speed → lower pull-up resistance value.</div></div>
+      <div class="q-box"><div class="q">5V sensor connected directly to 3.3V MCU GPIO. Sensor outputs 5V high. Risk?</div><div class="a">Risk: damage to MCU — most 3.3V GPIO pins are not 5V-tolerant. 5V on 3.3V input can permanently damage it. Fix: voltage divider (10kΩ + 20kΩ), or level shifter IC, or Zener clamp to 3.3V. Always check datasheet — some GPIOs are marked 5V-tolerant.</div></div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s15-twisted" oninput="saveTopicNote(this)"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
+      <h3>Real-World Scenario Questions <span class="imp-tag high">DEFINITELY ASKED</span></h3>
+      <span class="arrow">▶</span>
+    </div>
+    <div class="topic-body">
+      <div class="q-box"><div class="q">You're given 50 failed units and 4 hours. Walk me through what you do.</div><div class="a">Triage first — power on each, group by symptom. Pick the largest group (one root cause = most units fixed). Visual inspection across the group. Electrical: check power rails on 5–10 units, find where voltage diverges. Isolate to component or area. Document every measurement. After 4 hours: leading hypothesis, supporting evidence, recommended next step.</div></div>
+      <div class="q-box"><div class="q">Customer says phone screen turns off randomly when held to ear. What's the likely cause?</div><div class="a">Proximity sensor issue. Investigate: (1) threshold registers too sensitive? (2) IR crosstalk from device housing? (3) ALS interference in bright light? (4) Protective film or adhesive over sensor window from assembly? (5) Reproduce on multiple units — single defect or systemic?</div></div>
+      <div class="q-box"><div class="q">New PCB revision comes in. Old revision worked. New one doesn't power on. First move?</div><div class="a">Get the ECN — what exactly changed? Focus debugging on changed areas first. Check new component datasheets for different pin assignments or enable logic. Power up old revision alongside new, measure same test points, find first divergence point.</div></div>
+      <div class="q-box"><div class="q">30% of boards failing ICT resistance check on R15. X-ray shows no solder issues. What next?</div><div class="a">30% is systematic, not random. Check: (1) Is R15 correct value? Measure actual resistance on failed boards — if wrong value, wrong-part issue from a reel change. (2) ICT fixture probe making good contact? Worn probe gives false failures. (3) Is there a parallel resistance path in the circuit affecting the reading?</div></div>
+      <div class="q-box"><div class="q">Product passes all your tests but fails at customer's site. What do you investigate?</div><div class="a">Environment is the variable. Ask: ambient temp/humidity/altitude? Other EMI sources nearby? Their power supply quality? Grounding situation? Try to replicate in lab: temperature chamber, variable supply, nearby RF sources. Common culprits: temperature extremes, input power spikes, EMI from industrial equipment, humidity causing leakage currents.</div></div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s15-scenario" oninput="saveTopicNote(this)"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
+      <h3>Calculation Questions — Think Out Loud <span class="imp-tag high">PRACTICE THESE</span></h3>
+      <span class="arrow">▶</span>
+    </div>
+    <div class="topic-body">
+      <div class="q-box"><div class="q">LED needs 20mA, forward voltage 2V, powered from 5V. What resistor?</div><div class="a">V across R = 5 − 2 = 3V. R = 3 / 0.02 = 150Ω. Power = 0.02² × 150 = 0.06W — standard ¼W resistor fine.</div></div>
+      <div class="q-box"><div class="q">LDO: Vin=5V, Vout=3.3V, I=500mA. How much heat?</div><div class="a">P_waste = (5 − 3.3) × 0.5 = 1.7 × 0.5 = 0.85W heat in LDO. Efficiency = 3.3/5 = 66% only. That's why buck converters are used instead at higher currents.</div></div>
+      <div class="q-box"><div class="q">Signal period = 2ms. What is frequency?</div><div class="a">f = 1/T = 1/0.002 = 500Hz.</div></div>
+      <div class="q-box"><div class="q">12-bit ADC, Vref = 3.3V. What voltage change can it detect?</div><div class="a">2¹² = 4096 levels. Resolution = 3.3 / 4096 ≈ 0.8mV per step.</div></div>
+      <div class="q-box"><div class="q">FMEA: Severity=8, Occurrence=4, Detection=3. RPN and risk level?</div><div class="a">RPN = 8 × 4 × 3 = 96. Max possible = 1000. Moderate risk — needs attention especially because Severity=8 means serious consequences if it occurs. Prioritise improving occurrence or detection.</div></div>
+      <div class="q-box"><div class="q">200 boards tested, 174 passed. Yield? How many to analyse for Pareto?</div><div class="a">Yield = 174/200 × 100 = 87%. Failed = 26. With only 26, analyse all of them — categorise each failure mode. Small enough for 100% analysis, which gives the true distribution for your Pareto.</div></div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s15-calc" oninput="saveTopicNote(this)"></textarea>
+      </div>
+    </div>
+  </div>
+
+  <div class="topic">
+    <div class="topic-head" onclick="toggleTopic(this)">
+      <div class="topic-check" onclick="event.stopPropagation();markTopic(this)">✓</div>
+      <h3>Trap / Tricky Questions <span class="imp-tag high">READ THIS</span></h3>
+      <span class="arrow">▶</span>
+    </div>
+    <div class="topic-body">
+      <div class="q-box"><div class="q">"Your experience is mostly Arduino-level. Foxconn works at production scale. Are you ready?"</div><div class="a">I understand the concern. But my work went beyond running example code — I debugged hardware failures on custom boards, handled bring-up, root cause analysis, and validation cycles on nRF52 and ESP32 PCBAs. I learn fast in structured environments, and I'd rather show you my real capability than oversell.</div></div>
+      <div class="q-box"><div class="q">"You've changed jobs after short periods. How do we know you'll stay?"</div><div class="a">Both roles had natural endings — Optipace's projects completed their cycle, Semicon Media was a content role I outgrew. A Foxconn NPI/FA role is exactly the structured, growth-oriented environment I want to build a long-term career in. I'm not looking to move around — I'm looking for the right place to grow.</div></div>
+      <div class="q-box"><div class="q">"Can you write bare-metal firmware from scratch in C for an STM32?"</div><div class="a">I've studied bare-metal concepts — registers, clock config, peripheral init without HAL. My production experience is Arduino framework and nRF SDK. I can read and understand bare-metal code and know the concepts. Full bare-metal from scratch is something I'm actively building. But for NPI FA, the primary need is hardware debugging and analysis — not firmware authoring.</div></div>
+      <div class="topic-note-wrap">
+        <div class="topic-note-label">My notes</div>
+        <textarea class="topic-note" placeholder="Add your own notes here..." data-key="note-s15-trap" oninput="saveTopicNote(this)"></textarea>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div><!-- end container -->
+</main>
+</div><!-- end layout -->
+
+<button class="mobile-menu-btn" onclick="toggleSidebar()" id="menu-btn">☰</button>
 
 <script>
-function toggle(head) {
+// ── SIDEBAR TOGGLE (mobile)
+function toggleSidebar() {
+  document.getElementById('sidebar').classList.toggle('open');
+}
+
+// ── TOPIC TOGGLE
+function toggleTopic(head) {
   const topic = head.closest('.topic');
   topic.classList.toggle('open');
 }
+
+// ── MARK TOPIC DONE
+function markTopic(check) {
+  const topic = check.closest('.topic');
+  topic.classList.toggle('topic-done');
+  check.textContent = topic.classList.contains('topic-done') ? '✓' : '✓';
+  updateProgress();
+  saveDoneState();
+}
+
+// ── MARK SECTION DONE
+function markSection(btn, secId) {
+  btn.classList.toggle('marked');
+  btn.textContent = btn.classList.contains('marked') ? 'Done ✓' : 'Mark done';
+  const navItem = document.querySelector(`.nav-item[data-sec="${secId}"]`);
+  if (navItem) navItem.classList.toggle('done', btn.classList.contains('marked'));
+  updateProgress();
+  saveDoneState();
+}
+
+// ── PROGRESS
+function updateProgress() {
+  const totalTopics = document.querySelectorAll('.topic').length;
+  const doneTopics = document.querySelectorAll('.topic.topic-done').length;
+  const doneSections = document.querySelectorAll('.section-done-btn.marked').length;
+  const totalChecks = document.querySelectorAll('.check-item input').length;
+  const doneChecks = document.querySelectorAll('.check-item input:checked').length;
+
+  const pct = Math.round(((doneTopics / totalTopics) * 0.5 + (doneChecks / totalChecks) * 0.5) * 100);
+  document.getElementById('progress-pct').textContent = pct + '%';
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('done-count').textContent = doneChecks;
+
+  const summary = document.getElementById('checklist-summary');
+  if (summary) summary.textContent = doneChecks + ' of ' + totalChecks + ' done';
+}
+
+// ── CHECKLIST
+function toggleCheck(idx) {
+  const item = document.getElementById('ci-' + idx);
+  const cb = document.getElementById('cb-' + idx);
+  if (document.activeElement !== cb) cb.checked = !cb.checked;
+  item.classList.toggle('checked', cb.checked);
+  saveChecklist();
+  updateProgress();
+}
+
+function saveChecklist() {
+  const states = [];
+  document.querySelectorAll('.check-item input').forEach(cb => states.push(cb.checked));
+  localStorage.setItem('foxconn-checklist', JSON.stringify(states));
+}
+
+function loadChecklist() {
+  try {
+    const states = JSON.parse(localStorage.getItem('foxconn-checklist') || '[]');
+    states.forEach((checked, i) => {
+      const cb = document.getElementById('cb-' + i);
+      const item = document.getElementById('ci-' + i);
+      if (cb) { cb.checked = checked; if (item) item.classList.toggle('checked', checked); }
+    });
+  } catch(e) {}
+}
+
+// ── NOTES
+function saveNotes() {
+  localStorage.setItem('foxconn-global-notes', document.getElementById('global-notes').value);
+}
+
+function clearNotes() {
+  if (confirm('Clear all notes?')) {
+    document.getElementById('global-notes').value = '';
+    localStorage.removeItem('foxconn-global-notes');
+  }
+}
+
+function loadNotes() {
+  const saved = localStorage.getItem('foxconn-global-notes');
+  if (saved) document.getElementById('global-notes').value = saved;
+}
+
+function saveTopicNote(el) {
+  localStorage.setItem(el.dataset.key, el.value);
+}
+
+function loadTopicNotes() {
+  document.querySelectorAll('.topic-note').forEach(el => {
+    const saved = localStorage.getItem(el.dataset.key);
+    if (saved) el.value = saved;
+  });
+}
+
+// ── DONE STATE PERSIST
+function saveDoneState() {
+  const topicDone = Array.from(document.querySelectorAll('.topic')).map(t => t.classList.contains('topic-done'));
+  const secDone = Array.from(document.querySelectorAll('.section-done-btn')).map(b => b.classList.contains('marked'));
+  localStorage.setItem('foxconn-topic-done', JSON.stringify(topicDone));
+  localStorage.setItem('foxconn-sec-done', JSON.stringify(secDone));
+}
+
+function loadDoneState() {
+  try {
+    const topicDone = JSON.parse(localStorage.getItem('foxconn-topic-done') || '[]');
+    const secDone = JSON.parse(localStorage.getItem('foxconn-sec-done') || '[]');
+    document.querySelectorAll('.topic').forEach((t, i) => { if (topicDone[i]) t.classList.add('topic-done'); });
+    document.querySelectorAll('.section-done-btn').forEach((b, i) => {
+      if (secDone[i]) {
+        b.classList.add('marked');
+        b.textContent = 'Done ✓';
+        const sec = b.closest('.section');
+        const secId = sec ? sec.id : null;
+        if (secId) {
+          const navItem = document.querySelector(`.nav-item[data-sec="${secId}"]`);
+          if (navItem) navItem.classList.add('done');
+        }
+      }
+    });
+  } catch(e) {}
+}
+
+// ── COUNTDOWN
+function updateCountdown() {
+  const interview = new Date();
+  interview.setDate(interview.getDate() + ((1 - interview.getDay() + 7) % 7 || 7));
+  interview.setHours(10, 0, 0, 0);
+  const now = new Date();
+  const diff = interview - now;
+  if (diff <= 0) { document.getElementById('countdown-badge').textContent = 'Interview time!'; return; }
+  const h = Math.floor(diff / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  document.getElementById('countdown-badge').textContent = `Interview in ${h}h ${m}m — Monday 10AM`;
+}
+
+// ── TIMER
+let timerSeconds = 25 * 60;
+let timerInterval = null;
+let timerRunning = false;
+
+function setTimer(minutes) {
+  if (timerRunning) { clearInterval(timerInterval); timerRunning = false; }
+  timerSeconds = minutes * 60;
+  updateTimerDisplay();
+  document.getElementById('timer-start').textContent = 'Start';
+  document.getElementById('timer-start').className = 'timer-btn primary';
+  document.getElementById('timer-display').className = 'timer-display';
+}
+
+function timerToggle() {
+  if (timerRunning) {
+    clearInterval(timerInterval);
+    timerRunning = false;
+    document.getElementById('timer-start').textContent = 'Resume';
+    document.getElementById('timer-display').classList.remove('running');
+  } else {
+    timerRunning = true;
+    document.getElementById('timer-start').textContent = 'Pause';
+    document.getElementById('timer-display').classList.add('running');
+    timerInterval = setInterval(() => {
+      timerSeconds--;
+      updateTimerDisplay();
+      if (timerSeconds <= 0) {
+        clearInterval(timerInterval);
+        timerRunning = false;
+        document.getElementById('timer-start').textContent = 'Start';
+        document.getElementById('timer-display').className = 'timer-display';
+        alert('Time up! Take a 5-minute break.');
+        setTimer(25);
+      }
+    }, 1000);
+  }
+}
+
+function timerReset() {
+  clearInterval(timerInterval);
+  timerRunning = false;
+  setTimer(25);
+  document.getElementById('timer-start').textContent = 'Start';
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timerSeconds / 60);
+  const s = timerSeconds % 60;
+  document.getElementById('timer-display').textContent = String(m).padStart(2,'0') + ':' + String(s).padStart(2,'0');
+  if (timerSeconds <= 60 && timerRunning) {
+    document.getElementById('timer-display').classList.add('low');
+  } else {
+    document.getElementById('timer-display').classList.remove('low');
+  }
+}
+
+// ── ACTIVE NAV HIGHLIGHT on scroll
+const sections = document.querySelectorAll('.section');
+const navItems = document.querySelectorAll('.nav-item[data-sec]');
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      navItems.forEach(n => n.classList.remove('active'));
+      const active = document.querySelector(`.nav-item[data-sec="${entry.target.id}"]`);
+      if (active) active.classList.add('active');
+    }
+  });
+}, { threshold: 0.2 });
+
+sections.forEach(s => observer.observe(s));
+
+// ── INIT
+window.onload = () => {
+  loadChecklist();
+  loadNotes();
+  loadTopicNotes();
+  loadDoneState();
+  updateProgress();
+  updateCountdown();
+  setInterval(updateCountdown, 60000);
+};
 </script>
 </body>
 </html>
