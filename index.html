@@ -3,905 +3,749 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Round 2 — Quick Read</title>
+<title>Round 2 — Exact Topics</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap');
 
 :root {
-  --bg: #0a0a0a;
-  --card: #111111;
-  --border: #222;
+  --bg: #080808;
+  --card: #111;
+  --border: #1e1e1e;
   --accent: #00e676;
-  --warn: #ff9800;
-  --danger: #ff5252;
+  --warn: #ffb300;
+  --red: #ff5252;
   --blue: #40c4ff;
   --text: #f0f0f0;
-  --muted: #888;
-  --highlight: #1a2a1a;
+  --muted: #666;
+  --dim: #999;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Inter', sans-serif;
-  font-size: 14px;
-  line-height: 1.6;
-}
+body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; font-size: 14px; line-height: 1.6; }
 
 /* TOP BAR */
-.topbar {
-  position: fixed;
-  top: 0; left: 0; right: 0;
+.bar {
+  position: fixed; top: 0; left: 0; right: 0;
   background: #000;
   border-bottom: 2px solid var(--accent);
-  padding: 8px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  z-index: 100;
+  padding: 8px 14px;
+  display: flex; align-items: center; justify-content: space-between;
+  z-index: 200;
+  gap: 10px;
 }
+.bar-title { font-size: 11px; font-weight: 700; color: var(--accent); font-family: 'JetBrains Mono', monospace; letter-spacing: 0.08em; white-space: nowrap; }
+.cd { font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: var(--warn); white-space: nowrap; }
+.pills { display: flex; gap: 4px; flex-wrap: wrap; }
+.pill { font-size: 10px; padding: 3px 9px; border: 1px solid #333; border-radius: 20px; color: var(--muted); text-decoration: none; font-family: 'JetBrains Mono', monospace; transition: all 0.1s; white-space: nowrap; }
+.pill:hover { border-color: var(--accent); color: var(--accent); }
 
-.topbar-title {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--accent);
-  font-family: 'JetBrains Mono', monospace;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.topbar-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-.countdown {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--warn);
-}
-
-.nav-pills {
-  display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
-}
-
-.nav-pill {
-  font-size: 10px;
-  padding: 3px 8px;
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  color: var(--muted);
-  text-decoration: none;
-  transition: all 0.1s;
-  font-family: 'JetBrains Mono', monospace;
-}
-
-.nav-pill:hover { border-color: var(--accent); color: var(--accent); }
-
-/* LAYOUT */
-.page {
-  max-width: 780px;
-  margin: 0 auto;
-  padding: 70px 16px 60px;
-}
+/* PAGE */
+.page { max-width: 800px; margin: 0 auto; padding: 64px 14px 60px; }
 
 /* SECTION */
-.sec {
-  margin-bottom: 24px;
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  overflow: hidden;
-  scroll-margin-top: 60px;
-}
-
-.sec-head {
-  background: #161616;
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  border-bottom: 1px solid var(--border);
-  cursor: pointer;
-  user-select: none;
-}
-
-.sec-num {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  color: var(--accent);
-  background: #0d1f0d;
-  border: 1px solid var(--accent);
-  padding: 2px 6px;
-  border-radius: 3px;
-}
-
-.sec-title {
-  font-size: 13px;
-  font-weight: 700;
-  color: var(--text);
-  flex: 1;
-}
-
-.imp {
-  font-size: 9px;
-  font-family: 'JetBrains Mono', monospace;
-  font-weight: 700;
-  padding: 2px 6px;
-  border-radius: 3px;
-}
-
-.h { background: #1a0000; color: var(--danger); border: 1px solid #ff525244; }
-.m { background: #1a1400; color: var(--warn); border: 1px solid #ff980044; }
-
-.sec-arrow {
-  font-size: 11px;
-  color: var(--muted);
-  transition: transform 0.15s;
-}
-
-.sec.open .sec-arrow { transform: rotate(90deg); }
-
-.sec-body {
-  display: none;
-  padding: 14px 16px;
-}
-
+.sec { margin-bottom: 16px; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; scroll-margin-top: 58px; }
+.sec-head { background: #131313; padding: 11px 14px; display: flex; align-items: center; gap: 10px; cursor: pointer; user-select: none; border-bottom: 1px solid var(--border); }
+.sec-num { font-family: 'JetBrains Mono', monospace; font-size: 10px; color: var(--accent); background: #0a1a0a; border: 1px solid #00e67644; padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
+.sec-title { font-size: 14px; font-weight: 700; color: #fff; flex: 1; }
+.tag { font-size: 9px; font-family: 'JetBrains Mono', monospace; font-weight: 700; padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
+.tr { background: #1a0000; color: var(--red); border: 1px solid #ff525233; }
+.tw { background: #1a1000; color: var(--warn); border: 1px solid #ffb30033; }
+.arr { font-size: 11px; color: var(--muted); transition: transform 0.15s; }
+.sec.open .arr { transform: rotate(90deg); }
+.sec-body { display: none; padding: 14px; }
 .sec.open .sec-body { display: block; }
 
 /* CONTENT */
-.topic-label {
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--accent);
-  font-family: 'JetBrains Mono', monospace;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin: 14px 0 6px;
-}
+.lbl { font-size: 10px; font-weight: 700; color: var(--accent); font-family: 'JetBrains Mono', monospace; text-transform: uppercase; letter-spacing: 0.08em; margin: 14px 0 7px; padding-bottom: 4px; border-bottom: 1px solid #1a2a1a; }
+.lbl:first-child { margin-top: 0; }
 
-.topic-label:first-child { margin-top: 0; }
+ul { padding-left: 18px; margin-bottom: 6px; }
+li { color: #ddd; font-size: 13px; margin-bottom: 5px; line-height: 1.55; }
+li b, b { color: #fff; font-weight: 600; }
+li .r { color: var(--red); font-weight: 700; }
+li .w { color: var(--warn); font-weight: 600; }
+li .g { color: var(--accent); font-weight: 600; }
 
-ul {
-  padding-left: 16px;
-  margin-bottom: 8px;
-}
+.f { background: #0a180a; border-left: 3px solid var(--accent); padding: 8px 12px; font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--accent); margin: 8px 0; border-radius: 0 4px 4px 0; line-height: 1.7; }
 
-li {
-  color: #ddd;
-  font-size: 13px;
-  margin-bottom: 4px;
-  line-height: 1.55;
-}
-
-li b, strong { color: #fff; font-weight: 600; }
-
-.f {
-  background: #0d1a0d;
-  border-left: 3px solid var(--accent);
-  padding: 7px 12px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 12px;
-  color: var(--accent);
-  margin: 6px 0;
-  border-radius: 0 4px 4px 0;
-}
-
-.qa {
-  background: #111;
-  border: 1px solid #222;
-  border-left: 3px solid var(--warn);
-  border-radius: 0 6px 6px 0;
-  padding: 10px 12px;
-  margin: 6px 0;
-}
-
-.qa .q {
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--warn);
-  margin-bottom: 5px;
-}
-
-.qa .a {
-  font-size: 13px;
-  color: #ccc;
-  line-height: 1.6;
-}
-
+.qa { background: #0e0e0e; border: 1px solid #222; border-left: 3px solid var(--warn); border-radius: 0 6px 6px 0; padding: 10px 13px; margin: 8px 0; }
+.qa .q { font-size: 12px; font-weight: 700; color: var(--warn); margin-bottom: 6px; }
+.qa .a { font-size: 13px; color: #ccc; line-height: 1.6; }
 .qa .a ul { margin: 4px 0 0; }
+.qa .a li { color: #ccc; }
 
-.warn-box {
-  background: #1a1200;
-  border: 1px solid #ff980055;
-  border-radius: 5px;
-  padding: 8px 12px;
-  font-size: 12px;
-  color: var(--warn);
-  margin: 8px 0;
-}
+.alert { background: #150a00; border: 1px solid #ffb30044; border-left: 3px solid var(--warn); border-radius: 0 6px 6px 0; padding: 9px 13px; font-size: 12.5px; color: var(--warn); margin: 8px 0; font-weight: 600; }
 
-.ans-box {
-  background: #0a1a0a;
-  border: 1px solid #00e67644;
-  border-radius: 5px;
-  padding: 10px 12px;
-  margin: 8px 0;
-}
+.ans { background: #080f08; border: 1px solid #00e67633; border-radius: 6px; padding: 10px 13px; margin: 8px 0; }
+.ans-lbl { font-size: 9px; font-family: 'JetBrains Mono', monospace; color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 5px; }
+.ans p, .ans li { font-size: 13px; color: #a8d4a8; line-height: 1.6; }
 
-.ans-label {
-  font-size: 9px;
-  font-family: 'JetBrains Mono', monospace;
-  color: var(--accent);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  margin-bottom: 5px;
-}
+.chips { display: flex; flex-wrap: wrap; gap: 5px; margin: 8px 0; }
+.chip { font-family: 'JetBrains Mono', monospace; font-size: 10px; background: #0a180a; border: 1px solid #00e67633; color: var(--accent); padding: 3px 9px; border-radius: 20px; }
+.chip.b { background: #080e18; border-color: #40c4ff33; color: var(--blue); }
 
-.ans-box p, .ans-box li {
-  font-size: 13px;
-  color: #b8d4b8;
-  line-height: 1.6;
-}
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin: 8px 0; }
+.card { background: #0e0e0e; border: 1px solid #1e1e1e; border-radius: 6px; padding: 10px 12px; }
+.card-t { font-size: 11px; font-weight: 700; color: var(--blue); font-family: 'JetBrains Mono', monospace; margin-bottom: 5px; }
+.card li { font-size: 12px; color: #bbb; margin-bottom: 3px; }
 
-.chips { display: flex; flex-wrap: wrap; gap: 5px; margin: 6px 0; }
-.chip {
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 10px;
-  background: #0d1f0d;
-  border: 1px solid #00e67644;
-  color: var(--accent);
-  padding: 2px 8px;
-  border-radius: 20px;
-}
+.div { height: 1px; background: #1a1a1a; margin: 12px 0; }
 
-.divider {
-  height: 1px;
-  background: var(--border);
-  margin: 12px 0;
-}
-
-@media (max-width: 600px) {
-  .nav-pills { display: none; }
-  .page { padding: 64px 10px 40px; }
+@media (max-width: 580px) {
+  .pills { display: none; }
+  .grid2 { grid-template-columns: 1fr; }
+  .page { padding: 60px 10px 50px; }
 }
 </style>
 </head>
 <body>
 
-<div class="topbar">
-  <div class="topbar-title">Foxconn Round 2 — Deep Technical</div>
-  <div class="topbar-right">
-    <div class="countdown" id="cd">--:--</div>
-    <div class="nav-pills">
-      <a class="nav-pill" href="#s1">Electronics</a>
-      <a class="nav-pill" href="#s2">Instruments</a>
-      <a class="nav-pill" href="#s3">Debugging</a>
-      <a class="nav-pill" href="#s4">FA</a>
-      <a class="nav-pill" href="#s5">8D/FMEA</a>
-      <a class="nav-pill" href="#s6">Sensors</a>
-      <a class="nav-pill" href="#s7">Circuits</a>
-      <a class="nav-pill" href="#s8">Resume Q</a>
-      <a class="nav-pill" href="#s9">Scenarios</a>
-      <a class="nav-pill" href="#s10">Your Stories</a>
-      <a class="nav-pill" href="#s11">HR</a>
-    </div>
+<div class="bar">
+  <div class="bar-title">⚡ ROUND 2 — DEEP TECHNICAL</div>
+  <div class="cd" id="cd">--:--</div>
+  <div class="pills">
+    <a class="pill" href="#s1">DMM</a>
+    <a class="pill" href="#s2">FA</a>
+    <a class="pill" href="#s3">LCR</a>
+    <a class="pill" href="#s4">Scope</a>
+    <a class="pill" href="#s5">PSU</a>
+    <a class="pill" href="#s6">Protocols</a>
+    <a class="pill" href="#s7">Resume</a>
+    <a class="pill" href="#s8">Scenarios</a>
+    <a class="pill" href="#s9">HR</a>
   </div>
 </div>
 
 <div class="page">
 
-<!-- ── S1: ELECTRONICS ── -->
+<!-- ═══ S1: DMM ═══ -->
 <div class="sec open" id="s1">
   <div class="sec-head" onclick="tog(this)">
     <span class="sec-num">01</span>
-    <span class="sec-title">Electronics Fundamentals</span>
-    <span class="imp h">DEFINITELY ASKED</span>
-    <span class="sec-arrow">▶</span>
+    <span class="sec-title">DMM — Digital Multimeter</span>
+    <span class="tag tr">TOPIC 1 — STARTS HERE</span>
+    <span class="arr">▶</span>
   </div>
   <div class="sec-body">
-    <div class="topic-label">Ohm's Law &amp; Power</div>
-    <div class="f">V = IR &nbsp;|&nbsp; P = VI &nbsp;|&nbsp; P = I²R &nbsp;|&nbsp; P = V²/R</div>
+
+    <div class="lbl">All Modes — What Each Does</div>
     <ul>
-      <li><b>V</b> = Voltage (Volts) — the push. <b>I</b> = Current (Amps) — the flow. <b>R</b> = Resistance (Ohms) — the friction</li>
-      <li>5V across 100Ω → I = 5/100 = <b>50mA</b></li>
-      <li>2A through 10Ω → P = 4×10 = <b>40W</b> (heat)</li>
-      <li><b>KCL</b> — current in = current out at any node</li>
-      <li><b>KVL</b> — sum of all voltages around a loop = 0</li>
+      <li><b>DC Voltage (V—)</b> — measure power rails, logic levels, battery voltage. Red probe to +, black to GND. Read voltage of red probe relative to black</li>
+      <li><b>AC Voltage (V~)</b> — measure mains supply (230V India), transformer output. Never use on DC circuits</li>
+      <li><b>Resistance (Ω)</b> — <span class="r">POWER OFF CIRCUIT FIRST</span>. Measure component values, trace resistance. Live circuit = wrong reading</li>
+      <li><b>Continuity (beep ))))</b> — beeps if resistance &lt;~30Ω. For: solder joint check, trace check, short detection. Beep = connected. Silence = open</li>
+      <li><b>Diode Test</b> — shows forward voltage drop. Silicon = 0.6–0.7V forward. OL (open loop) in reverse = good diode. 0V both ways = shorted. OL both ways = open</li>
+      <li><b>DC Current (A)</b> — <span class="r">BREAK the circuit, insert DMM IN SERIES</span>. Use current port on DMM (not voltage port — blows fuse or destroys DMM)</li>
     </ul>
 
-    <div class="topic-label">Passive Components</div>
+    <div class="lbl">Dead Board — Step by Step with DMM</div>
     <ul>
-      <li><b>Resistor</b> — limits current. Series: R1+R2. Parallel: (R1×R2)/(R1+R2)</li>
-      <li><b>Capacitor</b> — stores charge. DC steady state = open circuit. At high freq = short circuit</li>
-      <li>Electrolytic caps are <b>polarised</b> — reversed = overheats, swells, fails</li>
-      <li>100nF ceramic decoupling cap — goes RIGHT NEXT to IC VCC pin, filters switching noise</li>
-      <li><b>Inductor</b> — opposes current change. DC = short. High freq = open</li>
-      <li><b>Diode</b> — one direction only. Silicon forward voltage = 0.6–0.7V. Cathode = stripe</li>
+      <li><b>Step 1</b> — measure input voltage at power connector. Correct voltage arriving? (e.g., 5V ±5%)</li>
+      <li><b>Step 2</b> — measure LDO or buck converter output. Rail at correct voltage?</li>
+      <li><b>Step 3</b> — measure VCC at the main IC pin directly. Not just at regulator — trace may be broken</li>
+      <li><b>Step 4</b> — check ground continuity from supply to board GND pin</li>
+      <li><b>Step 5</b> — if all rails correct but device dead → check enable pins, reset line, communication lines</li>
     </ul>
 
-    <div class="topic-label">Transistors</div>
+    <div class="lbl">Important Limitations</div>
     <ul>
-      <li><b>BJT NPN</b> — current-controlled. Base drives Collector→Emitter. VBE ≥ 0.7V to turn on</li>
-      <li><b>MOSFET N-channel</b> — voltage-controlled. Gate HIGH → Drain to Source conducts. Almost no gate current</li>
-      <li>MOSFETs used in power circuits — lower loss, faster switching than BJT</li>
+      <li>DMM shows <b>average steady-state voltage only</b> — misses transients, noise, ripple</li>
+      <li>DMM has 10MΩ input impedance — barely loads the circuit. Pin may show 3.3V on DMM but collapse under real load</li>
+      <li>Continuity beep between VCC and GND is <b>not always a short</b> — could be LED, resistor, protection diode. Switch to resistance mode and read the actual value. True short = near 0Ω + component getting hot</li>
     </ul>
 
-    <div class="topic-label">Power Supply</div>
-    <ul>
-      <li><b>LDO</b> — simple, burns excess as heat. Efficiency = Vout/Vin. Heat = (Vin−Vout) × I</li>
-      <li>5V→3.3V at 500mA: heat = 1.7×0.5 = <b>0.85W</b>, efficiency = <b>66%</b></li>
-      <li><b>Buck converter</b> — switching, steps DOWN efficiently (85–95%). Vout = Vin × duty cycle</li>
-      <li><b>Boost converter</b> — stepping UP (battery→USB)</li>
-      <li>Board dead → check power rails first. Always. Every time.</li>
-    </ul>
+    <div class="qa">
+      <div class="q">Q: How do you use a DMM to find a short circuit?</div>
+      <div class="a">
+        <ul>
+          <li>Power OFF the circuit</li>
+          <li>Set DMM to continuity or resistance mode</li>
+          <li>Probe between VCC and GND — if beep, measure resistance value</li>
+          <li>Near 0Ω = likely short. Check schematic for any legitimate parallel paths first</li>
+          <li>Systematically isolate sections — disconnect sub-circuits one at a time until short disappears. That section contains the fault</li>
+          <li>Power ON with current-limited supply — shorted component gets warm. Find it with touch or thermal camera</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="q">Q: How do you measure current without breaking the circuit?</div>
+      <div class="a">Use a clamp meter — it measures the magnetic field around a conductor without contact. Useful for high currents. For low currents on PCB, a shunt resistor (low value, e.g., 0.1Ω) in series — measure voltage across it, calculate I = V/R.</div>
+    </div>
   </div>
 </div>
 
-<!-- ── S2: INSTRUMENTS ── -->
+<!-- ═══ S2: FA ═══ -->
 <div class="sec open" id="s2">
   <div class="sec-head" onclick="tog(this)">
     <span class="sec-num">02</span>
-    <span class="sec-title">Lab Instruments</span>
-    <span class="imp h">DEFINITELY ASKED</span>
-    <span class="sec-arrow">▶</span>
+    <span class="sec-title">Failure Analysis (FA)</span>
+    <span class="tag tr">TOPIC 2 — YOU BLANKED LAST TIME</span>
+    <span class="arr">▶</span>
   </div>
   <div class="sec-body">
-    <div class="topic-label">DMM Modes</div>
+    <div class="alert">⚠ You forgot this in Round 1. Read these 6 steps out loud right now before the interview.</div>
+
+    <div class="lbl">FA Flow — 6 Steps in Order</div>
     <ul>
-      <li><b>DC Voltage (V—)</b> — measure rails, logic levels. Red to +, black to GND</li>
-      <li><b>Resistance (Ω)</b> — POWER OFF first. Measure component values, trace continuity</li>
-      <li><b>Continuity (beep)</b> — beeps if &lt;30Ω. Check solder joints, traces, shorts</li>
-      <li><b>Diode test</b> — silicon shows 0.6–0.7V forward. OL in reverse = good diode</li>
-      <li><b>Current (A)</b> — break the circuit, insert DMM IN SERIES. Use correct port</li>
+      <li><b>1. Visual Inspection</b> — naked eye → magnifier → microscope. Photos before touching anything. Look: burnt marks, swollen caps, solder bridges, cold joints, missing/wrong components, reversed polarity</li>
+      <li><b>2. Electrical Characterisation</b> — DMM + scope. Reproduce the failure. Measure all rails and key signals vs expected values</li>
+      <li><b>3. Fault Isolation</b> — use working unit as reference. Measure same points on both. First divergence = fault location</li>
+      <li><b>4. Physical Analysis</b> — X-ray (non-destructive, sees under BGA), cross-section (destructive, internal joint structure), SEM + EDS if needed</li>
+      <li><b>5. Root Cause Identification</b> — classify: <b>Design / Material / Process / ESD / Workmanship</b></li>
+      <li><b>6. Corrective Action</b> — 8D report, FMEA update, ECN if design change needed</li>
     </ul>
 
-    <div class="topic-label">Oscilloscope</div>
-    <ul>
-      <li><b>X axis</b> = time/div (timebase). <b>Y axis</b> = V/div (voltage scale)</li>
-      <li>Trigger stabilises waveform — set to ~50% of signal amplitude, rising edge</li>
-      <li>Always connect <b>probe ground clip to circuit GND first</b></li>
-      <li>DMM shows average — <b>scope shows transients, noise, spikes, ripple</b></li>
-      <li>Use scope for: power rail noise, clock quality, SPI/I2C/UART signals, glitches, PWM</li>
-    </ul>
-
-    <div class="topic-label">Spectrum Analyser — YOU MESSED THIS UP LAST TIME</div>
-    <div class="warn-box">Read this carefully — they will ask again</div>
-    <ul>
-      <li>Shows <b>frequency domain</b> — X axis = frequency, Y axis = amplitude (dBm)</li>
-      <li>Each peak = a frequency present in the signal</li>
-      <li>A 100MHz clock shows peak at 100MHz, harmonics at 200MHz, 300MHz (lower amplitude)</li>
-      <li>At Foxconn: used for <b>EMI/EMC compliance</b> — checking device doesn't emit radiation above legal limits</li>
-      <li>Also used to validate <b>RF performance</b> — Wi-Fi, Bluetooth, cellular at correct frequency and power</li>
-      <li>Scope = time domain (what signal looks like over time). Spectrum analyser = frequency domain (what frequencies are present)</li>
-    </ul>
-    <div class="ans-box">
-      <div class="ans-label">If asked "have you used it?"</div>
-      <p>I haven't operated one directly, but I understand it shows the frequency domain — which frequencies are present and at what levels. In Foxconn's context it's used for EMI compliance testing and RF performance validation. I'm ready to learn the instrument hands-on.</p>
+    <div class="lbl">FA Tools</div>
+    <div class="grid2">
+      <div class="card">
+        <div class="card-t">X-RAY</div>
+        <ul>
+          <li>Non-destructive</li>
+          <li>Views solder under BGA/QFN</li>
+          <li>Detects: voids, bridges, missing balls</li>
+          <li>Standard for hidden solder joints</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-t">CROSS-SECTION</div>
+        <ul>
+          <li>Destructive — cut + polish</li>
+          <li>Views internal solder structure</li>
+          <li>Shows: cracks, voids, intermetallic layer</li>
+          <li>Confirms thermal fatigue failures</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-t">SEM</div>
+        <ul>
+          <li>Up to 100,000× magnification</li>
+          <li>Surface morphology, fracture details</li>
+          <li>Sees cracks invisible optically</li>
+          <li>Needs vacuum chamber</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-t">EDS (with SEM)</div>
+        <ul>
+          <li>Identifies chemical elements</li>
+          <li>Confirms contamination, wrong alloy</li>
+          <li>Checks if solder is correct (SAC305)</li>
+          <li>Detects corrosion products</li>
+        </ul>
+      </div>
     </div>
 
-    <div class="topic-label">Power Analyser</div>
+    <div class="lbl">Common Failure Modes</div>
     <ul>
-      <li>Measures voltage + current + power simultaneously and continuously over time</li>
-      <li>Shows: real power (W), power factor, efficiency, harmonics</li>
-      <li>Used to characterise product power consumption across all operating modes</li>
-      <li>Different from DMM — DMM is a snapshot, power analyser logs over time</li>
+      <li><b>Cold solder joint</b> — dull, grey, grainy (not shiny). High resistance. Intermittent. Reflow with fresh solder</li>
+      <li><b>Solder bridge</b> — blob connecting adjacent pins. Short circuit. Remove with wick</li>
+      <li><b>Open trace</b> — broken PCB track. Continuity = open. Bridge with bodge wire</li>
+      <li><b>ESD damage</b> — IC appears fine physically but dead or intermittent. No visual sign. Replace IC</li>
+      <li><b>Reversed polarity</b> — electrolytic cap or diode backwards. Overheating, bulging, failure</li>
+      <li><b>Wrong component</b> — same package, wrong value. Measure actual value vs BOM</li>
+      <li><b>Lifted pad</b> — pad separated from PCB, looks soldered but no electrical connection</li>
+      <li><b>Tombstone</b> — one end of SMD component lifts off pad during reflow</li>
     </ul>
 
-    <div class="topic-label">Logic Analyser (on your resume)</div>
+    <div class="lbl">8D + FMEA — Quick Summary</div>
     <ul>
-      <li>Captures multiple digital signals simultaneously, decodes protocol bytes</li>
-      <li>You've used it — for I2C, SPI, UART debugging on nRF52 and ESP32 projects</li>
-      <li>Shows actual bytes being transmitted — much faster than counting bits on a scope</li>
+      <li><b>D1</b> Team → <b>D2</b> Describe problem → <b>D3</b> Containment (TEMPORARY) → <b>D4</b> Root cause (5-Why/Fishbone) → <b>D5</b> Corrective action (PERMANENT) → <b>D6</b> Implement → <b>D7</b> Prevent recurrence → <b>D8</b> Close</li>
+      <li><b>Containment ≠ Corrective action</b> — containment stops the bleeding NOW. Corrective action is the permanent fix</li>
     </ul>
+    <div class="f">RPN = Severity × Occurrence × Detection (max 1000)</div>
+    <ul>
+      <li>Higher RPN = higher priority. Reduce by improving Detection or reducing Occurrence</li>
+      <li>Severity 9–10 = safety/regulatory failure — review even at low RPN</li>
+    </ul>
+
+    <div class="qa">
+      <div class="q">Q: What is the difference between ICT and FCT?</div>
+      <div class="a">
+        <ul>
+          <li><b>ICT (In-Circuit Test)</b> — tests PCBA before product assembly. Bed-of-nails fixture contacts all test points. Checks: component values, opens, shorts. Catches assembly defects. Fast and cheap</li>
+          <li><b>FCT (Functional Test)</b> — tests fully assembled product under real operating conditions. Exercises all functions: power on, comms, sensors, display. Catches functional and firmware integration failures</li>
+          <li>ICT = assembly quality. FCT = does the product actually work</li>
+        </ul>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- ── S3: DEBUGGING ── -->
+<!-- ═══ S3: LCR ═══ -->
 <div class="sec open" id="s3">
   <div class="sec-head" onclick="tog(this)">
     <span class="sec-num">03</span>
-    <span class="sec-title">Hardware Debugging Methodology</span>
-    <span class="imp h">DEFINITELY ASKED</span>
-    <span class="sec-arrow">▶</span>
+    <span class="sec-title">LCR Meter</span>
+    <span class="tag tr">TOPIC 3 — KNOW THIS WELL</span>
+    <span class="arr">▶</span>
   </div>
   <div class="sec-body">
-    <div class="topic-label">The Process — say this in order</div>
+
+    <div class="lbl">What Is an LCR Meter?</div>
     <ul>
-      <li><b>1. Define the symptom precisely</b> — what exactly fails, under what conditions, how reproducibly</li>
-      <li><b>2. Check power first — always</b> — every rail, every pin, ground continuity</li>
-      <li><b>3. Visual inspection</b> — burnt marks, swollen caps, solder bridges, cold joints, wrong orientation</li>
-      <li><b>4. Reproduce the failure</b> — cannot root-cause what you can't reproduce consistently</li>
-      <li><b>5. Isolate the domain</b> — power? comms? firmware? mechanical?</li>
-      <li><b>6. Divide and conquer</b> — split circuit in half, test midpoint, eliminate half the possibilities</li>
-      <li><b>7. Measure — never assume</b> — probe it. Every hypothesis tested with instrument</li>
-      <li><b>8. Document everything</b> — every measurement, every result</li>
+      <li>Measures <b>L</b> (Inductance — Henry, H), <b>C</b> (Capacitance — Farad, F), <b>R</b> (Resistance — Ohm, Ω)</li>
+      <li>More accurate than DMM for component measurement — especially for capacitors and inductors</li>
+      <li>Applies a known AC signal at a specific frequency and measures the component's impedance response</li>
+      <li>DMM can only measure resistance — LCR meter measures all three passive component types</li>
     </ul>
 
-    <div class="topic-label">Common Failure Modes</div>
+    <div class="lbl">How It Works</div>
     <ul>
-      <li><b>Cold solder joint</b> — dull, grey, grainy (not shiny). High resistance. Intermittent. Reflow to fix</li>
-      <li><b>Solder bridge</b> — blob connecting adjacent pins/pads. Short circuit. Remove with wick</li>
-      <li><b>Open trace</b> — broken PCB track. Continuity test shows open. Fix with bodge wire</li>
-      <li><b>ESD damage</b> — IC appears fine but dead. No visual sign. Requires IC replacement</li>
-      <li><b>Reversed polarity</b> — cap or diode backwards. Overheating, bulging, failure</li>
-      <li><b>Wrong component</b> — same package, wrong value. Measure actual value vs BOM</li>
-      <li><b>Lifted pad</b> — pad separated from PCB. Looks soldered but no connection</li>
+      <li>Applies AC test signal (e.g., 1kHz, 10kHz, 100kHz) across the component</li>
+      <li>Measures impedance (Z), phase angle, and calculates L, C, or R from the result</li>
+      <li>Capacitor impedance: <b>Xc = 1/(2πfC)</b> — at known frequency, measure Xc, calculate C</li>
+      <li>Inductor impedance: <b>XL = 2πfL</b> — at known frequency, measure XL, calculate L</li>
+      <li>Test frequency matters — measure capacitors at the frequency they'll be used in circuit</li>
     </ul>
 
-    <div class="topic-label">Protocols — Debugging Each</div>
+    <div class="lbl">Key Parameters It Measures</div>
     <ul>
-      <li><b>UART</b> — 2 wires TX/RX, no clock, async. Both ends must match baud rate. Idle = HIGH. Check: baud match, voltage levels, TX↔RX not swapped</li>
-      <li><b>I2C</b> — 2 wires SDA/SCL. Open-drain — needs pull-up resistors (4.7kΩ). Multi-device via 7-bit address. Check: pull-ups present? correct address? ACK returned?</li>
-      <li><b>SPI</b> — 4 wires MOSI/MISO/SCK/CS. Fast, full-duplex. CS goes LOW to select. Check: CS toggling? correct CPOL/CPHA mode? frequency within device max?</li>
-      <li><b>I2C bus lockup</b> — SDA stuck LOW. Fix: clock SCL 9 times then send STOP</li>
+      <li><b>Capacitance (C)</b> — actual capacitance value in pF, nF, µF</li>
+      <li><b>ESR (Equivalent Series Resistance)</b> — internal resistance of capacitor. High ESR = bad cap. Critical for electrolytic caps — high ESR causes heat, ripple, failure</li>
+      <li><b>Inductance (L)</b> — actual inductance value in µH, mH, H</li>
+      <li><b>Q factor</b> — quality factor. Higher Q = lower loss in inductor. Q = XL/R</li>
+      <li><b>D (Dissipation factor)</b> — loss in capacitor. D = ESR × 2πfC. Low D = good cap</li>
     </ul>
+
+    <div class="lbl">When You Use LCR Meter in FA</div>
+    <ul>
+      <li>Verify component value matches BOM — wrong capacitor value is common NPI failure</li>
+      <li>Check electrolytic cap health — high ESR indicates degraded or failing cap even if capacitance looks ok</li>
+      <li>Verify inductors in switching power supplies — wrong inductance changes converter behaviour</li>
+      <li>Check crystal/resonator loading capacitors — wrong value shifts oscillation frequency</li>
+      <li>Incoming component quality inspection — verify batch components are within spec</li>
+    </ul>
+
+    <div class="qa">
+      <div class="q">Q: A board has a power supply ripple issue. How does LCR meter help?</div>
+      <div class="a">
+        <ul>
+          <li>Measure ESR of the output filter electrolytic capacitor</li>
+          <li>High ESR means the cap cannot filter ripple effectively — even if capacitance value is correct</li>
+          <li>ESR increases with age, temperature, and if cap was stressed beyond its voltage rating</li>
+          <li>Replace the cap — measure ESR of the new one to confirm it's low before installing</li>
+          <li>Also verify capacitance value — a degraded cap may have lost capacitance too</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="q">Q: Difference between LCR meter and DMM for component testing?</div>
+      <div class="a">
+        <ul>
+          <li>DMM resistance mode applies DC — only measures R. Cannot measure C or L</li>
+          <li>LCR meter applies AC at specific frequency — measures all three (L, C, R) plus derived parameters (ESR, Q, D)</li>
+          <li>LCR meter is far more accurate for capacitors — DMM may give rough capacitance in some modes but not ESR</li>
+          <li>For FA work: use DMM for quick voltage and continuity. Use LCR when you need to verify a specific passive component is within spec</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="f">Xc = 1/(2πfC) &nbsp;|&nbsp; XL = 2πfL &nbsp;|&nbsp; Z = √(R² + X²)</div>
   </div>
 </div>
 
-<!-- ── S4: FAILURE ANALYSIS ── -->
+<!-- ═══ S4: SCOPE ═══ -->
 <div class="sec open" id="s4">
   <div class="sec-head" onclick="tog(this)">
     <span class="sec-num">04</span>
-    <span class="sec-title">Failure Analysis (FA)</span>
-    <span class="imp h">DEFINITELY ASKED — YOU FORGOT LAST TIME</span>
-    <span class="sec-arrow">▶</span>
+    <span class="sec-title">Oscilloscope</span>
+    <span class="tag tr">TOPIC 4 — VERY LIKELY DEEP QUESTIONS</span>
+    <span class="arr">▶</span>
   </div>
   <div class="sec-body">
-    <div class="warn-box">You said you forgot FA points in round 1. Read this section carefully and say it out loud once before the interview.</div>
 
-    <div class="topic-label">FA Flow — 6 Steps (memorise this order)</div>
+    <div class="lbl">Key Controls</div>
     <ul>
-      <li><b>1. Visual inspection</b> — naked eye → magnifier → microscope. Document with photos before touching anything</li>
-      <li><b>2. Electrical characterisation</b> — DMM + scope. Reproduce the failure. Measure all rails vs expected</li>
-      <li><b>3. Fault isolation</b> — narrow down to component, joint, or circuit area using a good unit as reference</li>
-      <li><b>4. Physical analysis</b> — X-ray (non-destructive), cross-section (destructive), SEM/EDS if needed</li>
-      <li><b>5. Root cause identification</b> — classify: design defect / material defect / process defect / ESD / workmanship</li>
-      <li><b>6. Corrective action</b> — 8D report, FMEA update, ECN if design needs to change</li>
+      <li><b>Timebase (X axis — time/div)</b> — how much time per grid square. Set so 1–2 full cycles fill the screen. 1kHz signal (1ms period) → use 0.2ms/div</li>
+      <li><b>Voltage scale (Y axis — V/div)</b> — how much voltage per grid square. Signal should fill ~60% of screen height. If clipped → increase V/div. If tiny line → decrease V/div</li>
+      <li><b>Trigger</b> — stabilises waveform. Rising edge trigger at ~50% of signal amplitude. Without trigger, waveform scrolls unreadably. Single trigger = capture one-time events</li>
+      <li><b>Probe ground clip</b> — always connect to circuit GND first before probing any signal</li>
+      <li><b>×10 probe</b> — reduces loading on circuit (10× less current). Attenuates signal by 10× — set scope to compensate. Use ×10 for almost all work</li>
+      <li><b>Probe compensation</b> — adjust trim cap until built-in 1kHz square wave has sharp flat corners. Do this before any measurement</li>
     </ul>
 
-    <div class="topic-label">FA Tools</div>
+    <div class="lbl">Scope vs DMM — When to Use Each</div>
     <ul>
-      <li><b>X-ray</b> — non-destructive. Views solder under BGA/QFN without removing component. Detects voids, bridges, missing balls</li>
-      <li><b>Cross-section</b> — destructive. Cut, polish, view under microscope. Shows internal solder joint structure, cracks, voids</li>
-      <li><b>SEM</b> — Scanning Electron Microscope. Very high magnification (up to 100,000×). Shows cracks, fractures, surface morphology</li>
-      <li><b>EDS</b> — used WITH SEM. Identifies chemical elements present. Confirms contamination, wrong alloy, corrosion products</li>
+      <li><b>DMM</b> — steady-state DC voltage, resistance, continuity, slow measurements</li>
+      <li><b>Scope</b> — anything that changes with time: ripple, noise, transients, clock signals, data lines, glitches, PWM, spikes that cause resets</li>
+      <li><span class="r">If DMM shows correct voltage but circuit misbehaves → grab the scope</span></li>
     </ul>
 
-    <div class="topic-label">What an FA Report Contains</div>
+    <div class="lbl">What to Look For in FA</div>
     <ul>
-      <li>Unit ID, build date, batch, which test failed</li>
-      <li>Exact symptom and conditions</li>
-      <li>All measurements taken with photos/data</li>
-      <li>Fault isolation steps</li>
-      <li>Root cause statement with supporting evidence</li>
-      <li>Root cause classification (design/material/process/ESD)</li>
-      <li>Corrective action recommendation</li>
+      <li><b>Power rail ripple/noise</b> — DMM shows 3.3V but scope shows 50mV switching noise at 500kHz. Causes ADC errors, communication failures, erratic MCU behaviour</li>
+      <li><b>Clock signal</b> — correct frequency? Duty cycle ~50%? Clean edges or slow/ringy edges? Ringing = impedance mismatch, add series termination resistor</li>
+      <li><b>Voltage droop under load</b> — rail drops when device draws current. Scope captures it, DMM misses it. Common cause of random resets</li>
+      <li><b>Glitches</b> — short spikes that reset or corrupt data. Use single trigger to capture. Very hard to find without scope</li>
+      <li><b>Communication signals</b> — is UART TX active? I2C SCL running? SPI CS toggling?</li>
+      <li><b>PWM</b> — verify frequency and duty cycle are correct</li>
     </ul>
 
-    <div class="topic-label">Key Terms</div>
-    <div class="chips">
-      <span class="chip">NPI = New Product Introduction</span>
-      <span class="chip">FA = Failure Analysis</span>
-      <span class="chip">ICT = In-Circuit Test (before assembly)</span>
-      <span class="chip">FCT = Functional Test (after assembly)</span>
-      <span class="chip">AOI = Automated Optical Inspection</span>
-      <span class="chip">ECN = Engineering Change Notice</span>
-      <span class="chip">BOM = Bill of Materials</span>
-      <span class="chip">PCBA = PCB Assembly</span>
-      <span class="chip">Yield = Pass% of total tested</span>
-      <span class="chip">Pareto = 80% failures from 20% causes</span>
+    <div class="lbl">Reading a Waveform — Say This in Interview</div>
+    <ul>
+      <li>First state: <b>"Timebase is X ms/div, so period is approximately Y ms"</b></li>
+      <li>Then: <b>"Frequency = 1/period = Z Hz"</b></li>
+      <li>Then: <b>"Amplitude is approximately A volts peak-to-peak"</b></li>
+      <li>Then describe what you see: clean square wave / noisy / ringy edges / clipped / unexpected dips</li>
+      <li>Then interpret: <b>"This could indicate..."</b></li>
+    </ul>
+
+    <div class="qa">
+      <div class="q">Q: Board resets randomly. How do you use scope to find the cause?</div>
+      <div class="a">
+        <ul>
+          <li>Connect scope channel 1 to the RESET pin — trigger on reset going active (LOW)</li>
+          <li>Connect channel 2 to the main power rail (3.3V or VCC)</li>
+          <li>Set trigger on channel 1 falling edge — scope waits for the reset event</li>
+          <li>When reset occurs, scope captures what happened JUST BEFORE</li>
+          <li>Look at channel 2: did the power rail dip before the reset? If yes → power supply issue, not firmware</li>
+          <li>If power rail is clean during reset → watchdog timer firing (firmware hung), or external reset signal being asserted</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="q">Q: What is ringing on a scope and what causes it?</div>
+      <div class="a">
+        <ul>
+          <li>Ringing = oscillations (bouncing waveform) at the edge of a square wave — signal overshoots then undershoots before settling</li>
+          <li>Caused by: impedance mismatch between driver and trace (transmission line effect), trace inductance, capacitive loading</li>
+          <li>Fix: add a series termination resistor (22–100Ω) at the driver output. Reduces reflection and damps the ringing</li>
+          <li>Problem: ringing can cause logic to read the wrong state if it crosses the threshold voltage</li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- ── S5: 8D / FMEA ── -->
+<!-- ═══ S5: POWER SUPPLY ═══ -->
 <div class="sec open" id="s5">
   <div class="sec-head" onclick="tog(this)">
     <span class="sec-num">05</span>
-    <span class="sec-title">8D Problem Solving &amp; FMEA</span>
-    <span class="imp h">DEFINITELY ASKED</span>
-    <span class="sec-arrow">▶</span>
+    <span class="sec-title">Power Supply</span>
+    <span class="tag tr">TOPIC 5</span>
+    <span class="arr">▶</span>
   </div>
   <div class="sec-body">
-    <div class="topic-label">8D — All 8 Steps</div>
+
+    <div class="lbl">Power Supply Types</div>
     <ul>
-      <li><b>D1</b> — Form cross-functional team</li>
-      <li><b>D2</b> — Describe problem with data (5W2H: Who/What/Where/When/Why/How/How many)</li>
-      <li><b>D3</b> — Interim Containment Action (ICA) — TEMPORARY fix. Quarantine suspect units, add 100% inspection</li>
-      <li><b>D4</b> — Root cause — use 5-Why, Fishbone/Ishikawa diagram</li>
-      <li><b>D5</b> — Choose Permanent Corrective Action (PCA). Verify it works</li>
-      <li><b>D6</b> — Implement PCA. Update work instructions, BOMs, assembly drawings</li>
-      <li><b>D7</b> — Prevent recurrence — update FMEA, control plans, share across product lines</li>
-      <li><b>D8</b> — Close report, recognise team</li>
+      <li><b>LDO (Linear Dropout Regulator)</b> — simple, burns excess as heat. Efficiency = Vout/Vin</li>
+      <li>5V→3.3V at 500mA: heat = (5−3.3)×0.5 = <b class="w">0.85W</b>, efficiency = <b class="w">66%</b></li>
+      <li><b>Buck converter</b> — switching, steps DOWN efficiently 85–95%. Vout = Vin × duty cycle</li>
+      <li><b>Boost converter</b> — switching, steps UP. 3.7V battery → 5V USB output</li>
+      <li>LDO: use for low current, noise-sensitive analog circuits. Buck: use when current is high or voltage difference is large</li>
     </ul>
+
+    <div class="lbl">Lab Power Supply (Bench PSU)</div>
+    <ul>
+      <li>Set output voltage to your required value before connecting to circuit</li>
+      <li><b>Current limiting</b> — set current limit to just above expected draw. If circuit draws more (short circuit), PSU limits current instead of burning components. Essential for debugging</li>
+      <li>Start with low voltage, power on, observe current. Normal current = correct. High current = short somewhere</li>
+      <li>Two-channel PSU: use one channel for positive supply, one for negative (for op-amp circuits)</li>
+      <li><b>Remote sensing</b> — compensates for voltage drop in long cables by measuring voltage at the load, not at PSU terminals</li>
+    </ul>
+
+    <div class="lbl">Power Failures — How to Debug</div>
+    <ul>
+      <li><b>Rail at 0V</b> — fuse blown? LDO enable pin not asserted? Short circuit pulling rail down? Input voltage missing?</li>
+      <li><b>Rail low (e.g., 2.8V instead of 3.3V)</b> — overloaded (too much current draw)? LDO/buck under-spec? Long trace resistance causing drop?</li>
+      <li><b>Rail noisy</b> — check with scope. Insufficient decoupling caps? Switching regulator layout issue? Ground plane broken?</li>
+      <li><b>Rail correct at PSU but low at IC pin</b> — trace resistance or connector resistance causing drop under load. Measure at IC pin directly</li>
+      <li><b>LDO hot</b> — calculate: P = (Vin−Vout)×I. Check if within thermal limit of package. Add heatsink or switch to buck</li>
+    </ul>
+
+    <div class="lbl">Ohm's Law &amp; Power — Quick Reference</div>
+    <div class="f">V = IR &nbsp;|&nbsp; P = VI &nbsp;|&nbsp; P = I²R &nbsp;|&nbsp; P = V²/R</div>
+    <div class="f">Series R: Rtotal = R1+R2 &nbsp;|&nbsp; Parallel R: R = (R1×R2)/(R1+R2)</div>
 
     <div class="qa">
-      <div class="q">What's the difference between containment and corrective action?</div>
-      <div class="a">Containment (D3) is immediate and temporary — stops the bleeding right now. Example: quarantine the batch, add manual inspection. Corrective action (D5/D6) is the permanent fix that eliminates the root cause so this failure never happens again.</div>
+      <div class="q">Q: How do you use a bench PSU to debug a new board for the first time?</div>
+      <div class="a">
+        <ul>
+          <li>Set PSU to required voltage (e.g., 5V). Set current limit low — just above expected normal draw (e.g., 200mA for a small MCU board)</li>
+          <li>Connect to board. Power on. Watch current meter on PSU</li>
+          <li>Normal: current rises to expected level, stays stable. Board works</li>
+          <li>High current immediately: short circuit somewhere — PSU limits, nothing burns. Investigate short</li>
+          <li>Current gradually increasing: thermal runaway or a component charging slowly</li>
+          <li>Zero current: fuse blown, connector issue, or board not actually connected properly</li>
+          <li>After confirming no short, increase current limit to operating maximum and proceed with testing</li>
+        </ul>
+      </div>
     </div>
-
-    <div class="topic-label">FMEA</div>
-    <div class="f">RPN = Severity × Occurrence × Detection (max = 1000)</div>
-    <ul>
-      <li><b>Severity (S)</b> — how bad is the effect? 1–10. 9–10 = safety/regulatory failure</li>
-      <li><b>Occurrence (O)</b> — how often does it happen? 1–10. High = frequent</li>
-      <li><b>Detection (D)</b> — how likely to be caught? 1 = almost certain to catch. 10 = impossible to detect</li>
-      <li>Higher RPN = higher priority. Reduce RPN by improving detection or reducing occurrence</li>
-      <li>FMEA is <b>proactive</b> — done before failures happen to predict and prevent them</li>
-    </ul>
-
-    <div class="topic-label">5-Why Example</div>
-    <ul>
-      <li>Board dead → LDO output 0V → input cap shorted → reversed polarity → no marking in assembly drawing → silkscreen lacked "+" symbol</li>
-      <li><b>Root cause:</b> missing polarity marking in PCB design → update silkscreen guideline and design checklist</li>
-    </ul>
   </div>
 </div>
 
-<!-- ── S6: SENSORS ── -->
+<!-- ═══ S6: PROTOCOLS ═══ -->
 <div class="sec open" id="s6">
   <div class="sec-head" onclick="tog(this)">
     <span class="sec-num">06</span>
-    <span class="sec-title">Sensors — ALS &amp; Proximity</span>
-    <span class="imp m">LIKELY ASKED</span>
-    <span class="sec-arrow">▶</span>
+    <span class="sec-title">Communication Protocols — SPI, I2C, UART &amp; More</span>
+    <span class="tag tr">TOPIC 6 — EXPECT DEEP QUESTIONS</span>
+    <span class="arr">▶</span>
   </div>
   <div class="sec-body">
-    <div class="topic-label">Ambient Light Sensor (ALS)</div>
+
+    <div class="lbl">UART</div>
     <ul>
-      <li>Measures light intensity in <b>lux</b>. Used in phones to auto-adjust screen brightness</li>
-      <li>Photodiode generates current proportional to light → ADC converts to lux value</li>
-      <li>Interface: I2C. Spectral response matches human eye (~550nm green)</li>
-      <li>Integration time = how long ADC collects charge. Longer = more sensitive in dim light but slower</li>
-    </ul>
-    <div class="topic-label">ALS FA Issues</div>
-    <ul>
-      <li>Protective film over sensor → reads 0 lux. Remove film and retest</li>
-      <li>Wrong I2C address (address pin pulled wrong way)</li>
-      <li>Sensor not initialised in firmware — still in standby, returns stale 0</li>
-      <li>Integration time not configured → saturated or too slow</li>
-      <li>Physical damage or contamination on optical window</li>
+      <li><b>Wires:</b> TX (transmit) + RX (receive) + GND. No clock — asynchronous</li>
+      <li>Both sides must be configured to same <b>baud rate</b> (bits/second). Common: 9600, 115200</li>
+      <li>Frame: Start bit (LOW) → 8 data bits (LSB first) → Stop bit (HIGH). Idle = HIGH</li>
+      <li>TX of device A connects to RX of device B (and vice versa). TX→TX = nothing works</li>
+      <li><b>Failures:</b> baud rate mismatch (garbled output), TX/RX swapped, voltage level mismatch (5V TX→3.3V RX), line floating (no pull-up)</li>
     </ul>
 
-    <div class="topic-label">Proximity Sensor</div>
+    <div class="lbl">I2C</div>
     <ul>
-      <li>Turns off screen when phone held to ear. Uses IR LED + IR photodetector</li>
-      <li>IR LED pulses → reflected IR measured → more reflection = object closer</li>
-      <li>Crosses near/far threshold → generates interrupt → firmware turns off screen</li>
-      <li>Often combined with ALS in same IC (APDS-9930, LTR-559)</li>
+      <li><b>Wires:</b> SDA (data) + SCL (clock). Only 2 wires for unlimited devices. Each device has 7-bit address</li>
+      <li><b>Open-drain</b> — devices can only pull LOW, never drive HIGH. <span class="r">Pull-up resistors MANDATORY</span> (4.7kΩ standard, 2.2kΩ fast mode)</li>
+      <li>Master generates clock, initiates all transactions. Slave responds only when addressed</li>
+      <li>Transaction: START → address + R/W → ACK from slave → data → ACK → STOP</li>
+      <li><b>ACK bit</b> — slave pulls SDA LOW during 9th clock pulse to confirm it received the byte. No ACK = device not present, wrong address, or device busy</li>
+      <li><b>Failures:</b> missing pull-ups (SDA/SCL stuck LOW or floating), wrong device address, bus lockup (slave stuck holding SDA LOW — fix: clock SCL 9 times then STOP), address conflict, 5V device on 3.3V bus</li>
     </ul>
-    <div class="topic-label">Proximity FA Issues</div>
+
+    <div class="lbl">SPI</div>
     <ul>
-      <li><b>Crosstalk</b> — IR reflects off device housing, triggers without real object. Most common NPI issue</li>
-      <li>IR LED not driving — wrong current resistor or open circuit. Check voltage across LED on scope</li>
-      <li>Threshold registers wrong — triggers too early or not at all</li>
-      <li>Black tape/adhesive over sensor window from assembly</li>
-      <li>Ambient sunlight saturating photodetector → false near reading</li>
+      <li><b>Wires:</b> MOSI + MISO + SCLK + CS (one CS per slave device)</li>
+      <li>Synchronous, full-duplex (send and receive simultaneously). Faster than I2C (up to tens of MHz)</li>
+      <li><b>CS pin</b> — master pulls CS LOW to select device. Only one CS active at a time. Releases HIGH to deselect</li>
+      <li><b>SPI Modes (CPOL/CPHA)</b> — 4 modes define when data is sampled vs when clock transitions. <b>Mode 0</b> most common (clock idles LOW, data sampled on rising edge). Wrong mode = shifted/corrupted data</li>
+      <li><b>Failures:</b> CS not going LOW before clock, wrong CPOL/CPHA mode, clock too fast for device, MOSI/MISO swapped, CS floating HIGH</li>
     </ul>
+
+    <div class="lbl">RS232 vs RS485</div>
+    <ul>
+      <li><b>RS232</b> — single-ended (voltage vs GND). ±12V swing. Point-to-point only. Max ~15m. Common for instrument serial ports</li>
+      <li><b>RS485</b> — differential (A and B wires). Noise immune. Multi-drop (up to 32 devices). Up to 1200m. Used for Modbus RTU (my PZEM library), industrial equipment, production line control</li>
+    </ul>
+
+    <div class="lbl">USB (CDC)</div>
+    <ul>
+      <li>Differential pair (D+ and D−) + VBUS (5V) + GND</li>
+      <li><b>USB CDC</b> (Communication Device Class) — makes device appear as virtual serial port on computer. Used by Arduino, ESP32 for programming and debug</li>
+      <li>Enumeration: host requests descriptor from device. Descriptor identifies device type and capabilities. Failure = "Unknown Device" in Device Manager</li>
+      <li><b>Failures:</b> D+/D− swapped, wrong descriptor data, missing pull-up on D+</li>
+    </ul>
+
+    <div class="qa">
+      <div class="q">Q: I2C device is not responding. How do you debug?</div>
+      <div class="a">
+        <ul>
+          <li>Check pull-up resistors on SDA and SCL — are they present and the right value?</li>
+          <li>Use logic analyser or scope on SCL — is the clock running when master initiates transaction?</li>
+          <li>Check SDA line — is the master sending the correct device address? Is the slave pulling SDA LOW for the ACK bit?</li>
+          <li>Verify device address — check datasheet, check address selection pin (some ICs have ADDR pin pulled HIGH or LOW)</li>
+          <li>Check device power supply — VCC at the correct voltage at the IC pin?</li>
+          <li>Check for bus lockup — is SDA stuck LOW? Clock 9 times on SCL then send STOP to release</li>
+          <li>Verify voltage levels — 5V device on 3.3V bus can cause issues</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="q">Q: SPI sensor not responding even though clock and CS look correct on scope.</div>
+      <div class="a">
+        <ul>
+          <li>Check SPI mode (CPOL/CPHA) — does firmware mode match sensor datasheet requirement?</li>
+          <li>Check MOSI — is the correct command byte actually being sent? Put logic analyser on MOSI and verify</li>
+          <li>Check clock frequency — is it within the sensor's maximum rated SPI speed?</li>
+          <li>Check CS timing — CS must go LOW BEFORE clock starts. Some sensors require a minimum setup time</li>
+          <li>Check sensor VCC — is it actually powered?</li>
+          <li>Check MISO — is the sensor driving MISO at all? If MISO = floating, sensor may not be outputting</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="q">Q: What is the difference between synchronous and asynchronous communication?</div>
+      <div class="a">
+        <ul>
+          <li><b>Synchronous</b> — shared clock signal between sender and receiver. Receiver uses clock edge to sample data exactly. Examples: SPI, I2C. More reliable, higher speed possible</li>
+          <li><b>Asynchronous</b> — no shared clock. Both sides use an agreed baud rate (internal clock). Sender marks start of transmission with a start bit. Examples: UART, RS232, RS485. Simpler wiring, works over longer distances</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="lbl">Protocol Comparison Table</div>
+    <div class="chips">
+      <span class="chip b">UART: 2 wires, async, baud rate</span>
+      <span class="chip b">I2C: 2 wires, sync, addressed, pull-ups</span>
+      <span class="chip b">SPI: 4 wires, sync, fast, full-duplex</span>
+      <span class="chip b">RS485: differential, multi-drop, industrial</span>
+      <span class="chip b">USB: differential pair, high speed, enumeration</span>
+    </div>
   </div>
 </div>
 
-<!-- ── S7: CIRCUITS ── -->
+<!-- ═══ S7: RESUME ═══ -->
 <div class="sec open" id="s7">
   <div class="sec-head" onclick="tog(this)">
     <span class="sec-num">07</span>
-    <span class="sec-title">Analog &amp; Digital Circuits</span>
-    <span class="imp h">DEFINITELY ASKED</span>
-    <span class="sec-arrow">▶</span>
+    <span class="sec-title">Your Resume — Key Answers</span>
+    <span class="tag tw">YOUR EXPERIENCE — SAY THIS BOLDLY</span>
+    <span class="arr">▶</span>
   </div>
   <div class="sec-body">
-    <div class="topic-label">Analog vs Digital</div>
-    <ul>
-      <li><b>Analog</b> — continuous range of values. Microphone, temperature sensor output, audio</li>
-      <li><b>Digital</b> — only HIGH or LOW. UART TX, GPIO, SPI clock</li>
-      <li><b>ADC</b> — converts analog → digital. 12-bit = 4096 levels. Resolution = Vref/2ⁿ</li>
-      <li>12-bit ADC, 3.3V ref: 3.3/4096 = <b>0.8mV per step</b></li>
-      <li><b>DAC</b> — converts digital → analog. Used in audio output, signal generation</li>
-    </ul>
 
-    <div class="topic-label">Logic Voltage Levels</div>
-    <ul>
-      <li><b>5V TTL</b> — HIGH &gt;2V, LOW &lt;0.8V</li>
-      <li><b>3.3V CMOS</b> — HIGH &gt;2V, LOW &lt;0.8V. Max input = 3.3V (unless 5V-tolerant)</li>
-      <li>5V signal into 3.3V GPIO → can permanently damage the pin</li>
-      <li>Fix: voltage divider, level shifter IC (TXS0102), or Zener clamp</li>
-      <li>Some STM32 pins marked "FT" = 5V tolerant. Check datasheet per pin</li>
-    </ul>
+    <div class="alert">⚠ You messed up the Optipace testing answer last time. Read and practise this answer before 10:30.</div>
 
-    <div class="topic-label">Logic Gates</div>
-    <ul>
-      <li><b>AND</b> — all inputs HIGH → output HIGH</li>
-      <li><b>OR</b> — any input HIGH → output HIGH</li>
-      <li><b>NAND</b> — AND + NOT. Universal gate (can build anything from NAND)</li>
-      <li><b>XOR</b> — output HIGH when inputs DIFFERENT. Used in error detection</li>
-    </ul>
+    <div class="qa">
+      <div class="q">What testing did you do at Optipace? (SAY THIS — not "power outputs and firmware")</div>
+      <div class="a">
+        <ul>
+          <li>Led hardware validation testing for custom nRF52 and ESP32 PCBAs</li>
+          <li>Verified all power rails using DMM and oscilloscope — measured at IC pins, not just at connectors</li>
+          <li>Tested communication protocols — I2C, SPI, UART — using logic analyser to decode actual bytes and verify sensor responses</li>
+          <li>Performed root cause analysis on failing boards — traced failures to power supply issues, component orientation errors, solder defects</li>
+          <li>Coordinated with firmware team when isolating hardware vs software failures — used scope evidence to prove the issue before escalating</li>
+          <li>Documented all test results and failure findings systematically for each validation cycle</li>
+        </ul>
+      </div>
+    </div>
 
-    <div class="topic-label">PWM</div>
-    <ul>
-      <li>Digital signal switching HIGH/LOW rapidly. Duty cycle = % time HIGH</li>
-      <li>50% duty cycle at 3.3V → average 1.65V to load</li>
-      <li>Used for: LED dimming, motor speed control, servo position, DAC approximation</li>
-    </ul>
+    <div class="qa">
+      <div class="q">Tell me about your PZEM library and Modbus RTU.</div>
+      <div class="a">
+        <ul>
+          <li>PZEM-004T V4.0 — energy meter measuring voltage, current, power, energy, frequency, power factor</li>
+          <li>Communicates via <b>Modbus RTU</b> — industrial serial protocol over UART/RS485</li>
+          <li>Request frame: device address + function code 0x04 + register address + quantity + CRC16</li>
+          <li>I implemented: CRC16 calculation, request frame building, response parsing, register-to-unit scaling</li>
+          <li>Tested on multiple boards including Arduino UNO R4. Published to Arduino Library Manager + PlatformIO Registry</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="qa">
+      <div class="q">FreeRTOS — what is it?</div>
+      <div class="a">Real-time OS for MCUs. Multiple tasks run concurrently managed by scheduler. Key: tasks, queues (data between tasks), semaphores (synchronisation), priorities. Used on ESP32/nRF52 — sensor task + BLE task running independently without blocking each other.</div>
+    </div>
+
+    <div class="qa">
+      <div class="q">Hydroponics project — sensors and protocols?</div>
+      <div class="a">ESP32 + SHT40 (I2C, temp/humidity) + DS18B20 (1-Wire, water temp) + pH sensor (analog ADC) + CO2 (UART). Threshold-based relay control for fan, lights, pump. HTTP dashboard + I2C LCD. Fully autonomous. Published research paper.</div>
+    </div>
   </div>
 </div>
 
-<!-- ── S8: RESUME Q ── -->
+<!-- ═══ S8: SCENARIOS ═══ -->
 <div class="sec open" id="s8">
   <div class="sec-head" onclick="tog(this)">
     <span class="sec-num">08</span>
-    <span class="sec-title">Resume Questions — Your Experience</span>
-    <span class="imp h">DEFINITELY ASKED</span>
-    <span class="sec-arrow">▶</span>
+    <span class="sec-title">Scenario &amp; Calculation Questions</span>
+    <span class="tag tr">EXPECT THESE — THINK OUT LOUD</span>
+    <span class="arr">▶</span>
   </div>
   <div class="sec-body">
-    <div class="warn-box">You messed up the Optipace testing question last time. Read your answer below carefully.</div>
 
     <div class="qa">
-      <div class="q">What testing did you do at Optipace? (You messed this up — say this instead)</div>
-      <div class="a">
-        <ul>
-          <li>Led testing workflows for custom nRF52 and ESP32 boards — organised what to test, in what order, tracked results</li>
-          <li>Verified power rails on custom PCBAs using DMM and oscilloscope — checking 3.3V/VCC at the IC pins not just at connectors</li>
-          <li>Tested communication protocols — verified I2C, SPI, UART using logic analyser, decoded actual bytes to confirm sensor responses</li>
-          <li>Performed root cause analysis when boards failed validation — traced failures to power supply issues, solder defects, component orientation errors</li>
-          <li>Coordinated with firmware team when isolating hardware vs firmware failures — used scope to prove power rail drooping before firmware team wasted time on code</li>
-          <li>Documented all test results and failure findings for each validation cycle</li>
-        </ul>
-      </div>
+      <div class="q">LED: forward voltage 2V, current 20mA, supply 5V. Series resistor?</div>
+      <div class="a">V across R = 5−2 = 3V. R = V/I = 3/0.02 = <b>150Ω</b>. Power in R = 3×0.02 = 0.06W → standard ¼W resistor fine.</div>
     </div>
 
     <div class="qa">
-      <div class="q">Tell me about your PZEM library — what is Modbus RTU?</div>
-      <div class="a">
-        <ul>
-          <li>PZEM-004T V4.0 is an energy meter — measures voltage, current, power, energy, frequency, power factor</li>
-          <li>Communicates over <b>Modbus RTU</b> — industrial serial protocol over UART/RS485</li>
-          <li>Request frame: device address + function code (0x04) + register address + quantity + CRC16</li>
-          <li>Slave responds with: address + function code + byte count + data + CRC</li>
-          <li>I implemented CRC16 calculation, request frame building, response parsing, register-to-engineering-unit scaling</li>
-          <li>Published to Arduino Library Manager and PlatformIO Registry</li>
-        </ul>
-      </div>
+      <div class="q">LDO: 5V in, 3.3V out, 500mA load. Heat dissipated? Efficiency?</div>
+      <div class="a">Heat = (5−3.3) × 0.5 = <b>0.85W</b>. Efficiency = 3.3/5 = <b>66%</b>. At 1A: heat = 1.7W — needs heatsink.</div>
     </div>
 
     <div class="qa">
-      <div class="q">FreeRTOS — what is it and how did you use it?</div>
-      <div class="a">
-        <ul>
-          <li>Real-time OS for microcontrollers. Multiple tasks run concurrently managed by a scheduler</li>
-          <li>Key primitives: tasks (like threads), queues (pass data between tasks), semaphores (synchronisation), task priorities</li>
-          <li>Used on ESP32 and nRF52 — sensor polling in one task, BLE communication in another, so neither blocks the other</li>
-          <li>Shared data between tasks must be protected with mutex to avoid race conditions</li>
-        </ul>
-      </div>
+      <div class="q">Signal period = 2ms. Frequency? If duty cycle 30%, what is ON time?</div>
+      <div class="a">f = 1/T = 1/0.002 = <b>500Hz</b>. ON time = 0.30 × 2ms = <b>0.6ms</b>.</div>
     </div>
 
     <div class="qa">
-      <div class="q">I2C vs SPI — when to choose each?</div>
-      <div class="a">
-        <ul>
-          <li><b>I2C</b> — 2 wires, multi-device via addressing, needs pull-ups, max 400kHz standard. Choose for: slow sensors, many devices, limited pins</li>
-          <li><b>SPI</b> — 4 wires, faster (tens of MHz), full-duplex, no pull-ups. Choose for: displays, flash memory, fast ADCs</li>
-        </ul>
-      </div>
+      <div class="q">12-bit ADC, Vref = 3.3V. Resolution per step?</div>
+      <div class="a">2¹² = 4096 levels. Resolution = 3.3/4096 = <b>0.8mV per step</b>.</div>
     </div>
 
     <div class="qa">
-      <div class="q">Your hydroponics project — sensors and protocols used?</div>
-      <div class="a">
-        <ul>
-          <li>SHT40 (temp/humidity) → I2C</li>
-          <li>DS18B20 (water temp) → 1-Wire</li>
-          <li>pH sensor → analog ADC</li>
-          <li>Sensirion CO2 → UART</li>
-          <li>Controlled relays for fan, grow lights, water pump based on thresholds</li>
-          <li>HTTP to web dashboard + I2C LCD for local display</li>
-        </ul>
-      </div>
+      <div class="q">FMEA: S=8, O=4, D=3. RPN?</div>
+      <div class="a">RPN = 8×4×3 = <b>96</b>. Moderate but Severity=8 is high — review even at moderate RPN.</div>
     </div>
 
     <div class="qa">
-      <div class="q">Why did you leave Optipace and Semicon?</div>
-      <div class="a">Optipace projects reached completion — natural end. Semicon was content-focused, not a product engineering environment. I realised I need structured engineering with real production problems and proper methodologies. Foxconn NPI/FA is exactly that.</div>
+      <div class="q">200 boards tested, 174 passed. Yield?</div>
+      <div class="a">Yield = 174/200 × 100 = <b>87%</b>. Failed = 26. Analyse all 26 for Pareto of failure modes.</div>
+    </div>
+
+    <div class="qa">
+      <div class="q">Two boards same batch — one works, one doesn't. How do you approach?</div>
+      <div class="a">Design is probably fine. Use working board as reference. Measure same test points on both. First measurement that differs = fault location. Then isolate to component level in that area.</div>
+    </div>
+
+    <div class="qa">
+      <div class="q">Board works fine at room temp, fails after 30 minutes.</div>
+      <div class="a">Thermal failure. Use thermal camera to find hot component. Suspects: electrolytic cap (ESR increases with heat), LDO in thermal shutdown (calculate P = (Vin−Vout)×I, check thermal rating), solder joint opening with thermal expansion.</div>
+    </div>
+
+    <div class="qa">
+      <div class="q">Capacitor fully charged in DC circuit — current flowing?</div>
+      <div class="a">Zero. Fully charged cap in DC = open circuit. Current only flows while voltage is changing.</div>
+    </div>
+
+    <div class="qa">
+      <div class="q">You replaced a component and board works. Are you done?</div>
+      <div class="a">No. Fix the root cause — WHY did it fail? Wrong rating? Reversed? Counterfeit? That answer determines if other boards in batch are at risk. Document and initiate corrective action.</div>
     </div>
   </div>
 </div>
 
-<!-- ── S9: SCENARIOS ── -->
+<!-- ═══ S9: HR ═══ -->
 <div class="sec open" id="s9">
   <div class="sec-head" onclick="tog(this)">
     <span class="sec-num">09</span>
-    <span class="sec-title">Real-World Scenario Questions</span>
-    <span class="imp h">EXPECT THESE IN DEEP TECHNICAL</span>
-    <span class="sec-arrow">▶</span>
+    <span class="sec-title">HR Questions + Final Reminders</span>
+    <span class="tag tw">IF ASKED</span>
+    <span class="arr">▶</span>
   </div>
   <div class="sec-body">
 
-    <div class="qa">
-      <div class="q">Board is completely dead. Walk me through your debug process.</div>
-      <div class="a">
-        <ul>
-          <li>Measure input voltage at connector — correct voltage arriving?</li>
-          <li>Measure LDO/buck output — rail at correct voltage?</li>
-          <li>Measure VCC at main IC pin — not just at regulator, check it arrives at IC</li>
-          <li>Check ground continuity</li>
-          <li>If rails correct → check enable pins, reset line, communication lines</li>
-          <li>Visual inspection — burnt components, reversed cap, solder bridge</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="qa">
-      <div class="q">Two identical boards — one works, one doesn't. How do you approach?</div>
-      <div class="a">
-        <ul>
-          <li>Design is probably fine — failure is likely assembly defect or component variation</li>
-          <li>Use working board as golden reference</li>
-          <li>Measure same test points on both — first divergence = fault location</li>
-          <li>Check: power rails → communication signals → individual IC pins</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="qa">
-      <div class="q">Board works at room temp, fails after 30 minutes. What do you suspect?</div>
-      <div class="a">
-        <ul>
-          <li>Thermal failure — component marginal at room temp, fails when hot</li>
-          <li>Use thermal camera to find hot components</li>
-          <li>Suspects: electrolytic cap (capacitance drops with heat), LDO going into thermal shutdown, solder joint opening with thermal expansion</li>
-          <li>Calculate: at your load current, is LDO power dissipation within its thermal rating?</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="qa">
-      <div class="q">30% of boards fail ICT resistance check on R15. X-ray shows no solder issues. What next?</div>
-      <div class="a">
-        <ul>
-          <li>30% is systematic — not random. Focus on the cause that affects ALL failing boards</li>
-          <li>Measure actual resistance of R15 on failed boards with DMM — wrong value = wrong component reel loaded</li>
-          <li>Check ICT fixture probe for R15 — worn/bent probe causes false fails</li>
-          <li>Check schematic — is anything in parallel with R15 that affects the ICT measurement?</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="qa">
-      <div class="q">Phone screen turns off randomly during calls when held to ear.</div>
-      <div class="a">
-        <ul>
-          <li>Proximity sensor issue — triggering when it shouldn't</li>
-          <li>Check: threshold registers too sensitive?</li>
-          <li>Check: IR crosstalk from device housing reflecting back?</li>
-          <li>Check: protective film or adhesive over sensor window from assembly?</li>
-          <li>Test in open air dark room — if sensor reads "near" with nothing nearby → crosstalk</li>
-          <li>Test multiple units — one unit = physical defect. All units = firmware threshold or design issue</li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="qa">
-      <div class="q">You replace a cap and the board works. Are you done?</div>
-      <div class="a">No. That fixes the symptom, not the root cause. Ask: why did the cap fail? Wrong voltage rating? Reversed polarity? Counterfeit? Thermal overstress? The answer determines risk to other boards in the batch. Document, check other boards, initiate corrective action.</div>
-    </div>
-
-    <div class="topic-label">Twisted Questions — Quick Answers</div>
-    <div class="qa">
-      <div class="q">Fully charged capacitor in DC — current flowing?</div>
-      <div class="a">Zero. Cap = open circuit in DC steady state. Current only flows while voltage is changing.</div>
-    </div>
-    <div class="qa">
-      <div class="q">DMM shows 3.3V on GPIO — does that confirm it's driving correctly?</div>
-      <div class="a">Not necessarily. DMM has 10MΩ impedance — barely loads the pin. Voltage might collapse under real load. Measure with actual load connected or use scope.</div>
-    </div>
-    <div class="qa">
-      <div class="q">Continuity beep between VCC and GND — always a short?</div>
-      <div class="a">Not always. Could be legitimate: LED, small resistor, protection diode. Switch to resistance mode, read the actual value. True short = near 0Ω + component getting hot immediately.</div>
-    </div>
-    <div class="qa">
-      <div class="q">LED: 2V forward, 20mA, powered from 5V. Series resistor?</div>
-      <div class="a">V across R = 5−2 = 3V. R = 3/0.02 = 150Ω. Power in R = 3×0.02 = 0.06W. Standard ¼W resistor is fine.</div>
-    </div>
-    <div class="qa">
-      <div class="q">LDO: 5V in, 3.3V out, 500mA. How much heat?</div>
-      <div class="a">Heat = (5−3.3) × 0.5 = 0.85W. Efficiency = 3.3/5 = 66%.</div>
-    </div>
-    <div class="qa">
-      <div class="q">FMEA: S=8, O=4, D=3. RPN?</div>
-      <div class="a">RPN = 8×4×3 = 96. Moderate. But Severity=8 means if it occurs, it's serious — review even at moderate RPN.</div>
-    </div>
-    <div class="qa">
-      <div class="q">200 boards, 174 passed. Yield?</div>
-      <div class="a">174/200 × 100 = 87%. Failed = 26. Analyse all 26 for Pareto.</div>
-    </div>
-  </div>
-</div>
-
-<!-- ── S10: YOUR STORIES ── -->
-<div class="sec open" id="s10">
-  <div class="sec-head" onclick="tog(this)">
-    <span class="sec-num">10</span>
-    <span class="sec-title">Your STAR Stories</span>
-    <span class="imp h">YOUR ANCHOR — USE THESE</span>
-    <span class="sec-arrow">▶</span>
-  </div>
-  <div class="sec-body">
-    <div class="topic-label">Story 1 — nRF52 Debugging (use for any debugging/FA question)</div>
-    <ul>
-      <li><b>S:</b> Custom nRF52 board at Optipace showing [your symptom] — blocking firmware development</li>
-      <li><b>T:</b> My responsibility — find root cause, fix or report, document findings</li>
-      <li><b>A:</b> Checked power rails with DMM → found [what you found] → used scope/logic analyser to [what you did] → isolated to [specific component/area] → [fix you applied]</li>
-      <li><b>R:</b> Board functional. Documented failure mode. Checked other boards in batch for same issue</li>
-    </ul>
-    <div class="warn-box">Fill in your actual details. Even rough memory: "power rail was wrong" or "cap was reversed" — say something specific.</div>
-
-    <div class="topic-label">Story 2 — PZEM Library (use for: initiative, protocol knowledge, independent work)</div>
-    <ul>
-      <li><b>S:</b> Existing libraries didn't support PZEM V4 properly</li>
-      <li><b>T:</b> Write complete Modbus RTU library from scratch</li>
-      <li><b>A:</b> Read datasheet fully → understood register map → implemented CRC16 → built request frames → tested on logic analyser → published to Arduino Library Manager + PlatformIO</li>
-      <li><b>R:</b> Publicly available, community-used. Shows ability to implement hardware protocol from datasheet</li>
-    </ul>
-
-    <div class="topic-label">Story 3 — Hydroponics (use for: sensor integration, system thinking)</div>
-    <ul>
-      <li>ESP32 + 4 sensors (I2C, 1-Wire, analog, UART) + relay control + HTTP dashboard + LCD</li>
-      <li>Fully autonomous. Published as research paper</li>
-    </ul>
-  </div>
-</div>
-
-<!-- ── S11: HR ── -->
-<div class="sec open" id="s11">
-  <div class="sec-head" onclick="tog(this)">
-    <span class="sec-num">11</span>
-    <span class="sec-title">HR Questions &amp; Key Answers</span>
-    <span class="imp m">IF HR ROUND</span>
-    <span class="sec-arrow">▶</span>
-  </div>
-  <div class="sec-body">
     <div class="qa">
       <div class="q">Tell me about yourself.</div>
-      <div class="a">Electronics engineer, nearly 2 years professional experience plus 6+ years hands-on since UG. At Optipace: custom nRF52/ESP32 boards, hardware bring-up, debugging, validation, root cause analysis. At Semicon: wide range of platforms, technical documentation. Published Modbus library on Arduino Library Manager. Run a live IoT platform in production. Looking for structured NPI/FA environment — Foxconn is exactly that.</div>
+      <div class="a">Electronics engineer, nearly 2 years professional experience. At Optipace: custom nRF52/ESP32 boards, hardware validation, debugging, root cause analysis. Published Modbus RTU library on Arduino Library Manager. Run a live IoT platform in production. I'm here because I want structured NPI/FA work with proper methodologies — 8D, FMEA, real production scale.</div>
     </div>
+
     <div class="qa">
       <div class="q">Why Foxconn?</div>
-      <div class="a">World-class manufacturing scale, real product-level FA problems, structured methodologies — 8D, FMEA, DOE. The rigour and complexity here is where I'll develop the deepest engineering skills.</div>
+      <div class="a">World-class manufacturing scale. Real production-level FA problems. Structured quality systems — 8D, FMEA, DOE. This is where I'll develop the deepest hardware engineering skills.</div>
     </div>
-    <div class="qa">
-      <div class="q">Biggest weakness?</div>
-      <div class="a">I sometimes investigate too deeply before escalating. Working on recognising when to escalate for containment while root cause investigation continues separately — they don't need to be sequential.</div>
-    </div>
-    <div class="qa">
-      <div class="q">Why such short stints at previous companies?</div>
-      <div class="a">Optipace: projects reached natural completion. Semicon: content-focused, not engineering environment I needed. Both taught me what I want — this NPI/FA role is the right move and where I plan to stay and grow.</div>
-    </div>
+
     <div class="qa">
       <div class="q">Expected CTC?</div>
-      <div class="a">I'm open to discussing based on Foxconn's standard band for this role. I'm looking for the right opportunity more than a specific number.</div>
-    </div>
-    <div class="qa">
-      <div class="q">Comfortable relocating to Bangalore?</div>
-      <div class="a">Yes — already worked there at Optipace for over a year. Familiar with the city, no issues relocating.</div>
+      <div class="a">I'm open to Foxconn's standard band for this role. The opportunity matters more than a specific number.</div>
     </div>
 
-    <div class="topic-label">Questions to Ask Them</div>
+    <div class="qa">
+      <div class="q">Comfortable in Bangalore?</div>
+      <div class="a">Yes — already worked there at Optipace for over a year. No issues relocating.</div>
+    </div>
+
+    <div class="lbl">Questions to Ask Them</div>
     <ul>
-      <li>What does the typical NPI cycle look like for a new product at this facility?</li>
+      <li>What does the NPI cycle look like for a new product at this facility?</li>
+      <li>What FA tools are available in-house?</li>
       <li>What are the most common failure modes this team sees?</li>
-      <li>Which FA tools are available in-house vs external labs?</li>
     </ul>
 
-    <div class="topic-label">Key Terms — Say These Confidently</div>
+    <div class="div"></div>
+
+    <div class="lbl">🔴 Before You Enter — Remember These 5 Things</div>
+    <ul>
+      <li><b>1.</b> Check power first — always. Every debugging question starts here</li>
+      <li><b>2.</b> Root cause not just the fix — WHY it failed matters more than what you replaced</li>
+      <li><b>3.</b> Containment = temporary. Corrective action = permanent</li>
+      <li><b>4.</b> Your nRF52 debugging story — if you blank, come back to this</li>
+      <li><b>5.</b> Speak boldly. Slow down. Say the answer fully, not just the first layer</li>
+    </ul>
+
+    <div class="lbl">Key Terms — Say Confidently</div>
     <div class="chips">
+      <span class="chip">DMM = Digital Multimeter</span>
+      <span class="chip">LCR = Inductance Capacitance Resistance meter</span>
+      <span class="chip">ESR = Equivalent Series Resistance</span>
       <span class="chip">NPI = New Product Introduction</span>
       <span class="chip">FA = Failure Analysis</span>
       <span class="chip">FMEA = Failure Mode Effects Analysis</span>
@@ -909,14 +753,14 @@ li b, strong { color: #fff; font-weight: 600; }
       <span class="chip">8D = 8 Disciplines</span>
       <span class="chip">ICA = Interim Containment (temporary)</span>
       <span class="chip">PCA = Permanent Corrective Action</span>
-      <span class="chip">SEM = Scanning Electron Microscope</span>
-      <span class="chip">EDS = Elemental composition analysis</span>
       <span class="chip">ICT = In-Circuit Test</span>
       <span class="chip">FCT = Functional Test</span>
+      <span class="chip">SEM = Scanning Electron Microscope</span>
+      <span class="chip">EDS = Elemental analysis</span>
       <span class="chip">Cold joint = Dull grainy solder</span>
-      <span class="chip">Solder bridge = Unwanted short</span>
-      <span class="chip">Pareto = Fix top 20% causes first</span>
-      <span class="chip">Yield = Pass% of total built</span>
+      <span class="chip">Solder bridge = Unwanted short between pads</span>
+      <span class="chip">Yield = Pass / Total × 100%</span>
+      <span class="chip">Pareto = Fix top 20% causes for 80% improvement</span>
     </div>
   </div>
 </div>
@@ -924,27 +768,24 @@ li b, strong { color: #fff; font-weight: 600; }
 </div><!-- end page -->
 
 <script>
-function tog(head) {
-  head.closest('.sec').classList.toggle('open');
-}
+function tog(h) { h.closest('.sec').classList.toggle('open'); }
 
-// Countdown to 10:30 AM today
 function updateCD() {
   const now = new Date();
-  const target = new Date();
-  target.setHours(10, 30, 0, 0);
-  if (now > target) {
-    document.getElementById('cd').textContent = 'LIVE NOW';
-    document.getElementById('cd').style.color = '#ff5252';
+  const t = new Date();
+  t.setHours(10, 30, 0, 0);
+  const el = document.getElementById('cd');
+  if (now >= t) {
+    el.textContent = '🔴 LIVE';
+    el.style.color = '#ff5252';
     return;
   }
-  const diff = target - now;
-  const h = Math.floor(diff / 3600000);
-  const m = Math.floor((diff % 3600000) / 60000);
-  const s = Math.floor((diff % 60000) / 1000);
-  const el = document.getElementById('cd');
+  const d = t - now;
+  const h = Math.floor(d / 3600000);
+  const m = Math.floor((d % 3600000) / 60000);
+  const s = Math.floor((d % 60000) / 1000);
   el.textContent = (h > 0 ? h + 'h ' : '') + m + 'm ' + s + 's';
-  el.style.color = diff < 600000 ? '#ff5252' : '#ff9800';
+  el.style.color = d < 900000 ? '#ff5252' : '#ffb300';
 }
 updateCD();
 setInterval(updateCD, 1000);
